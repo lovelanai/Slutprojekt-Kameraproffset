@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-import { UserModel, User } from './user-model';
+import { Request, Response, NextFunction } from "express";
+import { UserModel, User } from "./user-model";
 
 export const getUser = async (req: Request, res: Response) => {
   const users = await UserModel.find({});
@@ -13,14 +13,28 @@ export const addUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log('adduser');
+  const { email, password } = req.body;
 
-  try {
-    const user = new UserModel(req.body);
-    await user.save();
-    res.status(200).json(user);
-    console.log('user');
-  } catch (err) {
-    next(err);
+  const doesUserExist = await UserModel.findOne({ email });
+
+  if (doesUserExist) {
+    res.status(404);
+    console.log("funkar ej");
+    throw new Error("Användare finns redan");
+  }
+
+  const user = await UserModel.create({
+    email: email,
+    password: password,
+  });
+
+  if (user) {
+    res.status(201).json({
+      email: user.email,
+      password: user.password,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Globalt fel");
   }
 };
