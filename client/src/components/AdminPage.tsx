@@ -7,6 +7,8 @@ import { ProductContext } from "../contexts/ProductContext";
 import { Product } from "../interfaces/interfaces";
 import "./AdminPage.css";
 import AdminPageForm from "./AdminPageForm";
+import LoginForm from "./LoginForm";
+import { useUser } from "../contexts/UserContext";
 
 const theme = createTheme({
   palette: {
@@ -35,75 +37,83 @@ function AdminPage() {
     setEditForm(true);
   };
 
+  const { isLoggedIn } = useUser();
+
   if (!editForm) {
     return (
       <ThemeProvider theme={theme}>
-        <div className="admin-top-container">
-          <div className="admin-edit-button">
-            <Button
-              onClick={() => sendToEdit()}
-              variant="contained"
-              size="large"
-              color="primary"
-            >
-              Lägg till produkt
-            </Button>
+        {!isLoggedIn ? (
+          <div className="admin-top-container">
+            <LoginForm />
           </div>
-          <div className="admin-container">
-            {products.map((item) => (
-              <div key={item.id} className="admin-product-container">
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <Button
-                    style={{ margin: "1rem" }}
-                    variant="contained"
-                    onClick={() => sendToEdit(item)}
-                    startIcon={<EditIcon />}
+        ) : (
+          <div className="admin-top-container">
+            <div className="admin-edit-button">
+              <Button
+                onClick={() => sendToEdit()}
+                variant="contained"
+                size="large"
+                color="primary"
+              >
+                Lägg till produkt
+              </Button>
+            </div>
+            <div className="admin-container">
+              {products.map((item) => (
+                <div key={item.id} className="admin-product-container">
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    Edit
-                  </Button>
-                  <Button
-                    style={{ margin: "1rem" }}
-                    color="secondary"
-                    variant="contained"
-                    onClick={() => handleRemoveProduct(item)}
-                    startIcon={<DeleteForeverIcon />}
-                  >
-                    Remove
-                  </Button>
-                </div>
-                <h2>Title: {item.title}</h2>
-                <p style={{ paddingLeft: "1rem" }}>ID: {item.id}</p>
-                <div className="admin-image-container">
-                  <img className="admin-image" src={item.image} alt="" />
-                  <img className="admin-image" src={item.image2} alt="" />
-                  <img className="admin-image" src={item.image3} alt="" />
-                </div>
-                <div className="admin-info-container">
-                  <p>Price: {item.price}</p>
-                  <p>Long info: {item.longinfo}</p>
-                  <ul>
-                    <li>Short info 1: {item.info1}</li>
-                    <li>Short info 2: {item.info2}</li>
-                    <li>Short info 3: {item.info3}</li>
-                  </ul>
+                    <Button
+                      style={{ margin: "1rem" }}
+                      variant="contained"
+                      onClick={() => sendToEdit(item)}
+                      startIcon={<EditIcon />}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      style={{ margin: "1rem" }}
+                      color="secondary"
+                      variant="contained"
+                      onClick={() => handleRemoveProduct(item)}
+                      startIcon={<DeleteForeverIcon />}
+                    >
+                      Remove
+                    </Button>
+                  </div>
+                  <h2>Title: {item.title}</h2>
+                  <p style={{ paddingLeft: "1rem" }}>ID: {item.id}</p>
+                  <div className="admin-image-container">
+                    <img className="admin-image" src={item.image} alt="" />
+                    <img className="admin-image" src={item.image2} alt="" />
+                    <img className="admin-image" src={item.image3} alt="" />
+                  </div>
+                  <div className="admin-info-container">
+                    <p>Price: {item.price}</p>
+                    <p>Long info: {item.longinfo}</p>
+                    <ul>
+                      <li>Short info 1: {item.info1}</li>
+                      <li>Short info 2: {item.info2}</li>
+                      <li>Short info 3: {item.info3}</li>
+                    </ul>
 
-                  <ul>
-                    {item.specs.map((spec) => (
-                      <li key={spec.id}>
-                        <p>
-                          {spec.spectitle} ID: {spec.id}
-                        </p>
-                        <p>{spec.spec}</p>
-                      </li>
-                    ))}
-                  </ul>
+                    <ul>
+                      {item.specs.map((spec) => (
+                        <li key={spec.id}>
+                          <p>
+                            {spec.spectitle} ID: {spec.id}
+                          </p>
+                          <p>{spec.spec}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </ThemeProvider>
     );
   } else {

@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { useUser } from "../contexts/confirmationContext";
+import { useConfirmation } from "../contexts/confirmationContext";
 import "./confirmationPage.css";
 
 function Confirmation() {
   const { customerName } = useParams();
-  const { isLoading } = useUser();
+  const { isLoading } = useConfirmation();
 
   let r = Math.round(Math.random() * 999999999999);
 

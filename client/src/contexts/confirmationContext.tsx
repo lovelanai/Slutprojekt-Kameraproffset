@@ -32,4 +32,4 @@ const ConfirmationProvider: FC = (props) => {
 
 export default ConfirmationProvider;
 
-export const useUser = () => useContext(ConfirmationContext);
+export const useConfirmation = () => useContext(ConfirmationContext);
