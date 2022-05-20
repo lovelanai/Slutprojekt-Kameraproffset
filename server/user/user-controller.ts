@@ -1,40 +1,60 @@
-import { Request, Response, NextFunction } from "express";
-import { UserModel, User } from "./user-model";
+import { Request, Response, NextFunction } from 'express';
+import { UserModel, User } from './user-model';
 
-export const getUser = async (req: Request, res: Response) => {
+// get all users
+export const getAllUsers = async (req: Request, res: Response) => {
   const users = await UserModel.find({});
+  console.log('getusers');
   res.status(200).json(users);
-  //   res.send('test');
-  //   console.log('getuser');
+  res.send();
 };
 
+// get user by id
+export const getUser = async (req: Request, res: Response) => {
+  console.log('get user by id');
+  const user = await UserModel.findById(req.params.id);
+  res.status(200).json(user);
+};
+
+// create a new user
 export const addUser = async (
   req: Request<{}, {}, User>,
   res: Response,
   next: NextFunction
 ) => {
-  const { email, password } = req.body;
-
-  const doesUserExist = await UserModel.findOne({ email });
-
-  if (doesUserExist) {
-    res.status(404);
-    console.log("funkar ej");
-    throw new Error("Användare finns redan");
+  try {
+    const user = new UserModel(req.body);
+    await user.save();
+    res.status(200).json(user);
+    console.log('user');
+  } catch (err) {
+    next(err);
   }
+};
 
-  const user = await UserModel.create({
-    email: email,
-    password: password,
+// update user by id
+export const updateUser = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
+  // const updatedEmail = await UserModel.findOneAndUpdate(req.body.email);
+  // const updatedPassword = await UserModel.findOneAndUpdate(req.body.password);
+  const { id } = req.params;
+
+  await UserModel.findByIdAndUpdate(id, req.body);
+
+  console.log(req.body);
+
+  console.log('updateUser');
+
+  res.status(200).json({
+    new: req.body,
   });
+};
 
-  if (user) {
-    res.status(201).json({
-      email: user.email,
-      password: user.password,
-    });
-  } else {
-    res.status(400);
-    throw new Error("Globalt fel");
-  }
+// delete user by id
+export const deleteUser = async (req: Request, res: Response) => {
+  const user = await UserModel.findByIdAndDelete(req.params.id);
+  console.log('delete user');
+  res.status(200).json(user);
 };

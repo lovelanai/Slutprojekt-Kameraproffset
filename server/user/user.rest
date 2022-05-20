@@ -6,6 +6,21 @@ POST http://localhost:4000/api/user
 Content-Type: application/json
 
 {
-    "email": "kaka@jajaj",
-    "password" : "blä",
+    "email": "love",
+    "password" : "hus",
+    "isAdmin": false
 }
+
+###
+
+PUT http://localhost:4000/api/user/62877ff16c2c5476a6b0911d
+Content-Type: application/json 
+
+{   
+    "email": "love",
+    "password": "öl"
+}
+
+###
+
+DELETE http://localhost:4000/api/user/62877ff16c2c5476a6b0911d
