@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UserModel, User } from './user-model';
+const argon2 = require('argon2');
 
 // get all users
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -23,7 +24,13 @@ export const addUser = async (
   next: NextFunction
 ) => {
   try {
-    const user = new UserModel(req.body);
+    const userData = {
+      email: req.body.email,
+      password: await argon2.hash(req.body.password),
+      isAdmin: false,
+    };
+
+    const user = new UserModel(userData);
     await user.save();
     res.status(200).json(user);
     console.log('user');
@@ -31,25 +38,33 @@ export const addUser = async (
     next(err);
   }
 };
-
 // update user by id
 export const updateUser = async (
   req: Request<{ id: string }>,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
-  // const updatedEmail = await UserModel.findOneAndUpdate(req.body.email);
-  // const updatedPassword = await UserModel.findOneAndUpdate(req.body.password);
-  const { id } = req.params;
+  try {
+    const userData = {
+      email: req.body.email,
+      password: await argon2.hash(req.body.password),
+      isAdmin: false,
+    };
 
-  await UserModel.findByIdAndUpdate(id, req.body);
+    const { id } = req.params;
 
-  console.log(req.body);
+    await UserModel.findByIdAndUpdate(id, userData);
 
-  console.log('updateUser');
+    console.log(userData);
 
-  res.status(200).json({
-    new: req.body,
-  });
+    console.log('updateUser');
+
+    res.status(200).json({
+      new: userData,
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
 // delete user by id
