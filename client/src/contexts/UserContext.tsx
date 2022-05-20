@@ -14,19 +14,14 @@ const ConfirmationProvider: FC = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = async () => {
-    let result = await fetch("/api/user", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (result.ok) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-      console.log("Du är utloggad");
-    }
+    setIsLoggedIn(true);
   };
+
+  // useEffect(() => {
+  //   fetch("http://localhost:4000/api/user")
+  //     .then((response) => response.json())
+  //     .then((data) => console.log(data));
+  // }, [login]);
 
   return (
     <UserContext.Provider value={{ isLoggedIn, login }}>

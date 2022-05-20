@@ -8,49 +8,7 @@ export default function LoginForm() {
   const { login } = useUser();
 
   const LoginHandler = async (e: any) => {
-    e.preventDefault();
-
-    let result = await fetch("/api/user", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (result.ok) {
-      result = await result.json();
-      setPassword("");
-      setEmail("");
-      login();
-      return alert("Du är inloggad");
-    } else {
-      console.log(email, password);
-      return alert(
-        "Du är redan inloggad eller angivit fel användarnamn / lösenord"
-      );
-    }
-  };
-
-  const createUser = async (e: any) => {
-    e.preventDefault();
-    let result = await fetch("/api/user", {
-      method: "post",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    });
-    if (result.ok) {
-      result = await result.json();
-      setEmail("");
-      setPassword("");
-      return alert("Användare skapad");
-    }
-    return alert(
-      "Användarnamnet finns redan, vänligen välj ett annat användarnamn"
-    );
+    login();
   };
 
   return (
@@ -96,15 +54,6 @@ export default function LoginForm() {
           onClick={LoginHandler}
         >
           Logga in
-        </Button>
-        <Button
-          type="submit"
-          variant="contained"
-          size="medium"
-          sx={{ width: "100%" }}
-          onClick={createUser}
-        >
-          Skapa användare
         </Button>
       </Box>
     </div>
