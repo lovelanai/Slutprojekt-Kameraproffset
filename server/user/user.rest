@@ -9,5 +9,5 @@ Content-Type: application/json
     "firstname": "olifant",
     "lastname": "cookie",
     "email": "kaka@jajaj",
-    "password" : "blä",
+    "password" : "bläää",
 }
