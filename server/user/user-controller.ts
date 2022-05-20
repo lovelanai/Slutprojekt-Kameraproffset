@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { UserModel, User } from './user-model';
+import { userRouter } from './user-router';
+import cookieSession from 'cookie-session';
 const argon2 = require('argon2');
 
 // get all users
@@ -38,6 +40,35 @@ export const addUser = async (
     next(err);
   }
 };
+
+// login user
+
+export const loginUser = async (req: Request<{}, {}, User>, res: Response) => {
+  const { email, password } = req.body;
+
+  const user = await UserModel.findOne({ email }).select('password');
+
+  if (!user) {
+    res.status(401).send('användare existerar inte');
+    return;
+  }
+  let matchPassword = await argon2.verify(req.body.password, user.password);
+
+  if (!req.session) {
+    // dont know how to create req.session
+    console.log('ingen inloggad');
+  }
+
+  if (!matchPassword) {
+    console.log('fel användarnamn eller lösenord');
+  }
+
+  if (req.session) {
+    req.session.user = { user: email };
+    console.log(`inloggad som ${user?.email}`);
+  }
+};
+
 // update user by id
 export const updateUser = async (
   req: Request<{ id: string }>,

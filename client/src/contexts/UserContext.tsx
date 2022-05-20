@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useEffect, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from 'react';
 
 export interface ContextValue {
   isLoggedIn: boolean;
@@ -14,14 +14,18 @@ const ConfirmationProvider: FC = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = async () => {
-    setIsLoggedIn(true);
+    let result = await fetch('/api/user/login');
+    if (result.ok) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+      console.log('Du är utloggad');
+    }
   };
 
-  // useEffect(() => {
-  //   fetch("http://localhost:4000/api/user")
-  //     .then((response) => response.json())
-  //     .then((data) => console.log(data));
-  // }, [login]);
+  useEffect(() => {
+    login();
+  }, []);
 
   return (
     <UserContext.Provider value={{ isLoggedIn, login }}>

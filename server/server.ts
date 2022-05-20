@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 import { env } from 'process';
 import { userRouter } from './user/user-router';
 import { productRouter } from './product/product-router';
+import cookiesession from 'cookie-session';
 
 require('dotenv').config();
 
@@ -12,6 +13,16 @@ const app = express();
 
 // global middlewares
 app.use(express.json());
+
+// creating secure cookie
+app.use(
+  cookiesession({
+    secret: 'aVeryS3cr3tK3y',
+    maxAge: 1000 * 600,
+    httpOnly: false,
+    secure: false,
+  })
+);
 
 // routes
 app.use('/api', userRouter);
