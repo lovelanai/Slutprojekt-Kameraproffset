@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import { env } from 'process';
 import { userRouter } from './user/user-router';
+import { productRouter } from './product/product-router';
 
 require('dotenv').config();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // routes
 app.use('/api', userRouter);
+app.use('/api', productRouter);
 
 //Connect to mongoose
 dotenv.config({ path: '/.env' });
