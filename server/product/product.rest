@@ -1,0 +1,49 @@
+GET http://localhost:4000/api/products
+
+###
+
+POST http://localhost:4000/api/product
+Content-Type: application/json
+
+{
+    "title": "String",
+    "longinfo": "String",
+    "info1": "String",
+    "info2": "String",
+    "info3": "String",
+    "price": 10,
+    "quantity": 27272,
+    "image": "string",
+    "image2": "string",
+    "image3": "string",
+    "spectitle": "string",
+    "spec": "string",
+    "specid": "string"
+
+}
+
+###
+
+PUT http://localhost:4000/api/product/62878f2ab155b83835486ad7
+Content-Type: application/json
+
+{
+    "title": "babab",
+    "longinfo": "String",
+    "info1": "String",
+    "info2": "String",
+    "info3": "String",
+    "price": 10,
+    "quantity": 27272,
+    "image": "string",
+    "image2": "string",
+    "image3": "string",
+    "spectitle": "string",
+    "spec": "string",
+    "specid": "string"
+
+}
+
+###
+
+DELETE http://localhost:4000/api/product/62878f2ab155b83835486ad7
