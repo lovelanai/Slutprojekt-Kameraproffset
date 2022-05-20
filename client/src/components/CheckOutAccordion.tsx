@@ -28,7 +28,7 @@ import {
 import CardPayment from "./CardPayment";
 import "./checkOutAccordion.css";
 import FakturaPayment from "./FakturaPayment";
-import { useUser } from "../contexts/confirmationContext";
+import { useConfirmation } from "../contexts/confirmationContext";
 import Shipping from "./Shipping";
 import SwishPayment from "./SwishPayment";
 
@@ -69,7 +69,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function CheckOutAccordion() {
-  const { confirm } = useUser();
+  const { confirm } = useConfirmation();
   const { cartItems } = React.useContext(ShoppingCartContext);
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
 

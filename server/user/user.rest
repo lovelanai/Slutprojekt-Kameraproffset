@@ -1,0 +1,11 @@
+GET http://localhost:4000/api/user
+
+###
+
+POST http://localhost:4000/api/user
+Content-Type: application/json
+
+{
+    "email": "kaka@jajaj",
+    "password" : "blä",
+}
