@@ -6,18 +6,18 @@ POST http://localhost:4000/api/user
 Content-Type: application/json
 
 {
-    "email": "love",
-    "password" : "hus",
+    "email": "hasish",
+    "password" : "kebabaen",
     "isAdmin": false
 }
 
 ###
 
-PUT http://localhost:4000/api/user/62877ff16c2c5476a6b0911d
+PUT http://localhost:4000/api/user/62878473958fe43138be76b3
 Content-Type: application/json 
 
 {   
-    "email": "love",
+    "email": "lalaal",
     "password": "öl"
 }
 
