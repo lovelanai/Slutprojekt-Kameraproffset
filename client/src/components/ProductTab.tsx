@@ -1,10 +1,10 @@
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
-import { Product } from "../interfaces/interfaces";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import { Product } from '../interfaces/interfaces';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -14,15 +14,15 @@ interface TabPanelProps {
 const Theme = createTheme({
   palette: {
     primary: {
-      main: "#333333",
-      contrastText: "#FBF7F5", //button text white instead of black
+      main: '#333333',
+      contrastText: '#FBF7F5', //button text white instead of black
     },
     background: {
-      default: "#333333",
+      default: '#333333',
     },
 
     secondary: {
-      main: "#DA344D",
+      main: '#DA344D',
     },
   },
 });
@@ -46,7 +46,7 @@ function TabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
   };
 }
 
@@ -63,8 +63,8 @@ export default function ProductTab(props: Props) {
 
   return (
     <ThemeProvider theme={Theme}>
-      <Box sx={{ width: "100%" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -78,17 +78,15 @@ export default function ProductTab(props: Props) {
           <Typography>{props.product.longinfo}</Typography>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <ul style={{ padding: "0" }}>
-            {props.product.specs.map((test) => (
+          <ul style={{ padding: '0' }}>
+            {props.product.specifications?.map((test, index) => (
               <li
-                style={{ display: "flex", justifyContent: "space-between" }}
-                key={test.id}
+                style={{ display: 'flex', justifyContent: 'space-between' }}
+                key={index}
               >
-                <Typography style={{ margin: "0" }}>
-                  {test.spectitle}
-                </Typography>
-                <Typography style={{ margin: ".3rem 0" }}>
-                  {test.spec}
+                <Typography style={{ margin: '0' }}>{test.title}</Typography>
+                <Typography style={{ margin: '.3rem 0' }}>
+                  {test.value}
                 </Typography>
               </li>
             ))}

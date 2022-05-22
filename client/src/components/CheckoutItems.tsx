@@ -4,11 +4,11 @@ import {
   CardContent,
   CardMedia,
   Typography,
-} from "@mui/material";
-import { useContext } from "react";
-import { ShoppingCartContext } from "../contexts/ShoppingCartContext";
-import "./CheckoutItems.css";
-import "./ShoppingCart.css";
+} from '@mui/material';
+import { useContext } from 'react';
+import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
+import './CheckoutItems.css';
+import './ShoppingCart.css';
 
 export default function CheckOutItems(): JSX.Element {
   const { cartItems } = useContext(ShoppingCartContext);
@@ -16,9 +16,9 @@ export default function CheckOutItems(): JSX.Element {
   return (
     <div>
       <div>
-        {cartItems.map((item) => (
-          <div>
-            <Card className="cardContainer" key={item.id}>
+        {cartItems.map((item, index) => (
+          <div key={index}>
+            <Card className="cardContainer">
               <div className="image">
                 <h1>{item.title}</h1>
                 <CardMedia

@@ -1,43 +1,52 @@
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
-import { Button, createTheme, ThemeProvider } from "@mui/material";
-import { useContext, useState } from "react";
-import { ProductContext } from "../contexts/ProductContext";
-import { Product } from "../interfaces/interfaces";
-import "./AdminPage.css";
-import AdminPageForm from "./AdminPageForm";
-import LoginForm from "./LoginForm";
-import { useUser } from "../contexts/UserContext";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
+import { Button, createTheme, ThemeProvider } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Product } from '../interfaces/interfaces';
+import './AdminPage.css';
+import AdminPageForm from './AdminPageForm';
+import LoginForm from './LoginForm';
+import { useUser } from '../contexts/UserContext';
+import { getAllProducts, removeProduct } from '../productService';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#333333",
-      contrastText: "#FBF7F5", //button text white instead of black
+      main: '#333333',
+      contrastText: '#FBF7F5', //button text white instead of black
     },
     background: {
-      default: "#333333",
+      default: '#333333',
     },
 
     secondary: {
-      main: "#DA344D",
+      main: '#DA344D',
     },
   },
 });
 
 function AdminPage() {
-  const { products } = useContext(ProductContext);
+  const [products, setProducts] = useState<Product[]>([]);
   const [editForm, setEditForm] = useState(false);
-  const { handleRemoveProduct } = useContext(ProductContext);
   const [activeProduct, setActiveProduct] = useState<Product>();
+  const { isLoggedIn } = useUser();
+
+  const handleRemoveProduct = (product: Product) => {
+    removeProduct(product);
+    setProducts(products.filter((p) => p._id !== product._id));
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getAllProducts().then((p) => setProducts(p));
+    }
+  }, [isLoggedIn]);
 
   const sendToEdit = (product?: Product) => {
     setActiveProduct(product);
     setEditForm(true);
   };
-
-  const { isLoggedIn } = useUser();
 
   if (!editForm) {
     return (
@@ -59,13 +68,13 @@ function AdminPage() {
               </Button>
             </div>
             <div className="admin-container">
-              {products.map((item) => (
-                <div key={item.id} className="admin-product-container">
+              {products.map((item, index) => (
+                <div key={index} className="admin-product-container">
                   <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    style={{ display: 'flex', justifyContent: 'space-between' }}
                   >
                     <Button
-                      style={{ margin: "1rem" }}
+                      style={{ margin: '1rem' }}
                       variant="contained"
                       onClick={() => sendToEdit(item)}
                       startIcon={<EditIcon />}
@@ -73,7 +82,7 @@ function AdminPage() {
                       Edit
                     </Button>
                     <Button
-                      style={{ margin: "1rem" }}
+                      style={{ margin: '1rem' }}
                       color="secondary"
                       variant="contained"
                       onClick={() => handleRemoveProduct(item)}
@@ -83,7 +92,7 @@ function AdminPage() {
                     </Button>
                   </div>
                   <h2>Title: {item.title}</h2>
-                  <p style={{ paddingLeft: "1rem" }}>ID: {item.id}</p>
+                  <p style={{ paddingLeft: '1rem' }}>ID: {item._id}</p>
                   <div className="admin-image-container">
                     <img className="admin-image" src={item.image} alt="" />
                     <img className="admin-image" src={item.image2} alt="" />
@@ -99,12 +108,10 @@ function AdminPage() {
                     </ul>
 
                     <ul>
-                      {item.specs.map((spec) => (
-                        <li key={spec.id}>
-                          <p>
-                            {spec.spectitle} ID: {spec.id}
-                          </p>
-                          <p>{spec.spec}</p>
+                      {item.specifications?.map((spec, index) => (
+                        <li key={index}>
+                          <p>{spec.title}</p>
+                          <p>{spec.value}</p>
                         </li>
                       ))}
                     </ul>
