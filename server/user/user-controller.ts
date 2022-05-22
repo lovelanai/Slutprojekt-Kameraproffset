@@ -46,13 +46,14 @@ export const addUser = async (
 export const loginUser = async (req: Request<{}, {}, User>, res: Response) => {
   const { email, password } = req.body;
 
-  const user = await UserModel.findOne({ email }).select('password');
+  const user = await UserModel.findOne({ email });
 
   if (!user) {
     res.status(401).send('användare existerar inte');
     return;
   }
-  let matchPassword = await argon2.verify(req.body.password, user.password);
+
+  let matchPassword = await argon2.verify(user.password, password);
 
   if (!req.session) {
     // dont know how to create req.session
@@ -64,8 +65,9 @@ export const loginUser = async (req: Request<{}, {}, User>, res: Response) => {
   }
 
   if (req.session) {
-    req.session.user = { user: email };
+    req.session.user = user;
     console.log(`inloggad som ${user?.email}`);
+    res.status(200).send();
   }
 };
 

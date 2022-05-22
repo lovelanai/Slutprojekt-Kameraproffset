@@ -11,8 +11,8 @@ import {
 export const userRouter = express
   .Router()
   .get('/user', getAllUsers)
+  .post('/user/login', loginUser)
   .get('/user/:id', getUser)
-  .get('/user/login', loginUser)
   .post('/user', addUser)
   .put('/user/:id', updateUser)
   .delete('/user/:id', deleteUser);

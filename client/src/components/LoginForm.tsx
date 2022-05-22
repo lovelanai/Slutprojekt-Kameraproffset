@@ -9,7 +9,7 @@ export default function LoginForm() {
 
   const LoginHandler = async (e: any) => {
     e.preventDefault();
-    login();
+    login(email, password);
   };
 
   return (
