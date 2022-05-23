@@ -7,23 +7,23 @@ import {
   createTheme,
   ThemeProvider,
   Typography,
-} from "@mui/material";
-import { useContext } from "react";
-import { ShoppingCartContext, useCart } from "../contexts/ShoppingCartContext";
-import "./ShoppingCart.css";
+} from '@mui/material';
+import { useContext } from 'react';
+import { ShoppingCartContext, useCart } from '../contexts/ShoppingCartContext';
+import './ShoppingCart.css';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#333333",
-      contrastText: "#FBF7F5", //button text white instead of black
+      main: '#333333',
+      contrastText: '#FBF7F5', //button text white instead of black
     },
     background: {
-      default: "#333333",
+      default: '#333333',
     },
 
     secondary: {
-      main: "#DA344D",
+      main: '#DA344D',
     },
   },
 });
@@ -46,8 +46,8 @@ export default function CartItem(): JSX.Element {
     <ThemeProvider theme={theme}>
       <div>
         <div className="test-container">
-          {cartItems.map((item) => (
-            <div key={item.id}>
+          {cartItems.map((item, index) => (
+            <div key={index}>
               <Card className="test">
                 <div className="image">
                   <h1>{item.title}</h1>
@@ -75,8 +75,8 @@ export default function CartItem(): JSX.Element {
                       -
                     </Button>
 
-                    <Typography style={{ marginLeft: "8px" }}>
-                      {item.quantity}{" "}
+                    <Typography style={{ marginLeft: '8px' }}>
+                      {item.quantity}{' '}
                     </Typography>
                     <Button
                       variant="contained"

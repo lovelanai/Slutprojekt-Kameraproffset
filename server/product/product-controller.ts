@@ -7,7 +7,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
 };
 
 export const getProduct = async (req: Request, res: Response) => {
-  const product = await ProductModel.find({});
+  const product = await ProductModel.findById(req.params.id);
   res.status(200).json(product);
 };
 
@@ -17,10 +17,9 @@ export const addProduct = async (
   next: NextFunction
 ) => {
   try {
-    const user = new ProductModel(req.body);
-    await user.save();
-    res.status(200).json(user);
-    console.log('user');
+    const product = new ProductModel(req.body);
+    await product.save();
+    res.status(200).json(product);
   } catch (err) {
     next(err);
   }

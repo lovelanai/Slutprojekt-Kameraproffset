@@ -1,15 +1,21 @@
-import { useContext } from "react";
-import { Route, Routes } from "react-router-dom";
-import { ProductContext } from "../contexts/ProductContext";
-import AdminPage from "./AdminPage";
-import CheckOut from "./CheckOutPage";
-import Confirmation from "./confirmationPage";
-import ProductInfo from "./Productinfo";
-import ShoppingCartPage from "./ShoppingCartPage";
-import Store from "./Store";
+import { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { Product } from '../interfaces/interfaces';
+import { getAllProducts } from '../productService';
+import AdminPage from './AdminPage';
+import CheckOut from './CheckOutPage';
+import Confirmation from './confirmationPage';
+import ProductInfo from './Productinfo';
+import ShoppingCartPage from './ShoppingCartPage';
+import Store from './Store';
 
 function Main() {
-  const { products } = useContext(ProductContext);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getAllProducts().then((p) => setProducts(p));
+  }, []);
+
   return (
     <main>
       <Routes>
@@ -23,10 +29,10 @@ function Main() {
           element={<Confirmation />}
         />
 
-        {products.map((item) => (
+        {products.map((item, index) => (
           <Route
-            key={item.id}
-            path={item.title.replaceAll(" ", "-")}
+            key={index}
+            path={item.title.replaceAll(' ', '-')}
             element={<ProductInfo product={item} />}
           />
         ))}

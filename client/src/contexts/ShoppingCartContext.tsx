@@ -1,5 +1,5 @@
-import { createContext, FC, useContext, useState } from "react";
-import { Product } from "../interfaces/interfaces";
+import { createContext, FC, useContext, useState } from 'react';
+import { Product } from '../interfaces/interfaces';
 
 export interface ContextValue {
   cartItems: Product[];
@@ -30,13 +30,13 @@ const ShoppingCartProvider: FC = (props) => {
    * @param product This is the product we want to add.
    */
   function handleAddProduct(product: Product) {
-    const productExists = cartItems.find((item) => item.id === product.id);
+    const productExists = cartItems.find((item) => item._id === product._id);
     // If the product already exist we won't add it to the array again,
     // we will just set its quantity to plus one
     if (productExists) {
       setCartItems(
         cartItems.map((item) =>
-          item.id === product.id
+          item._id === product._id
             ? { ...productExists, quantity: productExists.quantity + 1 }
             : item
         )
@@ -59,15 +59,15 @@ const ShoppingCartProvider: FC = (props) => {
    * @param product This is the product we want to remove.
    */
   function handleRemoveProduct(product: Product) {
-    const productExists = cartItems.find((item) => item.id === product.id);
+    const productExists = cartItems.find((item) => item._id === product._id);
     if (!productExists) return;
 
     if (productExists.quantity === 1) {
-      setCartItems(cartItems?.filter((item) => item.id !== product.id));
+      setCartItems(cartItems?.filter((item) => item._id !== product._id));
     } else {
       setCartItems(
         cartItems.map((item) => {
-          if (item.id === product.id) {
+          if (item._id === product._id) {
             return { ...productExists, quantity: productExists.quantity - 1 };
           }
           return item;
