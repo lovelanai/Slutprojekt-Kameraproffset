@@ -1,16 +1,16 @@
-import { Button, TextField } from "@mui/material";
-import React, { ChangeEvent, useState } from "react";
-import "./cardPayment.css";
+import { Button, TextField } from '@mui/material';
+import React, { ChangeEvent, useState } from 'react';
+import './css/CardPayment.css';
 
 interface Props {
   triggerNextAccordion(): void;
 }
 
 export default function CardPayment(props: Props) {
-  const [number, setNumber] = useState("");
-  const [name, setName] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [cvc, setCvc] = useState("");
+  const [number, setNumber] = useState('');
+  const [name, setName] = useState('');
+  const [expiry, setExpiry] = useState('');
+  const [cvc, setCvc] = useState('');
 
   const areAllFieldsFilled = () => {
     if (
@@ -34,7 +34,7 @@ export default function CardPayment(props: Props) {
   const handleChange = (
     evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    if (evt.target.name === "name") {
+    if (evt.target.name === 'name') {
       if (
         !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
           evt.target.value
@@ -53,7 +53,7 @@ export default function CardPayment(props: Props) {
       }
     }
 
-    if (evt.target.name === "number") {
+    if (evt.target.name === 'number') {
       if (!/^\d{16,16}$/gm.test(evt.target.value)) {
         setErrorinput({
           ...errorInput,
@@ -68,7 +68,7 @@ export default function CardPayment(props: Props) {
       }
     }
 
-    if (evt.target.name === "cvc") {
+    if (evt.target.name === 'cvc') {
       if (!/^\d{3,3}$/gm.test(evt.target.value)) {
         setErrorinput({
           ...errorInput,
@@ -83,7 +83,7 @@ export default function CardPayment(props: Props) {
       }
     }
 
-    if (evt.target.name === "expiry") {
+    if (evt.target.name === 'expiry') {
       if (!/^\d{4,4}$/gm.test(evt.target.value)) {
         setErrorinput({
           ...errorInput,
@@ -106,7 +106,7 @@ export default function CardPayment(props: Props) {
           name="name"
           id="outlined-name"
           placeholder="Namn"
-          helperText={errorInput.name ? "Ange giltigt namn" : "Namn på kort"}
+          helperText={errorInput.name ? 'Ange giltigt namn' : 'Namn på kort'}
           error={Boolean(errorInput.name)}
           onChange={handleChange}
         />
@@ -115,7 +115,7 @@ export default function CardPayment(props: Props) {
           id="outlined-number"
           label="Kortnummer"
           helperText={
-            errorInput.number ? "Ange giltigt kortnummer" : "Kortnummer"
+            errorInput.number ? 'Ange giltigt kortnummer' : 'Kortnummer'
           }
           error={Boolean(errorInput.number)}
           onChange={handleChange}
@@ -125,7 +125,7 @@ export default function CardPayment(props: Props) {
           name="expiry"
           placeholder="MM/YY"
           helperText={
-            errorInput.expiry ? "Ange korrekt MM/YY utan '/'" : "Utgångsdatum"
+            errorInput.expiry ? "Ange korrekt MM/YY utan '/'" : 'Utgångsdatum'
           }
           error={Boolean(errorInput.expiry)}
           onChange={handleChange}
@@ -134,10 +134,10 @@ export default function CardPayment(props: Props) {
         <TextField
           name="cvc"
           placeholder="CVC"
-          helperText={errorInput.cvc ? "Ange giltig CVC" : "CVC"}
+          helperText={errorInput.cvc ? 'Ange giltig CVC' : 'CVC'}
           error={Boolean(errorInput.cvc)}
           onChange={handleChange}
-          sx={{ width: "100%" }}
+          sx={{ width: '100%' }}
         />
       </div>
       <Button
@@ -146,7 +146,7 @@ export default function CardPayment(props: Props) {
         disabled={Boolean(areAllFieldsFilled())}
         size="medium"
         color="primary"
-        sx={{ width: "100%" }}
+        sx={{ width: '100%' }}
       >
         Bekräfta
       </Button>

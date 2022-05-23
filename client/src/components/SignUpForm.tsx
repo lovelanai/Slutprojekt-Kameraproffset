@@ -1,21 +1,21 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
 import { useState } from 'react';
+
 import { useUser } from '../contexts/UserContext';
 
-export default function LoginForm() {
+function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, snus, showSignUpForm } = useUser();
+  const { login, intesnus } = useUser();
 
   const LoginHandler = async (e: any) => {
     e.preventDefault();
     login(email, password);
   };
 
-  const SignUpHandler = (e: any) => {
+  const SignUpHandler = async (e: any) => {
     e.preventDefault();
-    snus();
-    console.log(showSignUpForm);
+    intesnus();
   };
 
   return (
@@ -30,7 +30,7 @@ export default function LoginForm() {
       >
         <div className="form-container">
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <h1 style={{ margin: '1rem 0' }}>Logga in</h1>
+            <h1 style={{ margin: '1rem 0' }}>Skapa konto</h1>
             <TextField
               style={{ margin: '1rem 0' }}
               className="box-1-input"
@@ -61,12 +61,14 @@ export default function LoginForm() {
           sx={{ width: '100%' }}
           onClick={LoginHandler}
         >
-          Logga in
+          Skapa konto
         </Button>
         <button onClick={SignUpHandler}>
-          <p>Har du inget konto? Registrera dig här.</p>
+          <p>Har du redan ett konto? Logga in här.</p>
         </button>
       </Box>
     </div>
   );
 }
+
+export default SignUpForm;

@@ -1,6 +1,6 @@
-import { useParams } from "react-router-dom";
-import { useConfirmation } from "../contexts/confirmationContext";
-import "./confirmationPage.css";
+import { useParams } from 'react-router-dom';
+import { useConfirmation } from '../contexts/ConfirmationContext';
+import './css/ConfirmationPage.css';
 
 function Confirmation() {
   const { customerName } = useParams();
@@ -17,8 +17,8 @@ function Confirmation() {
           <div className="confirmation-card">
             <div>
               <img
-                id={"logo"}
-                src={require("../assets/img/logo.png")}
+                id={'logo'}
+                src={require('../assets/img/logo.png')}
                 alt="logo"
               />
             </div>

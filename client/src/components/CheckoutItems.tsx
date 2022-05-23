@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { useContext } from 'react';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
-import './CheckoutItems.css';
+import './css/CheckoutItems.css';
 import './ShoppingCart.css';
 
 export default function CheckOutItems(): JSX.Element {
