@@ -18,10 +18,11 @@ Content-Type: application/json
     "image3": "string",
     "spectitle": "string",
     "spec": "string",
-    "category": [{
-        "model": "sony",
-        "color": "blue"
-    }],
+    "category": [
+        {
+        "brand": ["sony", "all"]
+    }
+    ],
     "specid": "string"
 
 }

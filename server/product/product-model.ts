@@ -38,8 +38,7 @@ const productSchema = new mongoose.Schema({
   image3: { type: String },
   category: [
     {
-      model: { type: String },
-      color: { type: String },
+      brand: { type: [String] },
     },
   ],
   specifications: [

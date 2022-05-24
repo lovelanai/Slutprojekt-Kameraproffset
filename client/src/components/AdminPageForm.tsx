@@ -6,11 +6,15 @@ import {
   TextField,
   Typography,
   createTheme,
+  ButtonGroup,
+  ToggleButtonGroup,
+  ToggleButton,
 } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '../interfaces/interfaces';
 import { addProduct, updateProduct } from '../productService';
+// import { ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 
 interface Props {
   product?: Product;
@@ -168,6 +172,15 @@ export default function AdminPageForm(props?: Props) {
     ) {
       return false;
     } else return true;
+  };
+
+  const [alignment, setAlignment] = useState('web');
+
+  const handleToggleButton = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    setAlignment(newAlignment);
   };
 
   return (
@@ -350,10 +363,31 @@ export default function AdminPageForm(props?: Props) {
               />
             </div>
           ))}
+          <div style={{ marginBottom: '1rem' }}>
+            <ToggleButtonGroup
+              color="primary"
+              value={alignment}
+              exclusive
+              onChange={handleToggleButton}
+            >
+              <ToggleButton style={{ marginLeft: '0.5rem' }} value="sony">
+                Sony
+              </ToggleButton>
+              <ToggleButton style={{ marginLeft: '0.5rem' }} value="panasonic">
+                Panasonic
+              </ToggleButton>
+              <ToggleButton style={{ marginLeft: '0.5rem' }} value="fujifilm">
+                Fujifilm
+              </ToggleButton>
+              <ToggleButton style={{ marginLeft: '0.5rem' }} value="canon">
+                Canon
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
           <Button
+            style={{ marginBottom: '1rem' }}
             onClick={addSpecification}
             variant="outlined"
-            sx={{ marginBottom: '3ex' }}
           >
             Lägg till specifikation
           </Button>
