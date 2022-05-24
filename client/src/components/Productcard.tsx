@@ -12,13 +12,26 @@ import { Product } from '../interfaces/interfaces';
 import { getAllProducts } from '../productService';
 import ProductAccordion from './ProductAccordion';
 import './css/Productcard.css';
+import { FilterContext } from '../contexts/FilterCategoriesContext';
 
 export default function ImgMediaCard(): JSX.Element {
+  const { filter, all, sony, panasonic, fujifilm, canon } = FilterContext();
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     getAllProducts().then((x) => setProducts(x));
-  }, []);
+  }, [setProducts]);
+
+  useEffect(() => {
+    // setProducts([]);
+
+    const filtered = products.map((product) => ({
+      ...product,
+      filtered: product.category?.includes(filter),
+    }));
+    setProducts(filtered);
+    console.log('peniskokare');
+  }, [all, sony, panasonic, fujifilm, canon]);
 
   const { handleAddProduct } = useCart();
 
