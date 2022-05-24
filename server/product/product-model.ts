@@ -1,8 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 export interface Specification {
   title: string;
   value: string;
+}
+
+export interface Category {
+  model: string;
+  color: string;
 }
 
 export interface Product {
@@ -16,6 +21,7 @@ export interface Product {
   image: string;
   image2: string;
   image3: string;
+  category: Category[];
   specifications: Specification[];
 }
 
@@ -30,6 +36,12 @@ const productSchema = new mongoose.Schema({
   image: { type: String },
   image2: { type: String },
   image3: { type: String },
+  category: [
+    {
+      model: { type: String },
+      color: { type: String },
+    },
+  ],
   specifications: [
     {
       title: { type: String },

@@ -8,7 +8,7 @@ Content-Type: application/json
 {
     "email": "admin",
     "password" : "admin",
-    "isAdmin": false
+    "isAdmin": true
 }
 
 ###
