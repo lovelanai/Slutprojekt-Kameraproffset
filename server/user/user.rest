@@ -6,10 +6,9 @@ POST http://localhost:4000/api/user/signup
 Content-Type: application/json
 
 {
-    "email": "hasish",
-    "password" : "kebabaen",
-    "isAdmin": false,
-    "role": "userRole"
+    "email": "admin",
+    "password" : "admin",
+    "isAdmin": false
 }
 
 ###
