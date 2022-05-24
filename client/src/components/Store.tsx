@@ -1,7 +1,15 @@
-import ImgMediaCard from "./Productcard";
+import ImgMediaCard from './Productcard';
+import FilterBar from './FilterBar';
 
 function Store() {
-  return <ImgMediaCard />;
+  return (
+    <div>
+      <div style={{ marginTop: '6rem' }}>
+        <FilterBar />
+      </div>
+      <ImgMediaCard />;
+    </div>
+  );
 }
 
 export default Store;
