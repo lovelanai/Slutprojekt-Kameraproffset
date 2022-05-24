@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Button, createTheme, ThemeProvider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Product } from '../interfaces/interfaces';
-import './AdminPage.css';
+import './css/AdminPage.css';
 import AdminPageForm from './AdminPageForm';
 import LoginForm from './LoginForm';
 import { useUser } from '../contexts/UserContext';

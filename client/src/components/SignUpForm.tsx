@@ -1,21 +1,24 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
 import { useState } from 'react';
 import { useUser } from '../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
-export default function LoginForm() {
+function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, displaySignUpForm, showSignUpForm } = useUser();
+  const { hideSignUpForm, createUser } = useUser();
 
-  const LoginHandler = async (e: any) => {
+  const navigate = useNavigate();
+
+  const SignUpHandler = async (e: any) => {
     e.preventDefault();
-    login(email, password);
+    hideSignUpForm();
   };
 
-  const SignUpHandler = (e: any) => {
+  const signUp = async (e: any) => {
     e.preventDefault();
-    displaySignUpForm();
-    console.log(showSignUpForm);
+    createUser(email, password);
+    navigate('/');
   };
 
   return (
@@ -30,7 +33,7 @@ export default function LoginForm() {
       >
         <div className="form-container">
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <h1 style={{ margin: '1rem 0' }}>Logga in</h1>
+            <h1 style={{ margin: '1rem 0' }}>Skapa konto</h1>
             <TextField
               style={{ margin: '1rem 0' }}
               className="box-1-input"
@@ -59,14 +62,16 @@ export default function LoginForm() {
           variant="contained"
           size="medium"
           sx={{ width: '100%' }}
-          onClick={LoginHandler}
+          onClick={signUp}
         >
-          Logga in
+          Skapa konto
         </Button>
         <button onClick={SignUpHandler}>
-          <p>Har du inget konto? Registrera dig här.</p>
+          <p>Har du redan ett konto? Logga in här.</p>
         </button>
       </Box>
     </div>
   );
 }
+
+export default SignUpForm;

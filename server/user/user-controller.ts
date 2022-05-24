@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { UserModel, User } from './user-model';
 import { userRouter } from './user-router';
 import cookieSession from 'cookie-session';
+import { RoleModel } from './role-model';
 const argon2 = require('argon2');
 
 // get all users
@@ -26,16 +27,19 @@ export const addUser = async (
   next: NextFunction
 ) => {
   try {
+    const userRole = (await RoleModel.find({ name: 'user' })).pop();
+    console.log(userRole);
     const userData = {
       email: req.body.email,
       password: await argon2.hash(req.body.password),
       isAdmin: false,
+      role: userRole,
     };
 
     const user = new UserModel(userData);
     await user.save();
     res.status(200).json(user);
-    console.log('user');
+    console.log(userData);
   } catch (err) {
     next(err);
   }

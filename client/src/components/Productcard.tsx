@@ -11,7 +11,7 @@ import { useCart } from '../contexts/ShoppingCartContext';
 import { Product } from '../interfaces/interfaces';
 import { getAllProducts } from '../productService';
 import ProductAccordion from './ProductAccordion';
-import './Productcard.css';
+import './css/Productcard.css';
 
 export default function ImgMediaCard(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);

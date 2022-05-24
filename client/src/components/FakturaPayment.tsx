@@ -1,6 +1,6 @@
-import { Box, Button, TextField } from "@mui/material";
-import { ChangeEvent, useState } from "react";
-import "./CheckOutPage.css";
+import { Box, Button, TextField } from '@mui/material';
+import { ChangeEvent, useState } from 'react';
+import './css/CheckOutPage.css';
 
 interface Props {
   email: string;
@@ -41,7 +41,7 @@ export default function FakturaPayment(props: Props) {
     <Box
       component="form"
       sx={{
-        "& .MuiTextField-root": { m: 1, width: "25ch" },
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
       }}
       noValidate
       autoComplete="on"
@@ -54,7 +54,7 @@ export default function FakturaPayment(props: Props) {
             required
             defaultValue={props.email}
             helperText={
-              errorInput.email ? "Ange giltig mailadress" : "Mailadress"
+              errorInput.email ? 'Ange giltig mailadress' : 'Mailadress'
             }
             error={Boolean(errorInput.email)}
             onChange={handleChange}
@@ -63,7 +63,7 @@ export default function FakturaPayment(props: Props) {
             variant="contained"
             disabled={Boolean(isEmailFilled())}
             onClick={() => props.triggerNextAccordion()}
-            sx={{ width: "100%" }}
+            sx={{ width: '100%' }}
           >
             Bekräfta
           </Button>

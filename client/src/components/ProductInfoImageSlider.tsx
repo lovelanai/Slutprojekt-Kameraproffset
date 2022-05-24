@@ -1,31 +1,31 @@
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import MobileStepper from "@mui/material/MobileStepper";
-import Paper from "@mui/material/Paper";
-import { useTheme } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
-import React from "react";
-import SwipeableViews from "react-swipeable-views";
-import { Product } from "../interfaces/interfaces";
-import "./imgslider.css";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import MobileStepper from '@mui/material/MobileStepper';
+import Paper from '@mui/material/Paper';
+import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+import SwipeableViews from 'react-swipeable-views';
+import { Product } from '../interfaces/interfaces';
+import './css/Imgslider.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const AutoPlaySwipeableViews = SwipeableViews;
 
 const sliderTheme = createTheme({
   palette: {
     primary: {
-      main: "#333333",
-      contrastText: "#FBF7F5", //button text white instead of black
+      main: '#333333',
+      contrastText: '#FBF7F5', //button text white instead of black
     },
     background: {
-      default: "#FFFFFF",
+      default: '#FFFFFF',
     },
 
     secondary: {
-      main: "#333333",
+      main: '#333333',
     },
   },
 });
@@ -75,7 +75,7 @@ function ProductInfoImageSlider(props: Props) {
       <div className="left-product-container">
         <Box className="img-slider" sx={{ flexGrow: 1 }}>
           <AutoPlaySwipeableViews
-            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={activeStep}
             onChangeIndex={handleStepChange}
             enableMouseEvents
@@ -105,7 +105,7 @@ function ProductInfoImageSlider(props: Props) {
                 disabled={activeStep === maxSteps - 1}
               >
                 Next
-                {theme.direction === "rtl" ? (
+                {theme.direction === 'rtl' ? (
                   <KeyboardArrowLeft />
                 ) : (
                   <KeyboardArrowRight />
@@ -118,7 +118,7 @@ function ProductInfoImageSlider(props: Props) {
                 onClick={handleBack}
                 disabled={activeStep === 0}
               >
-                {theme.direction === "rtl" ? (
+                {theme.direction === 'rtl' ? (
                   <KeyboardArrowRight />
                 ) : (
                   <KeyboardArrowLeft />
@@ -131,9 +131,9 @@ function ProductInfoImageSlider(props: Props) {
             square
             elevation={0}
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               height: 50,
               pl: 2,
             }}
