@@ -1,25 +1,28 @@
 import { createContext, FC, useContext, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 export interface ContextValue {
   isLoggedIn: boolean;
   login: (email: string, password: string) => void;
   showSignUpForm: boolean;
-  snus: () => void;
-  intesnus: () => void;
+  displaySignUpForm: () => void;
+  hideSignUpForm: () => void;
+  createUser: (email: string, password: string) => void;
 }
 
 export const UserContext = createContext<ContextValue>({
   isLoggedIn: false,
   login: () => {},
   showSignUpForm: false,
-  snus: () => {},
-  intesnus: () => {},
+  displaySignUpForm: () => {},
+  hideSignUpForm: () => {},
+  createUser: () => {},
 });
 
 const ConfirmationProvider: FC = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
-
+  const navigate = useNavigate();
+  // login as existing user
   const login = async (email: string, password: string) => {
     let result = await fetch('/api/user/login', {
       method: 'POST',
@@ -31,24 +34,50 @@ const ConfirmationProvider: FC = (props) => {
 
     if (result.ok) {
       setIsLoggedIn(true);
+      navigate('/');
+    } else {
+      alert('Fel användarnamn eller lösenord');
+      setIsLoggedIn(false);
+      console.log('Du är utloggad');
+    }
+  };
+
+  // create new user and log in
+  const createUser = async (email: string, password: string) => {
+    let result = await fetch('/api/user/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (result.ok) {
+      setIsLoggedIn(true);
+      console.log('nu är du inloggad');
     } else {
       setIsLoggedIn(false);
       console.log('Du är utloggad');
     }
   };
 
-  const snus = () => {
+  const displaySignUpForm = () => {
     setShowSignUpForm(true);
-    console.log('true');
   };
-  const intesnus = () => {
+  const hideSignUpForm = () => {
     setShowSignUpForm(false);
-    console.log('false');
   };
 
   return (
     <UserContext.Provider
-      value={{ isLoggedIn, login, showSignUpForm, snus, intesnus }}
+      value={{
+        isLoggedIn,
+        login,
+        showSignUpForm,
+        displaySignUpForm,
+        hideSignUpForm,
+        createUser,
+      }}
     >
       {props.children}
     </UserContext.Provider>

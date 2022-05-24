@@ -5,7 +5,7 @@ import { useUser } from '../contexts/UserContext';
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, snus, showSignUpForm } = useUser();
+  const { login, displaySignUpForm, showSignUpForm } = useUser();
 
   const LoginHandler = async (e: any) => {
     e.preventDefault();
@@ -14,7 +14,7 @@ export default function LoginForm() {
 
   const SignUpHandler = (e: any) => {
     e.preventDefault();
-    snus();
+    displaySignUpForm();
     console.log(showSignUpForm);
   };
 

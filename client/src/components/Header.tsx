@@ -7,6 +7,7 @@ import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
 import './css/Header.css';
 import './ShoppingCartPage.tsx';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useUser } from '../contexts/UserContext';
 
 const theme = createTheme({
   palette: {
@@ -26,15 +27,22 @@ const theme = createTheme({
 
 function Header() {
   const { amountOfProducts } = useContext(ShoppingCartContext);
+  const { isLoggedIn } = useUser();
   return (
     <ThemeProvider theme={theme}>
       <header id="header" className="show-products">
-        <Link to="/LoginPage">
-          <AdminPanelSettingsIcon
-            className="icon"
-            sx={{ paddingLeft: '1rem', fontSize: '2rem', opacity: '0' }}
-          />
-        </Link>
+        {!isLoggedIn ? (
+          <Link to="/LoginPage">
+            <button>Logga in</button>
+          </Link>
+        ) : (
+          <Link to="/AdminPage">
+            <AdminPanelSettingsIcon
+              className="icon"
+              sx={{ paddingLeft: '1rem', fontSize: '2rem', opacity: '0' }}
+            />
+          </Link>
+        )}
 
         <img id={'logo'} src={require('../assets/img/logo.png')} alt="logo" />
 

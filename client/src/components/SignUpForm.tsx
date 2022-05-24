@@ -1,21 +1,24 @@
 import { Box, TextField, Button } from '@mui/material';
 import { useState } from 'react';
-
 import { useUser } from '../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, intesnus } = useUser();
+  const { hideSignUpForm, createUser } = useUser();
 
-  const LoginHandler = async (e: any) => {
-    e.preventDefault();
-    login(email, password);
-  };
+  const navigate = useNavigate();
 
   const SignUpHandler = async (e: any) => {
     e.preventDefault();
-    intesnus();
+    hideSignUpForm();
+  };
+
+  const signUp = async (e: any) => {
+    e.preventDefault();
+    createUser(email, password);
+    navigate('/');
   };
 
   return (
@@ -59,7 +62,7 @@ function SignUpForm() {
           variant="contained"
           size="medium"
           sx={{ width: '100%' }}
-          onClick={LoginHandler}
+          onClick={signUp}
         >
           Skapa konto
         </Button>

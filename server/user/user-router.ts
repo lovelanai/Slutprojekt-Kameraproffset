@@ -13,6 +13,6 @@ export const userRouter = express
   .get('/user', getAllUsers)
   .post('/user/login', loginUser)
   .get('/user/:id', getUser)
-  .post('/user', addUser)
+  .post('/user/signup', addUser)
   .put('/user/:id', updateUser)
   .delete('/user/:id', deleteUser);
