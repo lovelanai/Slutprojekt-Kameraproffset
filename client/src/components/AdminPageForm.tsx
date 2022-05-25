@@ -1,4 +1,4 @@
-import { ThemeProvider } from "@emotion/react";
+import { ThemeProvider } from '@emotion/react';
 import {
   Box,
   Button,
@@ -9,12 +9,12 @@ import {
   ButtonGroup,
   ToggleButtonGroup,
   ToggleButton,
-} from "@mui/material";
-import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
-import { FilterContext } from "../contexts/FilterCategoriesContext";
-import { Product } from "../interfaces/interfaces";
-import { addProduct, updateProduct } from "../productService";
+} from '@mui/material';
+import { ChangeEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FilterContext } from '../contexts/FilterCategoriesContext';
+import { Product } from '../interfaces/interfaces';
+import { addProduct, updateProduct } from '../productService';
 
 interface Props {
   product?: Product;
@@ -23,22 +23,36 @@ interface Props {
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#333333",
-      contrastText: "#FBF7F5", //button text white instead of black
+      main: '#333333',
+      contrastText: '#FBF7F5', //button text white instead of black
     },
     background: {
-      default: "#333333",
+      default: '#333333',
     },
 
     secondary: {
-      main: "#DA344D",
+      main: '#DA344D',
     },
   },
 });
 
 export default function AdminPageForm(props?: Props) {
   const { all, sony, panasonic, canon, fujifilm, leica } = FilterContext();
-  const initialValues = { ...props?.product };
+  const initialValues = {
+    _id: props?.product?._id,
+    title: props?.product?.title,
+    longinfo: props?.product?.longinfo,
+    info1: props?.product?.info1,
+    info2: props?.product?.info2,
+    info3: props?.product?.info3,
+    price: props?.product?.price,
+    quantity: props?.product?.quantity,
+    image: props?.product?.image,
+    image2: props?.product?.image2,
+    image3: props?.product?.image3,
+    category: props?.product?.category ?? [],
+    specifications: props?.product?.specifications ?? [],
+  };
 
   const initialErrors = {
     title: false,
@@ -53,12 +67,12 @@ export default function AdminPageForm(props?: Props) {
   };
 
   const modalStyle = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: "background.paper",
+    bgcolor: 'background.paper',
     // border: "2px solid #000",
     boxShadow: 24,
     p: 4,
@@ -69,6 +83,20 @@ export default function AdminPageForm(props?: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const toggleCategory = (category: string) => {
+    if (category in value.category!) {
+      setValue({
+        ...value,
+        category: value.category!.filter((c) => c !== category),
+      });
+    } else {
+      setValue({
+        ...value,
+        category: [...value.category!, category],
+      });
+    }
+  };
 
   const handleAddProduct = (product: Product) => {
     if (props?.product) {
@@ -86,8 +114,8 @@ export default function AdminPageForm(props?: Props) {
   const addSpecification = () => {
     const specifications = value.specifications ?? [];
     specifications.push({
-      title: "",
-      value: "",
+      title: '',
+      value: '',
     });
 
     setValue({ ...value, specifications });
@@ -120,7 +148,7 @@ export default function AdminPageForm(props?: Props) {
     /**This if-statement checks if the name of the target is price, if true, then it checks
      * if it includes anything else than numbers.
      */
-    if (evt.target.name === "price") {
+    if (evt.target.name === 'price') {
       if (!/^\d*$/.test(evt.target.value)) {
         setErrorInput({
           ...errorInput,
@@ -177,7 +205,7 @@ export default function AdminPageForm(props?: Props) {
     } else return true;
   };
 
-  const [alignment, setAlignment] = useState("web");
+  const [alignment, setAlignment] = useState('web');
 
   const handleToggleButton = (
     event: React.MouseEvent<HTMLElement>,
@@ -191,10 +219,10 @@ export default function AdminPageForm(props?: Props) {
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": {
+          '& .MuiTextField-root': {
             marginTop: 2,
             marginBottom: 2,
-            width: "100%",
+            width: '100%',
           },
         }}
         noValidate
@@ -213,11 +241,11 @@ export default function AdminPageForm(props?: Props) {
             defaultValue={props?.product?.title}
             helperText={
               errorInput.title
-                ? "Titeln måste vara minst ett tecken"
-                : "Produktens titel"
+                ? 'Titeln måste vara minst ett tecken'
+                : 'Produktens titel'
             }
           />
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <TextField
               required
               id="outlined-number"
@@ -229,8 +257,8 @@ export default function AdminPageForm(props?: Props) {
               // value={value.price ? value.price : props.product?.price}
               helperText={
                 errorInput.price
-                  ? "Produktens pris får endast innehålla siffror"
-                  : "Produktens pris"
+                  ? 'Produktens pris får endast innehålla siffror'
+                  : 'Produktens pris'
               }
             />
           </div>
@@ -245,7 +273,7 @@ export default function AdminPageForm(props?: Props) {
             error={Boolean(errorInput.image)}
             defaultValue={props?.product?.image}
             helperText={
-              errorInput.image ? "Skriv in en URL" : "Produktens bild URL 1"
+              errorInput.image ? 'Skriv in en URL' : 'Produktens bild URL 1'
             }
           />
           <TextField
@@ -259,7 +287,7 @@ export default function AdminPageForm(props?: Props) {
             label="Image2"
             name="image2"
             helperText={
-              errorInput.image2 ? "Skriv in en URL" : "Produktens bild URL 2"
+              errorInput.image2 ? 'Skriv in en URL' : 'Produktens bild URL 2'
             }
           />
           <TextField
@@ -273,7 +301,7 @@ export default function AdminPageForm(props?: Props) {
             error={Boolean(errorInput.image3)}
             defaultValue={props?.product?.image3}
             helperText={
-              errorInput.image3 ? "Skriv in en URL" : "Produktens bild URL 3"
+              errorInput.image3 ? 'Skriv in en URL' : 'Produktens bild URL 3'
             }
           />
           <TextField
@@ -287,8 +315,8 @@ export default function AdminPageForm(props?: Props) {
             error={Boolean(errorInput.longinfo)}
             helperText={
               errorInput.longinfo
-                ? "Produktinfo får inte vara tom"
-                : "Produktens långa info"
+                ? 'Produktinfo får inte vara tom'
+                : 'Produktens långa info'
             }
             defaultValue={props?.product?.longinfo}
           />
@@ -302,7 +330,7 @@ export default function AdminPageForm(props?: Props) {
             onChange={handleChange}
             error={Boolean(errorInput.info1)}
             helperText={
-              errorInput.info1 ? "Ange produktens info" : "Produktens info 1"
+              errorInput.info1 ? 'Ange produktens info' : 'Produktens info 1'
             }
             defaultValue={props?.product?.info1}
           />
@@ -318,8 +346,8 @@ export default function AdminPageForm(props?: Props) {
             onChange={handleChange}
             helperText={
               errorInput.info2
-                ? "Ange produktens info"
-                : "Produktens korta info 2"
+                ? 'Ange produktens info'
+                : 'Produktens korta info 2'
             }
           />
           <TextField
@@ -333,15 +361,15 @@ export default function AdminPageForm(props?: Props) {
             error={Boolean(errorInput.info3)}
             helperText={
               errorInput.info3
-                ? "Ange produktens info"
-                : "Produktens korta info 3"
+                ? 'Ange produktens info'
+                : 'Produktens korta info 3'
             }
             defaultValue={props?.product?.info3}
           />
           {value.specifications?.map((_, index) => (
             <div
               key={index}
-              style={{ display: "flex", justifyContent: "center" }}
+              style={{ display: 'flex', justifyContent: 'center' }}
             >
               <TextField
                 multiline
@@ -350,7 +378,7 @@ export default function AdminPageForm(props?: Props) {
                 label="Spec title"
                 name={`title`}
                 onChange={(e) => handleSpecChange(index, e)}
-                helperText={"Specifikationstitel " + (index + 1)}
+                helperText={'Specifikationstitel ' + (index + 1)}
                 defaultValue={props?.product?.specifications[index].title}
               />
               <TextField
@@ -361,12 +389,12 @@ export default function AdminPageForm(props?: Props) {
                 label="Spec info"
                 name={`value`}
                 onChange={(e) => handleSpecChange(index, e)}
-                helperText={"Ange specifikationsinfo " + (index + 1)}
+                helperText={'Ange specifikationsinfo ' + (index + 1)}
                 defaultValue={props?.product?.specifications[index].value}
               />
             </div>
           ))}
-          <div style={{ marginBottom: "1rem" }}>
+          <div style={{ marginBottom: '1rem' }}>
             <ToggleButtonGroup
               color="primary"
               value={alignment}
@@ -374,36 +402,36 @@ export default function AdminPageForm(props?: Props) {
               onChange={handleToggleButton}
             >
               <ToggleButton
-                onClick={sony}
-                style={{ marginLeft: "0.5rem" }}
+                onClick={() => toggleCategory('sony')}
+                style={{ marginLeft: '0.5rem' }}
                 value="sony"
               >
                 Sony
               </ToggleButton>
               <ToggleButton
-                onClick={panasonic}
-                style={{ marginLeft: "0.5rem" }}
+                onClick={() => toggleCategory('panasonic')}
+                style={{ marginLeft: '0.5rem' }}
                 value="panasonic"
               >
                 Panasonic
               </ToggleButton>
               <ToggleButton
-                onClick={fujifilm}
-                style={{ marginLeft: "0.5rem" }}
+                onClick={() => toggleCategory('fujifilm')}
+                style={{ marginLeft: '0.5rem' }}
                 value="fujifilm"
               >
                 Fujifilm
               </ToggleButton>
               <ToggleButton
-                onClick={canon}
-                style={{ marginLeft: "0.5rem" }}
+                onClick={() => toggleCategory('canon')}
+                style={{ marginLeft: '0.5rem' }}
                 value="canon"
               >
                 Canon
               </ToggleButton>
               <ToggleButton
-                onClick={leica}
-                style={{ marginLeft: "0.5rem" }}
+                onClick={() => toggleCategory('leica')}
+                style={{ marginLeft: '0.5rem' }}
                 value="leica"
               >
                 Leica
@@ -411,7 +439,7 @@ export default function AdminPageForm(props?: Props) {
             </ToggleButtonGroup>
           </div>
           <Button
-            style={{ marginBottom: "1rem" }}
+            style={{ marginBottom: '1rem' }}
             onClick={addSpecification}
             variant="outlined"
           >
@@ -426,7 +454,7 @@ export default function AdminPageForm(props?: Props) {
             size="medium"
             color="primary"
           >
-            Submit
+            Skapa produkt
           </Button>
           <Modal
             open={open}
@@ -436,7 +464,7 @@ export default function AdminPageForm(props?: Props) {
           >
             <Box sx={modalStyle}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                {props?.product ? "Produkt uppdaterad" : "Produkten tillagd"}
+                {props?.product ? 'Produkt uppdaterad' : 'Produkten tillagd'}
               </Typography>
             </Box>
           </Modal>

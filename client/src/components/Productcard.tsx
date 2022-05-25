@@ -1,18 +1,18 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useCart } from "../contexts/ShoppingCartContext";
-import { Product } from "../interfaces/interfaces";
-import { getAllProducts } from "../productService";
-import ProductAccordion from "./ProductAccordion";
-import "./css/Productcard.css";
-import { FilterContext } from "../contexts/FilterCategoriesContext";
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useCart } from '../contexts/ShoppingCartContext';
+import { Product } from '../interfaces/interfaces';
+import { getAllProducts } from '../productService';
+import ProductAccordion from './ProductAccordion';
+import './css/Productcard.css';
+import { FilterContext } from '../contexts/FilterCategoriesContext';
 
 export default function ImgMediaCard(): JSX.Element {
   const { filter } = FilterContext();
@@ -34,8 +34,8 @@ export default function ImgMediaCard(): JSX.Element {
       {products.map((item, index) => (
         <Card className="storeCardStyle" key={index}>
           <Link
-            style={{ textDecoration: "none" }}
-            to={item.title.replaceAll(" ", "-")}
+            style={{ textDecoration: 'none' }}
+            to={item.title.replaceAll(' ', '-')}
           >
             <CardActionArea>
               <div className="ImageContainer">
@@ -82,7 +82,7 @@ export default function ImgMediaCard(): JSX.Element {
                 Lägg i kundvagn
               </Button>
 
-              <Link to={item.title.replaceAll(" ", "-")}>
+              <Link to={item.title.replaceAll(' ', '-')}>
                 <Button variant="contained" color="primary" size="small">
                   Till produkten
                 </Button>
