@@ -50,7 +50,7 @@ export default function AdminPageForm(props?: Props) {
     image: props?.product?.image,
     image2: props?.product?.image2,
     image3: props?.product?.image3,
-    category: props?.product?.category ?? [],
+    category: props?.product?.category ?? ['all'],
     specifications: props?.product?.specifications ?? [],
   };
 
