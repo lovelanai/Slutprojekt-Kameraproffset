@@ -1,6 +1,6 @@
-import { createContext, FC, useContext, useState } from 'react';
-import { confirmationFetch } from '../components/ConfirmationFetch';
-import { ShoppingCartContext } from './ShoppingCartContext';
+import { createContext, FC, useContext, useState } from "react";
+import { confirmationFetch } from "../components/ConfirmationFetch";
+import { ShoppingCartContext } from "./ShoppingCartContext";
 
 export interface ContextValue {
   isLoading: boolean;
@@ -18,7 +18,7 @@ const ConfirmationProvider: FC = (props) => {
 
   const confirm = async () => {
     setIsLoading(true);
-    await confirmationFetch('api/confirm');
+    await confirmationFetch("api/confirm");
     emptyCart();
     setIsLoading(false);
   };

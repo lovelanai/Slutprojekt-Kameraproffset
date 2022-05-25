@@ -6,19 +6,18 @@ POST http://localhost:4000/api/product
 Content-Type: application/json
 
 {
-    "title": "String",
-    "longinfo": "String",
-    "info1": "String",
-    "info2": "String",
-    "info3": "String",
-    "price": 10,
+    "title": "Sony A7 III kamerahus",
+    "longinfo": "Sony A7 III är försedd med en nyutvecklad, bakbelyst Exmor R CMOS-sensor i fullformat och den har ärvt många funktioner och finesser från modellerna A7R III och A9 såsom bättre batteritid och joystick för att kontrollera autofokusen.",
+    "info1": "Avancerad AF med följande ögon",
+    "info2": "10 bilder per sekund",
+    "info3": "Dubbla minneskört",
+    "price": 19092929,
     "quantity": 27272,
-    "image": "string",
-    "image2": "string",
-    "image3": "string",
-    "spectitle": "string",
-    "spec": "string",
-    "specid": "string"
+    "image": "https://www.scandinavianphoto.se/globalassets/1038723.jpg?ref=9A7E5CB4A2&w=1920&h=1920&mode=max",
+    "image2": "https://www.scandinavianphoto.se/globalassets/1038723_1.jpg?ref=1145D98FC7&w=1920&h=1920&mode=max",
+    "image3": "https://www.scandinavianphoto.se/globalassets/1038723_2.jpg?ref=36400AFD1E&w=1920&h=1920&mode=max",
+    "category": ["canon", "all"]
+    
 
 }
 

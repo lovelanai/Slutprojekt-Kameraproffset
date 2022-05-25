@@ -3,7 +3,7 @@ import './css/Footer.css';
 function Footer() {
   return (
     <footer>
-      <h2>© William Saar | Erik Matsegård | Love Lanai | Max Andersson</h2>
+      <h2>© Olivia Isberg | Love Lanai | Anna Özmehak</h2>
     </footer>
   );
 }

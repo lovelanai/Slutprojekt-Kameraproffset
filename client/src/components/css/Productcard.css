@@ -4,7 +4,7 @@
   flex-wrap: wrap;
   flex-basis: max-content;
   background-color: white;
-  margin-top: 5rem;
+  margin-top: 10rem;
   min-height: calc(100vh - 8rem);
 }
 
@@ -18,11 +18,14 @@
 }
 
 .ImageContainer {
-  height: 20rem;
+  height: 15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .InfoContainer {
-  height: 12rem;
+  min-height: 12rem;
   color: black;
 }
 
