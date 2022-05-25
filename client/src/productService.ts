@@ -1,7 +1,10 @@
-import { Delivery, Product } from './interfaces/interfaces';
+import { Delivery, Payment, Product } from './interfaces/interfaces';
 
 const getAllProducts = async (): Promise<Product[]> =>
   await fetch('/api/products').then((response) => response.json());
+
+const getAllPaymentMethods = async (): Promise<Payment[]> =>
+  await fetch('/api/payment').then((response) => response.json());
 
 const addProduct = async (product: Product): Promise<Response> =>
   await fetch(`/api/product`, {
@@ -35,4 +38,5 @@ export {
   updateProduct,
   removeProduct,
   getAllShipmentMethods,
+  getAllPaymentMethods,
 };
