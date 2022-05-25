@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
 import {
   Delivery,
-  mockedPay,
+  Payment,
   PaySelection,
   PersonalData,
   ShipperSelection,
@@ -31,7 +31,7 @@ import FakturaPayment from './FakturaPayment';
 import { useConfirmation } from '../contexts/ConfirmationContext';
 import Shipping from './Shipping';
 import SwishPayment from './SwishPayment';
-import { getAllShipmentMethods } from '../productService';
+import { getAllPaymentMethods, getAllShipmentMethods } from '../productService';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -74,6 +74,7 @@ export default function CheckOutAccordion() {
   const { cartItems } = React.useContext(ShoppingCartContext);
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
   const [shipment, setShipment] = useState<Delivery[]>([]);
+  const [payment, setPayment] = useState<Payment[]>([]);
 
   const defaultShipperState: ShipperSelection[] = shipment.map((shipper) => ({
     shipper,
@@ -84,18 +85,25 @@ export default function CheckOutAccordion() {
     getAllShipmentMethods().then((s) => {
       setShipment(s);
     });
-  }, [setShipment]);
+
+    getAllPaymentMethods().then((p) => {
+      setPayment(p);
+    });
+  }, [setShipment, setPayment]);
 
   useEffect(() => {
     const shipmentOptions = shipment.map((shipper) => ({
       shipper,
       checked: false,
     }));
+    const paymentOptions = payment.map((paymethod) => ({
+      paymethod,
+      paychecked: false,
+    }));
 
     setCheckboxes(shipmentOptions);
-  }, [shipment]);
-
-  console.log(shipment);
+    setCheckboxesPay(paymentOptions);
+  }, [shipment, payment]);
 
   const totalCost = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -110,7 +118,7 @@ export default function CheckOutAccordion() {
       setExpanded(newExpanded ? panel : false);
     };
 
-  const defaultPaymentState: PaySelection[] = mockedPay.map((paymethod) => ({
+  const defaultPaymentState: PaySelection[] = payment.map((paymethod) => ({
     paymethod,
     paychecked: false,
   }));
@@ -193,7 +201,7 @@ export default function CheckOutAccordion() {
                         tempCheckbox.paychecked = false;
                       });
 
-                      const currentBoxIndex = mockedPay.findIndex(
+                      const currentBoxIndex = payment.findIndex(
                         (item) => item._id === CheckBox.paymethod._id
                       );
 

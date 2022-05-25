@@ -6,6 +6,7 @@ import { userRouter } from './user/user-router';
 import { productRouter } from './product/product-router';
 import cookiesession from 'cookie-session';
 import { shipmentRouter } from './shipment/shipment-router';
+import { paymentRouter } from './payment/payment-router';
 
 require('dotenv').config();
 
@@ -29,6 +30,7 @@ app.use(
 app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', shipmentRouter);
+app.use('/api', paymentRouter);
 
 //Connect to mongoose
 dotenv.config({ path: '/.env' });
