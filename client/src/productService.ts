@@ -1,4 +1,4 @@
-import { Product } from './interfaces/interfaces';
+import { Delivery, Product } from './interfaces/interfaces';
 
 const getAllProducts = async (): Promise<Product[]> =>
   await fetch('/api/products').then((response) => response.json());
@@ -26,4 +26,13 @@ const removeProduct = async (product: Product): Promise<Response> =>
     method: 'DELETE',
   });
 
-export { getAllProducts, addProduct, updateProduct, removeProduct };
+const getAllShipmentMethods = async (): Promise<Delivery[]> =>
+  await fetch('/api/shipment').then((response) => response.json());
+
+export {
+  getAllProducts,
+  addProduct,
+  updateProduct,
+  removeProduct,
+  getAllShipmentMethods,
+};
