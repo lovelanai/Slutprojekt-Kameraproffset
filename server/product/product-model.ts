@@ -1,4 +1,4 @@
-import mongoose, { Types } from 'mongoose';
+import mongoose, { Types } from "mongoose";
 
 export interface Specification {
   title: string;
@@ -6,8 +6,7 @@ export interface Specification {
 }
 
 export interface Category {
-  model: string;
-  color: string;
+  category: string[];
 }
 
 export interface Product {
@@ -36,11 +35,7 @@ const productSchema = new mongoose.Schema({
   image: { type: String },
   image2: { type: String },
   image3: { type: String },
-  category: [
-    {
-      brand: { type: [String] },
-    },
-  ],
+  category: { type: [String] },
   specifications: [
     {
       title: { type: String },
@@ -49,4 +44,4 @@ const productSchema = new mongoose.Schema({
   ],
 });
 
-export const ProductModel = mongoose.model<Product>('Product', productSchema);
+export const ProductModel = mongoose.model<Product>("Product", productSchema);

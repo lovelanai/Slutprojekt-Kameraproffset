@@ -1,6 +1,4 @@
-import { createContext, FC, useContext, useEffect, useState } from 'react';
-import { Product } from '../interfaces/interfaces';
-import { getAllProducts } from '../productService';
+import { createContext, FC, useContext, useState } from "react";
 
 export interface ContextValue {
   all: () => void;
@@ -8,6 +6,7 @@ export interface ContextValue {
   panasonic: () => void;
   canon: () => void;
   fujifilm: () => void;
+  leica: () => void;
   filter: string;
 }
 
@@ -17,35 +16,40 @@ export const FilterCategoryContext = createContext<ContextValue>({
   panasonic: () => {},
   canon: () => {},
   fujifilm: () => {},
-  filter: '',
+  leica: () => {},
+  filter: "",
 });
 
 const FilterCategoryProvider: FC = (props) => {
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState("all");
 
   const all = () => {
-    setFilter('all');
+    setFilter("all");
   };
 
   const sony = () => {
-    setFilter('sony');
+    setFilter("sony");
   };
 
   const panasonic = () => {
-    setFilter('panasonic');
+    setFilter("panasonic");
   };
 
   const canon = () => {
-    setFilter('canon');
+    setFilter("canon");
   };
 
   const fujifilm = () => {
-    setFilter('fujifilm');
+    setFilter("fujifilm");
+  };
+
+  const leica = () => {
+    setFilter("leica");
   };
 
   return (
     <FilterCategoryContext.Provider
-      value={{ filter, all, sony, fujifilm, canon, panasonic }}
+      value={{ filter, all, sony, fujifilm, canon, panasonic, leica }}
     >
       {props.children}
     </FilterCategoryContext.Provider>
