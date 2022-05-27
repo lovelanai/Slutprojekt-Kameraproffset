@@ -13,6 +13,7 @@ import { getAllProducts } from '../productService';
 import ProductAccordion from './ProductAccordion';
 import './css/Productcard.css';
 import { FilterContext } from '../contexts/FilterCategoriesContext';
+import {useLocalStorageState} from "./hooks/localstorage";
 
 export default function ImgMediaCard(): JSX.Element {
   const { filter } = FilterContext();
@@ -26,6 +27,7 @@ export default function ImgMediaCard(): JSX.Element {
 
     console.log(filter);
   }, [filter]);
+
 
   const { handleAddProduct } = useCart();
 

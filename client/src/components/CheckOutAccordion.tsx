@@ -28,7 +28,7 @@ import {
 import CardPayment from './CardPayment';
 import './css/CheckOutAccordion.css';
 import FakturaPayment from './FakturaPayment';
-import { useConfirmation } from '../contexts/ConfirmationContext';
+import { useConfirmation } from '../contexts/confirmationContext';
 import Shipping from './Shipping';
 import SwishPayment from './SwishPayment';
 import { getAllPaymentMethods, getAllShipmentMethods } from '../productService';
