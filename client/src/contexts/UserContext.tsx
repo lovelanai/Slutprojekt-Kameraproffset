@@ -1,5 +1,11 @@
-import { createContext, FC, useContext, useState } from 'react';
+import { createContext, FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+interface User {
+  email: string;
+  isAdmin: boolean;
+}
+
 export interface ContextValue {
   isLoggedIn: boolean;
   login: (email: string, password: string) => void;
@@ -7,6 +13,8 @@ export interface ContextValue {
   displaySignUpForm: () => void;
   hideSignUpForm: () => void;
   createUser: (email: string, password: string) => void;
+  logout: () => void;
+  user: User | undefined;
 }
 
 export const UserContext = createContext<ContextValue>({
@@ -16,16 +24,34 @@ export const UserContext = createContext<ContextValue>({
   displaySignUpForm: () => {},
   hideSignUpForm: () => {},
   createUser: () => {},
+  logout: () => {},
+  user: undefined,
 });
 
 const ConfirmationProvider: FC = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
+  const [user, setUser] = useState<User | undefined>();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('/api/user/current', {
+      credentials: 'include',
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          setUser(data);
+          setIsLoggedIn(true);
+        });
+      }
+    });
+  }, []);
+
   // login as existing user
   const login = async (email: string, password: string) => {
     let result = await fetch('/api/user/login', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -33,6 +59,7 @@ const ConfirmationProvider: FC = (props) => {
     });
 
     if (result.ok) {
+      setUser(await result.json());
       setIsLoggedIn(true);
       navigate('/');
     } else {
@@ -68,6 +95,24 @@ const ConfirmationProvider: FC = (props) => {
     setShowSignUpForm(false);
   };
 
+  const logout = async () => {
+    let result = await fetch('/api/user/logout', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (window.confirm('Vill du logga ut?')) {
+      if (result.ok) {
+        navigate('/');
+        alert('Du har loggat ut');
+        setIsLoggedIn(false);
+      }
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -77,6 +122,8 @@ const ConfirmationProvider: FC = (props) => {
         displaySignUpForm,
         hideSignUpForm,
         createUser,
+        logout,
+        user,
       }}
     >
       {props.children}

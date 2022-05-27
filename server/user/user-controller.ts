@@ -32,6 +32,14 @@ export const addUser = async (
       isAdmin: false,
     };
 
+    const doesUserExist = await UserModel.findOne({ email: req.body.email });
+
+    if (doesUserExist) {
+      res.status(400);
+      res.json({ message: 'Användare finns redan registrerad' });
+      return;
+    }
+
     const user = new UserModel(userData);
     await user.save();
     res.status(200).json(user);
@@ -67,8 +75,16 @@ export const loginUser = async (req: Request<{}, {}, User>, res: Response) => {
   if (req.session) {
     req.session.user = user;
     console.log(`inloggad som ${user?.email}`);
-    res.status(200).send();
+    res.status(200).json({
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
   }
+};
+
+export const logoutUser = async (req: Request, res: Response) => {
+  req.session = null;
+  res.status(200).json({ message: 'Du är nu utloggad' });
 };
 
 // update user by id
@@ -105,4 +121,15 @@ export const deleteUser = async (req: Request, res: Response) => {
   const user = await UserModel.findByIdAndDelete(req.params.id);
   console.log('delete user');
   res.status(200).json(user);
+};
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+  if (req.session?.user !== undefined) {
+    res.status(200).json({
+      email: req.session.user.email,
+      isAdmin: req.session.user.isAdmin,
+    });
+  } else {
+    res.status(204).send();
+  }
 };

@@ -29,7 +29,13 @@ export default function LoginForm() {
         autoComplete="on"
       >
         <div className="form-container">
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
             <h1 style={{ margin: '1rem 0' }}>Logga in</h1>
             <TextField
               style={{ margin: '1rem 0' }}
@@ -52,18 +58,21 @@ export default function LoginForm() {
               required
             />
           </div>
-        </div>
 
-        <Button
-          type="submit"
-          variant="contained"
-          size="medium"
-          sx={{ width: '100%' }}
-          onClick={LoginHandler}
+          <Button
+            type="submit"
+            variant="contained"
+            size="medium"
+            sx={{ width: '100%', background: '#333333', marginBottom: '1rem' }}
+            onClick={LoginHandler}
+          >
+            Logga in
+          </Button>
+        </div>
+        <button
+          onClick={SignUpHandler}
+          style={{ background: 'none', border: 'none' }}
         >
-          Logga in
-        </Button>
-        <button onClick={SignUpHandler}>
           <p>Har du inget konto? Registrera dig här.</p>
         </button>
       </Box>

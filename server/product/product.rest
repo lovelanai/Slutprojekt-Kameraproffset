@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:4000/api/product/62878f2ab155b83835486ad7
+PUT http://localhost:4000/api/product/628df127e2aeab5112c9422b
 Content-Type: application/json
 
 {
@@ -45,4 +45,4 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:4000/api/product/62878f2ab155b83835486ad7
+DELETE http://localhost:4000/api/product/628df127e2aeab5112c9422b

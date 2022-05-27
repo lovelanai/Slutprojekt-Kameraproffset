@@ -7,6 +7,7 @@ import { productRouter } from './product/product-router';
 import cookiesession from 'cookie-session';
 import { shipmentRouter } from './shipment/shipment-router';
 import { paymentRouter } from './payment/payment-router';
+import 'colorts/lib/string';
 
 require('dotenv').config();
 
@@ -38,11 +39,11 @@ mongoose
   .connect(`${process.env.DB_CONNECTION}`)
   .catch((error) => console.log(error));
 
-app.get('/', (req, res) => {
-  res.send('server');
-});
-
 //Server is running
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
+});
+
+app.get('/', (req, res) => {
+  res.send('server');
 });
