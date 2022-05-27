@@ -9,6 +9,7 @@ const getAllPaymentMethods = async (): Promise<Payment[]> =>
 const addProduct = async (product: Product): Promise<Response> =>
   await fetch(`/api/product`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -18,6 +19,7 @@ const addProduct = async (product: Product): Promise<Response> =>
 const updateProduct = async (product: Product): Promise<Response> =>
   await fetch(`/api/product/${product._id}`, {
     method: 'PUT',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -27,6 +29,7 @@ const updateProduct = async (product: Product): Promise<Response> =>
 const removeProduct = async (product: Product): Promise<Response> =>
   await fetch(`/api/product/${product._id}`, {
     method: 'DELETE',
+    credentials: 'include',
   });
 
 const getAllShipmentMethods = async (): Promise<Delivery[]> =>

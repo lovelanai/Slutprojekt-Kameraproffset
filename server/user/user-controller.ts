@@ -32,6 +32,14 @@ export const addUser = async (
       isAdmin: false,
     };
 
+    const doesUserExist = await UserModel.findOne({ email: req.body.email });
+
+    if (doesUserExist) {
+      res.status(400);
+      res.json({ message: 'Användare finns redan registrerad' });
+      return;
+    }
+
     const user = new UserModel(userData);
     await user.save();
     res.status(200).json(user);
@@ -105,4 +113,10 @@ export const deleteUser = async (req: Request, res: Response) => {
   const user = await UserModel.findByIdAndDelete(req.params.id);
   console.log('delete user');
   res.status(200).json(user);
+};
+
+export const isUserLoggedIn = async (req: Request, res: Response) => {
+  res.status(200).json({
+    loggedIn: req.session?.user !== undefined,
+  });
 };

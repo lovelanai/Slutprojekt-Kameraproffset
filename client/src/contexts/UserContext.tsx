@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from 'react';
+import { createContext, FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 export interface ContextValue {
   isLoggedIn: boolean;
@@ -22,10 +22,22 @@ const ConfirmationProvider: FC = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('/api/user/isloggedin', {
+      credentials: 'include',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsLoggedIn(data.loggedIn);
+      });
+  }, []);
+
   // login as existing user
   const login = async (email: string, password: string) => {
     let result = await fetch('/api/user/login', {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
