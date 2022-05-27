@@ -79,6 +79,11 @@ export const loginUser = async (req: Request<{}, {}, User>, res: Response) => {
   }
 };
 
+export const logoutUser = async (req: Request, res: Response) => {
+  req.session = null;
+  res.status(200).json({ message: 'Du är nu utloggad' });
+};
+
 // update user by id
 export const updateUser = async (
   req: Request<{ id: string }>,

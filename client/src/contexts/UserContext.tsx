@@ -7,6 +7,7 @@ export interface ContextValue {
   displaySignUpForm: () => void;
   hideSignUpForm: () => void;
   createUser: (email: string, password: string) => void;
+  logout: () => void;
 }
 
 export const UserContext = createContext<ContextValue>({
@@ -16,6 +17,7 @@ export const UserContext = createContext<ContextValue>({
   displaySignUpForm: () => {},
   hideSignUpForm: () => {},
   createUser: () => {},
+  logout: () => {},
 });
 
 const ConfirmationProvider: FC = (props) => {
@@ -80,6 +82,24 @@ const ConfirmationProvider: FC = (props) => {
     setShowSignUpForm(false);
   };
 
+  const logout = async () => {
+    let result = await fetch('/api/user/logout', {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (window.confirm('Vill du logga ut?')) {
+      if (result.ok) {
+        navigate('/');
+        alert('Du har loggat ut');
+        setIsLoggedIn(false);
+      }
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -89,6 +109,7 @@ const ConfirmationProvider: FC = (props) => {
         displaySignUpForm,
         hideSignUpForm,
         createUser,
+        logout,
       }}
     >
       {props.children}

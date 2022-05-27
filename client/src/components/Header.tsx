@@ -27,7 +27,12 @@ const theme = createTheme({
 
 function Header() {
   const { amountOfProducts } = useContext(ShoppingCartContext);
-  const { isLoggedIn } = useUser();
+  const { isLoggedIn, logout } = useUser();
+
+  const logoutHandler = (e: any) => {
+    e.preventDefault();
+    logout();
+  };
   return (
     <ThemeProvider theme={theme}>
       <header id="header" className="show-products">
@@ -43,6 +48,7 @@ function Header() {
             />
           </Link>
         )}
+        <button onClick={logoutHandler}>Logga ut</button>
 
         <img id={'logo'} src={require('../assets/img/logo.png')} alt="logo" />
 
@@ -53,6 +59,7 @@ function Header() {
             alt="logo"
           />
         </Link>
+
         <Link to="/ShoppingCartPage">
           <Badge
             className="icon"
