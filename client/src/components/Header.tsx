@@ -29,7 +29,7 @@ const theme = createTheme({
 
 function Header() {
   const { amountOfProducts } = useContext(ShoppingCartContext);
-  const { isLoggedIn, logout } = useUser();
+  const { isLoggedIn, logout, user } = useUser();
 
   const logoutHandler = (e: any) => {
     e.preventDefault();
@@ -39,21 +39,25 @@ function Header() {
     <ThemeProvider theme={theme}>
       <header id="header" className="show-products">
         {!isLoggedIn ? (
-          <Link to="/LoginPage">
-            <Button style={{ color: '#FEF9DC', marginLeft: '1rem' }} startIcon={<LoginIcon />}>
-              Logga in
-            </Button>
-          </Link>
+          <div>
+            <Link to="/LoginPage">
+              <Button className="loginButton" startIcon={<LoginIcon />}>
+                Logga in
+              </Button>
+            </Link>
+          </div>
         ) : (
           <div>
-            <Link to="/AdminPage">
-              <AdminPanelSettingsIcon
-                className="icon"
-                sx={{ paddingLeft: '1rem', fontSize: '2rem', opacity: '0' }}
-              />
-            </Link>
+            {user?.isAdmin ? (
+              <Link to="/AdminPage">
+                <AdminPanelSettingsIcon
+                  className="icon"
+                  sx={{ paddingLeft: '1rem', fontSize: '2rem', opacity: '0' }}
+                />
+              </Link>
+            ) : null}
             <Button
-              style={{ color: '#FEF9DC'}}
+              style={{ color: '#FEF9DC', marginLeft: '1rem' }}
               startIcon={<LogoutIcon />}
               onClick={logoutHandler}
             >

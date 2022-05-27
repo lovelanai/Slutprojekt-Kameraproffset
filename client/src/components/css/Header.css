@@ -53,6 +53,14 @@ header img {
   animation-delay: 1.8s;
 }
 
+.show-products .loginButton {
+  animation: showCart 1s ease-in-out forwards;
+  animation-delay: 1.8s;
+  color: #fef9dc;
+  margin-left: 1rem;
+  opacity: 0;
+}
+
 .show-products #smallLogo {
   animation: smalllogo 1s ease-in-out forwards;
   animation-delay: 1.8s;

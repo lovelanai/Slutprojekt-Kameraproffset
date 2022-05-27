@@ -75,7 +75,10 @@ export const loginUser = async (req: Request<{}, {}, User>, res: Response) => {
   if (req.session) {
     req.session.user = user;
     console.log(`inloggad som ${user?.email}`);
-    res.status(200).send();
+    res.status(200).json({
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
   }
 };
 
@@ -120,8 +123,13 @@ export const deleteUser = async (req: Request, res: Response) => {
   res.status(200).json(user);
 };
 
-export const isUserLoggedIn = async (req: Request, res: Response) => {
-  res.status(200).json({
-    loggedIn: req.session?.user !== undefined,
-  });
+export const getCurrentUser = async (req: Request, res: Response) => {
+  if (req.session?.user !== undefined) {
+    res.status(200).json({
+      email: req.session.user.email,
+      isAdmin: req.session.user.isAdmin,
+    });
+  } else {
+    res.status(204).send();
+  }
 };

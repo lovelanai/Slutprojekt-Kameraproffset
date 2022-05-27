@@ -1,5 +1,11 @@
 import { createContext, FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+interface User {
+  email: string;
+  isAdmin: boolean;
+}
+
 export interface ContextValue {
   isLoggedIn: boolean;
   login: (email: string, password: string) => void;
@@ -8,6 +14,7 @@ export interface ContextValue {
   hideSignUpForm: () => void;
   createUser: (email: string, password: string) => void;
   logout: () => void;
+  user: User | undefined;
 }
 
 export const UserContext = createContext<ContextValue>({
@@ -18,21 +25,26 @@ export const UserContext = createContext<ContextValue>({
   hideSignUpForm: () => {},
   createUser: () => {},
   logout: () => {},
+  user: undefined,
 });
 
 const ConfirmationProvider: FC = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSignUpForm, setShowSignUpForm] = useState(false);
+  const [user, setUser] = useState<User | undefined>();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/api/user/isloggedin', {
+    fetch('/api/user/current', {
       credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsLoggedIn(data.loggedIn);
-      });
+    }).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          setUser(data);
+          setIsLoggedIn(true);
+        });
+      }
+    });
   }, []);
 
   // login as existing user
@@ -47,6 +59,7 @@ const ConfirmationProvider: FC = (props) => {
     });
 
     if (result.ok) {
+      setUser(await result.json());
       setIsLoggedIn(true);
       navigate('/');
     } else {
@@ -110,6 +123,7 @@ const ConfirmationProvider: FC = (props) => {
         hideSignUpForm,
         createUser,
         logout,
+        user,
       }}
     >
       {props.children}

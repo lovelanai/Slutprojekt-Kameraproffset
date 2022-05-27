@@ -5,7 +5,7 @@ import {
   deleteUser,
   updateUser,
   getAllUsers,
-  isUserLoggedIn,
+  getCurrentUser,
   logoutUser,
   loginUser,
 } from './user-controller';
@@ -15,7 +15,7 @@ export const userRouter = express
   .get('/user', getAllUsers)
   .post('/user/login', loginUser)
   .get('/user/logout', logoutUser)
-  .get('/user/isloggedin', isUserLoggedIn)
+  .get('/user/current', getCurrentUser)
   .get('/user/:id', getUser)
   .post('/user/signup', addUser)
   .put('/user/:id', updateUser)
