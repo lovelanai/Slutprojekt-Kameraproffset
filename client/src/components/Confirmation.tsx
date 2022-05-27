@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useConfirmation } from '../contexts/confirmationContext';
+import { useConfirmation } from '../contexts/ConfirmationContext';
 import './css/ConfirmationPage.css';
 
 function Confirmation() {
