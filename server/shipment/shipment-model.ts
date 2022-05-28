@@ -8,7 +8,7 @@ export interface Shipment {
   image: string;
 }
 
-const shipmentSchema = new mongoose.Schema({
+export const shipmentSchema = new mongoose.Schema({
   title: { type: String },
   price: { type: Number },
   info: { type: String },

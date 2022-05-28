@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
-import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -14,11 +15,12 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from '@mui/material/AccordionSummary';
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import { styled } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
+import { useConfirmation } from '../contexts/ConfirmationContext';
 import {
+  CreateOrderBody,
   Delivery,
   Payment,
   PaySelection,
@@ -26,12 +28,11 @@ import {
   ShipperSelection,
 } from '../interfaces/interfaces';
 import CardPayment from './CardPayment';
-import './css/CheckOutAccordion.css';
 import FakturaPayment from './FakturaPayment';
-import { useConfirmation } from '../contexts/ConfirmationContext';
-import Shipping from './Shipping';
 import SwishPayment from './SwishPayment';
+import Shipping from './Shipping';
 import { getAllPaymentMethods, getAllShipmentMethods } from '../productService';
+import './css/CheckOutAccordion.css';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -75,11 +76,33 @@ export default function CheckOutAccordion() {
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
   const [shipment, setShipment] = useState<Delivery[]>([]);
   const [payment, setPayment] = useState<Payment[]>([]);
+  const [createOrderBody, setCreateOrderBody] = useState<CreateOrderBody>({
+    email: '',
+    phoneNumber: '',
+    products: cartItems.map((p) => {
+      return {
+        id: p._id!,
+        quantity: p.quantity,
+      };
+    }),
+    deliveryAddress: {
+      street: '',
+      zipcode: '',
+      firstname: '',
+      lastname: '',
+    },
+    payment: '',
+    shipment: '',
+  });
 
   const defaultShipperState: ShipperSelection[] = shipment.map((shipper) => ({
     shipper,
     checked: false,
   }));
+
+  useEffect(() => {
+    console.log(createOrderBody);
+  }, [createOrderBody]);
 
   useEffect(() => {
     getAllShipmentMethods().then((s) => {
@@ -128,7 +151,8 @@ export default function CheckOutAccordion() {
 
   const [personalInfo, setPersonalInfo] = useState<PersonalData>({
     email: '',
-    name: '',
+    firstName: '',
+    lastName: '',
     phone: '',
     postnr: '',
     street: '',
@@ -136,12 +160,38 @@ export default function CheckOutAccordion() {
 
   function sendPersonalData(personaldata: PersonalData) {
     setPersonalInfo(personaldata);
+    setCreateOrderBody({
+      ...createOrderBody,
+      email: personaldata.email,
+      phoneNumber: personaldata.phone,
+      deliveryAddress: {
+        street: personaldata.street,
+        zipcode: personaldata.postnr,
+        firstname: personaldata.firstName,
+        lastname: personaldata.lastName,
+      },
+    });
+  }
+
+  function setPaymentMethod() {
+    const paymentId = checkboxesPay.find((item) => item.paychecked === true)
+      ?.paymethod._id!;
+    setCreateOrderBody({ ...createOrderBody, payment: paymentId });
+    setExpanded('panel3');
+  }
+
+  function setShippingMethod() {
+    const shipmentId = checkboxes.find((item) => item.checked === true)?.shipper
+      ._id!;
+    setCreateOrderBody({ ...createOrderBody, shipment: shipmentId });
+    setExpanded('panel5');
   }
 
   const areAllFieldsFilled = () => {
     if (
       personalInfo.email?.length >= 5 &&
-      personalInfo.name?.length &&
+      personalInfo.firstName?.length &&
+      personalInfo.lastName?.length &&
       personalInfo.phone.toString().length >= 7 &&
       personalInfo.postnr?.toString().length === 5 &&
       personalInfo.street?.length
@@ -232,7 +282,7 @@ export default function CheckOutAccordion() {
                 ? false
                 : true
             }
-            onClick={() => setExpanded('panel3')}
+            onClick={setPaymentMethod}
           >
             Bekräfta
           </Button>
@@ -334,7 +384,7 @@ export default function CheckOutAccordion() {
             disabled={
               checkboxes.find((item) => item.checked === true) ? false : true
             }
-            onClick={() => setExpanded('panel5')}
+            onClick={setShippingMethod}
           >
             Bekräfta
           </Button>
@@ -355,7 +405,8 @@ export default function CheckOutAccordion() {
               <h3>Personuppgifter</h3>
               <p>Telefon: {personalInfo.phone}</p>
               <p>Email: {personalInfo.email}</p>
-              <p>Namn: {personalInfo.name}</p>
+              <p>Förnamn: {personalInfo.firstName}</p>
+              <p>Efternamn: {personalInfo.lastName}</p>
               <p>Postnr: {personalInfo.postnr}</p>
               <p>Adress: {personalInfo.street}</p>
               <div>
@@ -432,9 +483,9 @@ export default function CheckOutAccordion() {
             the button will not be disabled and the "Link-to" will work. */}
             {checkboxes.find((item) => item.checked === true) &&
             checkboxesPay.find((item) => item.paychecked === true) ? (
-              <Link to={`/Confirmation/${personalInfo.name}`}>
+              <Link to={`/Confirmation/${personalInfo.email}`}>
                 <Button
-                  onClick={confirm}
+                  onClick={() => confirm(createOrderBody)}
                   variant="contained"
                   sx={{ width: '100%' }}
                 >
@@ -444,7 +495,6 @@ export default function CheckOutAccordion() {
             ) : (
               <Button
                 disabled={true}
-                onClick={confirm}
                 variant="contained"
                 sx={{ width: '100%' }}
               >

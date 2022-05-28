@@ -1,4 +1,4 @@
-import mongoose, { Types } from "mongoose";
+import mongoose, { Types } from 'mongoose';
 
 export interface Specification {
   title: string;
@@ -24,7 +24,7 @@ export interface Product {
   specifications: Specification[];
 }
 
-const productSchema = new mongoose.Schema({
+export const productSchema = new mongoose.Schema({
   title: { type: String },
   longinfo: { type: String },
   info1: { type: String },
@@ -44,4 +44,4 @@ const productSchema = new mongoose.Schema({
   ],
 });
 
-export const ProductModel = mongoose.model<Product>("Product", productSchema);
+export const ProductModel = mongoose.model<Product>('Product', productSchema);

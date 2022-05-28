@@ -75,8 +75,30 @@ export interface PaySelection {
 
 export interface PersonalData {
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   phone: string;
   postnr: string;
   street: string;
+}
+
+export interface Address {
+  street: string;
+  zipcode: string;
+  firstname: string;
+  lastname: string;
+}
+
+export interface OrderProduct {
+  id: string;
+  quantity: number;
+}
+
+export interface CreateOrderBody {
+  email: string;
+  phoneNumber: string;
+  products: OrderProduct[];
+  deliveryAddress: Address;
+  payment: string;
+  shipment: string;
 }
