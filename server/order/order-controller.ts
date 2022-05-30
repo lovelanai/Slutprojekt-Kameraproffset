@@ -57,3 +57,8 @@ export const createOrder = async (
     next(err);
   }
 };
+
+export const getAllOrders = async (req: Request, res: Response) => {
+  const orders = await OrderModel.find({});
+  res.status(200).json(orders);
+};
