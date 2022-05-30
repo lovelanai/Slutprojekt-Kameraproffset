@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { Order, OrderModel } from '../order/order-model';
+import { Order, OrderModel } from './order-model';
 import { Product, ProductModel } from '../product/product-model';
 import { ShipmentModel } from '../shipment/shipment-model';
-import { User } from '../user/user-model';
+import { User, UserModel } from '../user/user-model';
 import CookieSessionInterfaces from 'cookie-session';
 import { PaymentModel } from '../payment/payment-model';
 
@@ -59,6 +59,6 @@ export const createOrder = async (
 };
 
 export const getAllOrders = async (req: Request, res: Response) => {
-  const orders = await OrderModel.find({});
+  const orders = await OrderModel.find({}).populate('user');
   res.status(200).json(orders);
 };

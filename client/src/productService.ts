@@ -1,10 +1,13 @@
-import { Delivery, Payment, Product } from './interfaces/interfaces';
+import { Delivery, Order, Payment, Product } from './interfaces/interfaces';
 
 const getAllProducts = async (): Promise<Product[]> =>
   await fetch('/api/products').then((response) => response.json());
 
 const getAllPaymentMethods = async (): Promise<Payment[]> =>
   await fetch('/api/payment').then((response) => response.json());
+
+const getAllOrders = async (): Promise<Order[]> =>
+  await fetch('/api/allorders').then((response) => response.json());
 
 const addProduct = async (product: Product): Promise<Response> =>
   await fetch(`/api/product`, {
@@ -42,4 +45,5 @@ export {
   removeProduct,
   getAllShipmentMethods,
   getAllPaymentMethods,
+  getAllOrders,
 };
