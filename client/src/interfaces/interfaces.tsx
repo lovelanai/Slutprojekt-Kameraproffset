@@ -118,6 +118,7 @@ export interface Shipment {
 }
 
 export interface Order {
+  _id: string;
   user: User;
   email: string;
   phoneNumber: string;
