@@ -8,7 +8,7 @@ export interface Payment {
   alt: string;
 }
 
-const paymentSchema = new mongoose.Schema({
+export const paymentSchema = new mongoose.Schema({
   title: { type: String },
   price: { type: Number },
   info: { type: String },

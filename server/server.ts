@@ -8,6 +8,7 @@ import cookiesession from 'cookie-session';
 import { shipmentRouter } from './shipment/shipment-router';
 import { paymentRouter } from './payment/payment-router';
 import 'colorts/lib/string';
+import { orderRouter } from './order/order-router';
 
 require('dotenv').config();
 
@@ -32,6 +33,7 @@ app.use('/api', userRouter);
 app.use('/api', productRouter);
 app.use('/api', shipmentRouter);
 app.use('/api', paymentRouter);
+app.use('/api', orderRouter);
 
 //Connect to mongoose
 dotenv.config({ path: '/.env' });

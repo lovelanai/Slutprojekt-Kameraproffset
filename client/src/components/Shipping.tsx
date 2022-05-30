@@ -10,14 +10,16 @@ interface Props {
 
 export default function Shipping(props: Props) {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [phonenumber, setPhonenumber] = useState('');
   const [zip, setZip] = useState('');
   const [adress, setAdress] = useState('');
 
   const initialErrors = {
     email: false,
-    name: false,
+    firstName: false,
+    lastName: false,
     phonenumber: false,
     zip: false,
     adress: false,
@@ -31,14 +33,15 @@ export default function Shipping(props: Props) {
   useEffect(() => {
     props.sendPersonalData({
       email: email,
-      name: name,
+      firstName: firstName,
+      lastName: lastName,
       phone: phonenumber,
       postnr: zip,
       street: adress,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [email, name, phonenumber, zip, adress]);
+  }, [email, firstName, lastName, phonenumber, zip, adress]);
 
   const handleChange = (
     evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -62,7 +65,7 @@ export default function Shipping(props: Props) {
       }
     }
 
-    if (evt.target.name === 'name') {
+    if (evt.target.name === 'firstName') {
       if (
         !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
           evt.target.value
@@ -73,7 +76,27 @@ export default function Shipping(props: Props) {
           [evt.target.name]: true,
         });
       } else {
-        setName(evt.target.value);
+        setFirstName(evt.target.value);
+
+        setErrorinput({
+          ...errorInput,
+          [evt.target.name]: false,
+        });
+      }
+    }
+
+    if (evt.target.name === 'lastName') {
+      if (
+        !/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(
+          evt.target.value
+        )
+      ) {
+        setErrorinput({
+          ...errorInput,
+          [evt.target.name]: true,
+        });
+      } else {
+        setLastName(evt.target.value);
 
         setErrorinput({
           ...errorInput,
@@ -158,29 +181,38 @@ export default function Shipping(props: Props) {
               onChange={handleChange}
             />
             <TextField
-              name="name"
-              label="Fullständigt namn"
+              name="firstName"
+              label="Förnamn"
               required
               helperText={
-                errorInput.name ? 'Ange giltigt namn' : 'För- och efternamn'
+                errorInput.firstName ? 'Ange giltigt förnamn' : 'Förnamn'
               }
-              error={Boolean(errorInput.name)}
+              error={Boolean(errorInput.firstName)}
               onChange={handleChange}
             />
-
             <TextField
-              name="phonenumber"
-              label="Telefonnummer"
+              name="lastName"
+              label="Efternamn"
               required
               helperText={
-                errorInput.phonenumber
-                  ? 'Ange giltigt telefonnummer'
-                  : 'Telefonnummer'
+                errorInput.lastName ? 'Ange giltigt efternamn' : 'Efternamn'
               }
-              error={Boolean(errorInput.phonenumber)}
+              error={Boolean(errorInput.lastName)}
               onChange={handleChange}
             />
           </div>
+          <TextField
+            name="phonenumber"
+            label="Telefonnummer"
+            required
+            helperText={
+              errorInput.phonenumber
+                ? 'Ange giltigt telefonnummer'
+                : 'Telefonnummer'
+            }
+            error={Boolean(errorInput.phonenumber)}
+            onChange={handleChange}
+          />
           <TextField
             className="box-1-input"
             name="zip"
