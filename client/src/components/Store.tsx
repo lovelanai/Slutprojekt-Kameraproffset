@@ -1,6 +1,6 @@
 import ImgMediaCard from "./Productcard";
 import FilterBar from "./FilterBar";
-import SubFilterBar from "./SubFilterBar";
+
 import { FilterContext } from "../contexts/FilterCategoriesContext";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Button } from "@mui/material";
@@ -11,7 +11,6 @@ function Store() {
       {displayFilter ? (
         <div>
           <div className="filter-bar">
-            {/* <SubFilterBar /> */}
             <FilterBar />
           </div>
           <ImgMediaCard />;

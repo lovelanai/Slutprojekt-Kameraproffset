@@ -14,6 +14,7 @@ export interface ContextValue {
   showFilter: () => void;
   hideFilter: () => void;
   filter: string;
+  subfilter: string;
   displayFilter: boolean;
 }
 
@@ -31,11 +32,13 @@ export const FilterCategoryContext = createContext<ContextValue>({
   showFilter: () => {},
   hideFilter: () => {},
   filter: "",
+  subfilter: "",
   displayFilter: false,
 });
 
 const FilterCategoryProvider: FC = (props) => {
   const [filter, setFilter] = useState("all");
+  const [subfilter, setSubFilter] = useState("all");
   const [displayFilter, setDisplayFilter] = useState(false);
 
   const all = () => {
@@ -63,19 +66,20 @@ const FilterCategoryProvider: FC = (props) => {
   };
 
   const systemkamera = () => {
-    setFilter("systemkamera");
+    setSubFilter("systemkamera");
   };
 
   const kompaktkamera = () => {
-    setFilter("kompaktkamera");
+    setSubFilter("kompaktkamera");
   };
 
   const mellanformatskamera = () => {
-    setFilter("mellanformatskamera");
+    setSubFilter("mellanformatskamera");
   };
 
   const resetfilter = () => {
     setFilter("all");
+    setSubFilter("all");
   };
 
   const showFilter = () => {
@@ -91,6 +95,7 @@ const FilterCategoryProvider: FC = (props) => {
     <FilterCategoryContext.Provider
       value={{
         filter,
+        subfilter,
         all,
         sony,
         fujifilm,
