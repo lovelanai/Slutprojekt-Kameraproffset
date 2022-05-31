@@ -69,17 +69,19 @@ function AdminProductPage() {
               <h2>Title: {item.title}</h2>
               <p style={{ paddingLeft: '1rem' }}>ID: {item._id}</p>
               <div className="admin-image-container">
-                <img className="admin-image" src={item.image} alt="" />
-                <img className="admin-image" src={item.image2} alt="" />
-                <img className="admin-image" src={item.image3} alt="" />
+                {item.images.map((image, index) => (
+                  <img key={index} className="admin-image" src={image} alt="" />
+                ))}
               </div>
               <div className="admin-info-container">
                 <p>Price: {item.price}</p>
                 <p>Long info: {item.longinfo}</p>
                 <ul>
-                  <li>Short info 1: {item.info1}</li>
-                  <li>Short info 2: {item.info2}</li>
-                  <li>Short info 3: {item.info3}</li>
+                  {item.info.map((info, index) => (
+                    <li>
+                      Short info {index + 1}: {info}
+                    </li>
+                  ))}
                 </ul>
 
                 <ul>

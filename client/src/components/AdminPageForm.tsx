@@ -1,3 +1,5 @@
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import {
   Box,
@@ -9,13 +11,16 @@ import {
   ButtonGroup,
   ToggleButtonGroup,
   ToggleButton,
-    FormControl,
-    Input
+  FormControl,
+  Input,
+  Paper,
+  Stack,
 } from '@mui/material';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { FilterContext } from '../contexts/FilterCategoriesContext';
 import { Product } from '../interfaces/interfaces';
+import { createMedia, replaceMedia } from '../services/mediaService';
 import { addProduct, updateProduct } from '../services/productService';
 
 interface Props {
@@ -38,6 +43,18 @@ const theme = createTheme({
   },
 });
 
+class ImageDataWithInfo {
+  file: File | undefined;
+  value: string = '';
+  info: string = '';
+
+  constructor(value: string, info: string, file?: File) {
+    this.file = file;
+    this.value = value;
+    this.info = info;
+  }
+}
+
 export default function AdminPageForm(props: Props) {
   const navigate = useNavigate();
 
@@ -45,29 +62,41 @@ export default function AdminPageForm(props: Props) {
     _id: props?.product?._id || '',
     title: props?.product?.title || '',
     longinfo: props?.product?.longinfo || '',
-    info1: props?.product?.info1 || '',
-    info2: props?.product?.info2 || '',
-    info3: props?.product?.info3 || '',
+    info: props?.product?.info || [],
     price: props?.product?.price || '',
     quantity: props?.product?.quantity || 0,
-    image: props?.product?.image || '',
-    image2: props?.product?.image2 || '',
-    image3: props?.product?.image3 || '',
-    category: props?.product?.category ?? ['all'],
-    specifications: props?.product?.specifications ?? [],
+    images: props?.product?.images || [],
+    category: props?.product?.category || ['all'],
+    specifications: props?.product?.specifications || [],
+  };
+
+  const imagesWithInfoInitialState = initialValues.images.map(
+    (image, index) => new ImageDataWithInfo(image, initialValues.info[index])
+  );
+
+  if (imagesWithInfoInitialState.length === 0) {
+    imagesWithInfoInitialState.push(new ImageDataWithInfo('', ''));
+  }
+
+  const [imagesWithInfo, setImagesWithInfo] = useState<ImageDataWithInfo[]>(
+    imagesWithInfoInitialState
+  );
+
+  const addImageWithInfo = () => {
+    setImagesWithInfo([...imagesWithInfo, new ImageDataWithInfo('', '')]);
+  };
+
+  const removeImageWithInfo = (index: number) => {
+    const newImagesWithInfo = [...imagesWithInfo];
+    newImagesWithInfo.splice(index, 1);
+    setImagesWithInfo(newImagesWithInfo);
   };
 
   const initialErrors = {
     title: false,
     longinfo: false,
-    info1: false,
-    info2: false,
-    info3: false,
     quantity: false,
     price: false,
-    image: false,
-    image2: false,
-    image3: false,
   };
 
   const modalStyle = {
@@ -86,7 +115,10 @@ export default function AdminPageForm(props: Props) {
   const [errorInput, setErrorInput] = useState(initialErrors);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/admin/products');
+  };
 
   useEffect(() => {
     setValue(initialValues);
@@ -104,14 +136,6 @@ export default function AdminPageForm(props: Props) {
         ...value,
         category: [...value.category!, category],
       });
-    }
-  };
-
-  const handleAddProduct = async (product: Product): Promise<Response> => {
-    if (props?.product) {
-      return await updateProduct(product);
-    } else {
-      return await addProduct(product);
     }
   };
 
@@ -176,24 +200,54 @@ export default function AdminPageForm(props: Props) {
     });
   };
 
-  const sendToAddProduct = () => {
+  const handleAddProduct = async (): Promise<any> => {
+    let imageUploadPromises = imagesWithInfo
+      .map((image, index) => {
+        if (image.file === undefined) {
+          return null;
+        }
+
+        const formData = new FormData();
+        formData.append('media', image.file!);
+
+        if (props?.product?.images[index]) {
+          return replaceMedia(props.product.images[index], formData);
+        } else {
+          return createMedia(formData);
+        }
+      })
+      .filter((image) => image !== null);
+
+    const images = imagesWithInfo
+      .filter((image) => image.file === undefined)
+      .map((image) => image.value)
+      .concat(
+        (await Promise.all(imageUploadPromises)).map(
+          (image) => `/api/media/${image._id}`
+        )
+      );
+
     const product: Product = {
       _id: props?.product?._id ?? undefined,
       title: value.title!,
       longinfo: value.longinfo!,
-      info1: value.info1!,
-      info2: value.info2!,
-      info3: value.info3!,
+      info: imagesWithInfo.map((image) => image.info),
       price: Number(value.price),
       quantity: Number(value.quantity),
-      image: value.image!,
-      image2: value.image2!,
-      image3: value.image3!,
+      images,
       category: value.category!,
       specifications: value.specifications!,
     };
 
-    handleAddProduct(product)
+    if (props?.product) {
+      return await updateProduct(product);
+    } else {
+      return await addProduct(product);
+    }
+  };
+
+  const sendToAddProduct = () => {
+    handleAddProduct()
       .then((response) => addedProductMessage())
       .catch((error) => console.log(error));
   };
@@ -203,12 +257,12 @@ export default function AdminPageForm(props: Props) {
       value.title?.length &&
       value.price?.toString().length &&
       value.longinfo?.length &&
-      value.image?.length &&
-      value.image2?.length &&
-      value.image3?.length &&
-      value.info1?.length &&
-      value.info2?.length &&
-      value.info3?.length &&
+      // value.image?.length &&
+      // value.image2?.length &&
+      // value.image3?.length &&
+      // value.info1?.length &&
+      // value.info2?.length &&
+      // value.info3?.length &&
       value.quantity?.toString().length
     ) {
       return false;
@@ -224,20 +278,24 @@ export default function AdminPageForm(props: Props) {
     setAlignment(newAlignment);
   };
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault()
+  const handleImageChange = (
+    imageIndex: number,
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const newImagesWithInfo = [...imagesWithInfo];
+      newImagesWithInfo[imageIndex].file = event.target.files[0];
+      setImagesWithInfo(newImagesWithInfo);
+    }
+  };
 
-    console.log('tjena')
-    let data = new FormData();
-    data.append("image", event.target.files)
-    fetch('/api/media', {
-      method: 'POST',
-      body: data,
-
-    })
-    console.log(data)
-  }
-
+  const handleInfoChange = (
+    index: number,
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    imagesWithInfo[index].info = event.target.value;
+    setImagesWithInfo(imagesWithInfo);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -286,49 +344,73 @@ export default function AdminPageForm(props: Props) {
               }
             />
           </div>
-          <Input onSubmit={handleSubmit} error={Boolean(errorInput.image)} name='image' type="file" inputProps={{accept: "image/png, image/jpeg"}}/>
-          {/*<TextField*/}
-          {/*  required*/}
-          {/*  multiline*/}
-          {/*  maxRows={6}*/}
-          {/*  id="outlined-Image1"*/}
-          {/*  onChange={handleChange}*/}
-          {/*  label="Image1"*/}
-          {/*  name="image"*/}
-          {/*  error={Boolean(errorInput.image)}*/}
-          {/*  value={value.image}*/}
-          {/*  helperText={*/}
-          {/*    errorInput.image ? 'Skriv in en URL' : 'Produktens bild URL 1'*/}
-          {/*  }*/}
-          {/*/>*/}
-          {/*<TextField*/}
-          {/*  required*/}
-          {/*  multiline*/}
-          {/*  maxRows={6}*/}
-          {/*  id="outlined-Image2"*/}
-          {/*  value={value.image2}*/}
-          {/*  onChange={handleChange}*/}
-          {/*  error={Boolean(errorInput.image2)}*/}
-          {/*  label="Image2"*/}
-          {/*  name="image2"*/}
-          {/*  helperText={*/}
-          {/*    errorInput.image2 ? 'Skriv in en URL' : 'Produktens bild URL 2'*/}
-          {/*  }*/}
-          {/*/>*/}
-          {/*<TextField*/}
-          {/*  required*/}
-          {/*  multiline*/}
-          {/*  maxRows={6}*/}
-          {/*  id="outlined-Image3"*/}
-          {/*  label="Image3"*/}
-          {/*  name="image3"*/}
-          {/*  onChange={handleChange}*/}
-          {/*  error={Boolean(errorInput.image3)}*/}
-          {/*  value={value.image3}*/}
-          {/*  helperText={*/}
-          {/*    errorInput.image3 ? 'Skriv in en URL' : 'Produktens bild URL 3'*/}
-          {/*  }*/}
-          {/*/>*/}
+          {imagesWithInfo.map((image, index) => (
+            <Paper
+              variant="outlined"
+              sx={{ padding: '1rem', marginBottom: '1rem' }}
+            >
+              <Stack direction="row">
+                <Box>
+                  <img
+                    src={
+                      image.file
+                        ? URL.createObjectURL(image.file)
+                        : image.value || undefined
+                    }
+                    alt=""
+                    width="110"
+                    style={{ marginRight: '1rem' }}
+                  />
+                </Box>
+                <Box sx={{ minWidth: '70%', maxWidth: '1000px' }}>
+                  <Input
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleImageChange(index, e)
+                    }
+                    name="image"
+                    type="file"
+                    inputProps={{ accept: 'image/png, image/jpeg' }}
+                  />
+                  <TextField
+                    required
+                    multiline
+                    maxRows={6}
+                    id="outlined-Info1"
+                    label="Info1"
+                    name="info1"
+                    onChange={(
+                      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                    ) => handleInfoChange(index, e)}
+                    defaultValue={image.info}
+                    /* error={Boolean(errorInput.info1)}
+                helperText={
+                  errorInput.info1
+                    ? 'Ange produktens info'
+                    : 'Produktens info 1'
+                }
+                value={value.info1}
+                */
+                  />
+                </Box>
+                <Stack
+                  flexGrow="1"
+                  justifyContent="center"
+                  alignItems="flex-end"
+                >
+                  <Button onClick={addImageWithInfo}>
+                    <AddCircleOutlineRoundedIcon
+                      sx={{ height: '2em', width: '2em' }}
+                    />
+                  </Button>
+                  <Button onClick={() => removeImageWithInfo(index)}>
+                    <RemoveCircleOutlineRoundedIcon
+                      sx={{ height: '2em', width: '2em' }}
+                    />
+                  </Button>
+                </Stack>
+              </Stack>
+            </Paper>
+          ))}
           <TextField
             required
             multiline
@@ -344,52 +426,6 @@ export default function AdminPageForm(props: Props) {
                 : 'Produktens långa info'
             }
             value={value.longinfo}
-          />
-          <TextField
-            required
-            multiline
-            maxRows={6}
-            id="outlined-Info1"
-            label="Info1"
-            name="info1"
-            onChange={handleChange}
-            error={Boolean(errorInput.info1)}
-            helperText={
-              errorInput.info1 ? 'Ange produktens info' : 'Produktens info 1'
-            }
-            value={value.info1}
-          />
-          <TextField
-            required
-            multiline
-            maxRows={6}
-            id="outlined-Info2"
-            label="Info2"
-            name="info2"
-            error={Boolean(errorInput.info2)}
-            value={value.info2}
-            onChange={handleChange}
-            helperText={
-              errorInput.info2
-                ? 'Ange produktens info'
-                : 'Produktens korta info 2'
-            }
-          />
-          <TextField
-            required
-            multiline
-            maxRows={6}
-            id="outlined-Info3"
-            label="Info3"
-            name="info3"
-            onChange={handleChange}
-            error={Boolean(errorInput.info3)}
-            helperText={
-              errorInput.info3
-                ? 'Ange produktens info'
-                : 'Produktens korta info 3'
-            }
-            value={value.info3}
           />
           <TextField
             required
@@ -435,7 +471,6 @@ export default function AdminPageForm(props: Props) {
               />
             </div>
           ))}
-
           <p>Varumärke</p>
           <div style={{ marginBottom: '1rem' }}>
             <ToggleButtonGroup
@@ -491,29 +526,27 @@ export default function AdminPageForm(props: Props) {
             Lägg till specifikation
           </Button>
         </div>
-        <Link to="/admin/products">
-          <Button
-            onClick={sendToAddProduct}
-            variant="contained"
-            disabled={Boolean(areAllFieldsFilled())}
-            size="medium"
-            color="primary"
-          >
-            Skapa produkt
-          </Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={modalStyle}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                {props?.product ? 'Produkt uppdaterad' : 'Produkten tillagd'}
-              </Typography>
-            </Box>
-          </Modal>
-        </Link>
+        <Button
+          onClick={sendToAddProduct}
+          variant="contained"
+          disabled={Boolean(areAllFieldsFilled())}
+          size="medium"
+          color="primary"
+        >
+          Skapa produkt
+        </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={modalStyle}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              {props?.product ? 'Produkt uppdaterad' : 'Produkten tillagd'}
+            </Typography>
+          </Box>
+        </Modal>
       </Box>
     </ThemeProvider>
   );

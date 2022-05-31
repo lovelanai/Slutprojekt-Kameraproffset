@@ -36,23 +36,11 @@ interface Props {
 
 function ProductInfoImageSlider(props: Props) {
   const { product } = props;
-  const images = [
-    {
-      label: product.info1,
-      id: 1,
-      imgPath: product.image,
-    },
-    {
-      label: product.info2,
-      id: 2,
-      imgPath: product.image2,
-    },
-    {
-      label: product.info3,
-      id: 3,
-      imgPath: product.image3,
-    },
-  ];
+  const images = product.images.map((image, index) => {
+    return { label: product.info[index], imgPath: image };
+  });
+
+  console.log(images);
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -81,8 +69,8 @@ function ProductInfoImageSlider(props: Props) {
             enableMouseEvents
           >
             {images.map((step, index) => (
-              <div key={step.id}>
-                {Math.abs(activeStep - index) <= 2 ? (
+              <div key={index}>
+                {Math.abs(activeStep - index) < maxSteps ? (
                   <Box
                     className="img"
                     component="img"

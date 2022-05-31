@@ -35,7 +35,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               component="img"
               alt={product.title}
               height="auto"
-              image={product.image}
+              image={product.images[0]}
               title={product.title}
             />
           </div>
@@ -50,8 +50,9 @@ export default function ProductCard({ product }: ProductCardProps) {
                 component="ul"
                 className="item-short-info"
               >
-                <li>{product.info1}</li>
-                <li>{product.info2}</li> <li>{product.info3}</li>
+                {product.info.map((info, index) => (
+                  <li key={index}>{info}</li>
+                ))}
               </Typography>
             </div>
             <div className="price">

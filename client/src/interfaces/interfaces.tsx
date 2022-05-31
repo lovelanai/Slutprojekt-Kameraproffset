@@ -2,14 +2,10 @@ export interface Product {
   _id: string | undefined;
   title: string;
   longinfo: string;
-  info1: string;
-  info2: string;
-  info3: string;
+  info: string[];
   price: number;
   quantity: number;
-  image: string;
-  image2: string;
-  image3: string;
+  images: string[];
   category: string[];
   specifications: Spec[];
 }
@@ -48,7 +44,6 @@ export interface PaySelection {
   paymethod: Payment;
   paychecked: boolean;
 }
-
 
 export interface PersonalData {
   email: string;
