@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Order } from '../interfaces/interfaces';
-import { getAllOrders } from '../productService';
+import { getAllOrders } from '../services/productService';
 import OrderAccoridion from './OrderAccordion';
 
 function AdminOrderPage() {

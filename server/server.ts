@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Response, Request } from 'express';
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 import { env } from 'process';
@@ -48,4 +48,12 @@ app.listen(PORT, () => {
 
 app.get('/', (req, res) => {
   res.send('server');
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  const statusCode =
+    res.statusCode < 400 || res.statusCode > 599 ? 500 : res.statusCode;
+
+  console.error(err.stack);
+  res.status(statusCode).json({ error: err.message });
 });
