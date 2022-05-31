@@ -1,4 +1,4 @@
-import { ThemeProvider } from '@emotion/react';
+import { ThemeProvider } from "@emotion/react";
 import {
   Box,
   Button,
@@ -23,15 +23,15 @@ interface Props {
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#333333',
-      contrastText: '#FBF7F5', //button text white instead of black
+      main: "#333333",
+      contrastText: "#FBF7F5", //button text white instead of black
     },
     background: {
-      default: '#333333',
+      default: "#333333",
     },
 
     secondary: {
-      main: '#DA344D',
+      main: "#DA344D",
     },
   },
 });
@@ -69,12 +69,12 @@ export default function AdminPageForm(props: Props) {
   };
 
   const modalStyle = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: 'background.paper',
+    bgcolor: "background.paper",
     // border: "2px solid #000",
     boxShadow: 24,
     p: 4,
@@ -90,6 +90,7 @@ export default function AdminPageForm(props: Props) {
     setValue(initialValues);
   }, [props.product]);
 
+  // brand-category
   const toggleCategory = (category: string) => {
     if (category in value.category!) {
       setValue({
@@ -100,6 +101,20 @@ export default function AdminPageForm(props: Props) {
       setValue({
         ...value,
         category: [...value.category!, category],
+      });
+    }
+  };
+  // type-category
+  const toggleSubCategory = (subcategory: string) => {
+    if (subcategory in value.subcategory!) {
+      setValue({
+        ...value,
+        subcategory: value.subcategory!.filter((c) => c !== subcategory),
+      });
+    } else {
+      setValue({
+        ...value,
+        subcategory: [...value.subcategory!, subcategory],
       });
     }
   };
@@ -120,8 +135,8 @@ export default function AdminPageForm(props: Props) {
   const addSpecification = () => {
     const specifications = value.specifications ?? [];
     specifications.push({
-      title: '',
-      value: '',
+      title: "",
+      value: "",
     });
 
     setValue({ ...value, specifications });
@@ -154,7 +169,7 @@ export default function AdminPageForm(props: Props) {
     /**This if-statement checks if the name of the target is price, if true, then it checks
      * if it includes anything else than numbers.
      */
-    if (evt.target.name === 'price') {
+    if (evt.target.name === "price") {
       if (!/^\d*$/.test(evt.target.value)) {
         setErrorInput({
           ...errorInput,
@@ -188,6 +203,7 @@ export default function AdminPageForm(props: Props) {
       image2: value.image2!,
       image3: value.image3!,
       category: value.category!,
+      subcategory: value.subcategory!,
       specifications: value.specifications!,
     };
 
@@ -213,7 +229,7 @@ export default function AdminPageForm(props: Props) {
     } else return true;
   };
 
-  const [alignment, setAlignment] = useState('web');
+  const [alignment, setAlignment] = useState("web");
 
   const handleToggleButton = (
     event: React.MouseEvent<HTMLElement>,
@@ -227,10 +243,10 @@ export default function AdminPageForm(props: Props) {
       <Box
         component="form"
         sx={{
-          '& .MuiTextField-root': {
+          "& .MuiTextField-root": {
             marginTop: 2,
             marginBottom: 2,
-            width: '100%',
+            width: "100%",
           },
         }}
         noValidate
@@ -249,11 +265,11 @@ export default function AdminPageForm(props: Props) {
             value={value.title}
             helperText={
               errorInput.title
-                ? 'Titeln måste vara minst ett tecken'
-                : 'Produktens titel'
+                ? "Titeln måste vara minst ett tecken"
+                : "Produktens titel"
             }
           />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <TextField
               required
               id="outlined-number"
@@ -264,8 +280,8 @@ export default function AdminPageForm(props: Props) {
               value={value.price}
               helperText={
                 errorInput.price
-                  ? 'Produktens pris får endast innehålla siffror'
-                  : 'Produktens pris'
+                  ? "Produktens pris får endast innehålla siffror"
+                  : "Produktens pris"
               }
             />
           </div>
@@ -280,7 +296,7 @@ export default function AdminPageForm(props: Props) {
             error={Boolean(errorInput.image)}
             value={value.image}
             helperText={
-              errorInput.image ? 'Skriv in en URL' : 'Produktens bild URL 1'
+              errorInput.image ? "Skriv in en URL" : "Produktens bild URL 1"
             }
           />
           <TextField
@@ -294,7 +310,7 @@ export default function AdminPageForm(props: Props) {
             label="Image2"
             name="image2"
             helperText={
-              errorInput.image2 ? 'Skriv in en URL' : 'Produktens bild URL 2'
+              errorInput.image2 ? "Skriv in en URL" : "Produktens bild URL 2"
             }
           />
           <TextField
@@ -308,7 +324,7 @@ export default function AdminPageForm(props: Props) {
             error={Boolean(errorInput.image3)}
             value={value.image3}
             helperText={
-              errorInput.image3 ? 'Skriv in en URL' : 'Produktens bild URL 3'
+              errorInput.image3 ? "Skriv in en URL" : "Produktens bild URL 3"
             }
           />
           <TextField
@@ -322,8 +338,8 @@ export default function AdminPageForm(props: Props) {
             error={Boolean(errorInput.longinfo)}
             helperText={
               errorInput.longinfo
-                ? 'Produktinfo får inte vara tom'
-                : 'Produktens långa info'
+                ? "Produktinfo får inte vara tom"
+                : "Produktens långa info"
             }
             value={value.longinfo}
           />
@@ -337,7 +353,7 @@ export default function AdminPageForm(props: Props) {
             onChange={handleChange}
             error={Boolean(errorInput.info1)}
             helperText={
-              errorInput.info1 ? 'Ange produktens info' : 'Produktens info 1'
+              errorInput.info1 ? "Ange produktens info" : "Produktens info 1"
             }
             value={value.info1}
           />
@@ -353,8 +369,8 @@ export default function AdminPageForm(props: Props) {
             onChange={handleChange}
             helperText={
               errorInput.info2
-                ? 'Ange produktens info'
-                : 'Produktens korta info 2'
+                ? "Ange produktens info"
+                : "Produktens korta info 2"
             }
           />
           <TextField
@@ -368,8 +384,8 @@ export default function AdminPageForm(props: Props) {
             error={Boolean(errorInput.info3)}
             helperText={
               errorInput.info3
-                ? 'Ange produktens info'
-                : 'Produktens korta info 3'
+                ? "Ange produktens info"
+                : "Produktens korta info 3"
             }
             value={value.info3}
           />
@@ -392,7 +408,7 @@ export default function AdminPageForm(props: Props) {
           {value.specifications?.map((_, index) => (
             <div
               key={index}
-              style={{ display: 'flex', justifyContent: 'center' }}
+              style={{ display: "flex", justifyContent: "center" }}
             >
               <TextField
                 multiline
@@ -401,7 +417,7 @@ export default function AdminPageForm(props: Props) {
                 label="Spec title"
                 name={`title`}
                 onChange={(e) => handleSpecChange(index, e)}
-                helperText={'Specifikationstitel ' + (index + 1)}
+                helperText={"Specifikationstitel " + (index + 1)}
                 value={value.specifications[index].title}
               />
               <TextField
@@ -412,12 +428,14 @@ export default function AdminPageForm(props: Props) {
                 label="Spec info"
                 name={`value`}
                 onChange={(e) => handleSpecChange(index, e)}
-                helperText={'Ange specifikationsinfo ' + (index + 1)}
+                helperText={"Ange specifikationsinfo " + (index + 1)}
                 value={value.specifications[index].value}
               />
             </div>
           ))}
-          <div style={{ marginBottom: '1rem' }}>
+
+          <p>Varumärke</p>
+          <div style={{ marginBottom: "1rem" }}>
             <ToggleButtonGroup
               color="primary"
               value={alignment}
@@ -425,44 +443,76 @@ export default function AdminPageForm(props: Props) {
               onChange={handleToggleButton}
             >
               <ToggleButton
-                onClick={() => toggleCategory('sony')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("sony")}
+                style={{ marginLeft: "0.5rem" }}
                 value="sony"
               >
                 Sony
               </ToggleButton>
               <ToggleButton
-                onClick={() => toggleCategory('panasonic')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("panasonic")}
+                style={{ marginLeft: "0.5rem" }}
                 value="panasonic"
               >
                 Panasonic
               </ToggleButton>
               <ToggleButton
-                onClick={() => toggleCategory('fujifilm')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("fujifilm")}
+                style={{ marginLeft: "0.5rem" }}
                 value="fujifilm"
               >
                 Fujifilm
               </ToggleButton>
               <ToggleButton
-                onClick={() => toggleCategory('canon')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("canon")}
+                style={{ marginLeft: "0.5rem" }}
                 value="canon"
               >
                 Canon
               </ToggleButton>
               <ToggleButton
-                onClick={() => toggleCategory('leica')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("leica")}
+                style={{ marginLeft: "0.5rem" }}
                 value="leica"
               >
                 Leica
               </ToggleButton>
             </ToggleButtonGroup>
           </div>
+          <p>Kamera typ</p>
+          <div style={{ marginBottom: "1rem" }}>
+            <ToggleButtonGroup
+              color="primary"
+              value={alignment}
+              exclusive
+              onChange={handleToggleButton}
+            >
+              <ToggleButton
+                onClick={() => toggleSubCategory("systemkamera")}
+                style={{ marginLeft: "0.5rem" }}
+                value="systemkamera"
+              >
+                Systemkamera
+              </ToggleButton>
+              <ToggleButton
+                onClick={() => toggleSubCategory("kompaktkamera")}
+                style={{ marginLeft: "0.5rem" }}
+                value="kompaktkamera"
+              >
+                Kompaktkamera
+              </ToggleButton>
+              <ToggleButton
+                onClick={() => toggleSubCategory("mellanformatskamera")}
+                style={{ marginLeft: "0.5rem" }}
+                value="mellanformatskamera"
+              >
+                Mellanformatskamera
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+
           <Button
-            style={{ marginBottom: '1rem' }}
+            style={{ marginBottom: "1rem" }}
             onClick={addSpecification}
             variant="outlined"
           >
@@ -487,7 +537,7 @@ export default function AdminPageForm(props: Props) {
           >
             <Box sx={modalStyle}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                {props?.product ? 'Produkt uppdaterad' : 'Produkten tillagd'}
+                {props?.product ? "Produkt uppdaterad" : "Produkten tillagd"}
               </Typography>
             </Box>
           </Modal>

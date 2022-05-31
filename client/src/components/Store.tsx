@@ -6,8 +6,13 @@ import { Product } from '../interfaces/interfaces';
 import { getAllProducts } from '../services/productService';
 import './css/Store.css';
 
+import { FilterContext } from "../contexts/FilterCategoriesContext";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Button } from "@mui/material";
 function Store() {
-  const { filter } = FilterContext();
+
+  const { showFilter, displayFilter } = FilterContext();
+          const { filter } = FilterContext();
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -18,26 +23,33 @@ function Store() {
 
     console.log(filter);
   }, [filter]);
-
+  
   return (
     <div>
-      <div
-        style={{
-          marginTop: '-4rem',
-          background: '#f9f9f9',
-          position: 'fixed',
-          width: '100%',
-          zIndex: '3',
-          marginBottom: '1rem',
-        }}
-      >
-        <FilterBar />
-      </div>
-      <div className="ProductContainer">
+      {displayFilter ? (
+        <div>
+          <div className="filter-bar">
+            <FilterBar />
+          </div>
+          <ImgMediaCard />;
+        </div>
+      ) : (
+        <div style={{ position: "relative" }}>
+          <Button
+            onClick={showFilter}
+            style={{ position: "fixed", left: "0", top: "6rem", zIndex: "10" }}
+          >
+            <MenuIcon />
+            Filter
+          </Button>
+           <div className="ProductContainer">
         {products.map((product, index) => (
           <ProductCard product={product} key={index} />
         ))}
       </div>
+        </div>
+      )}
+
     </div>
   );
 }
