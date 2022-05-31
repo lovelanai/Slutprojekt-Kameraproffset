@@ -1,17 +1,18 @@
-import express from "express";
-import mongoose from "mongoose";
-import * as dotenv from "dotenv";
-import { env } from "process";
-import { userRouter } from "./user/user-router";
-import { productRouter } from "./product/product-router";
-import cookiesession from "cookie-session";
-import { shipmentRouter } from "./shipment/shipment-router";
-import { paymentRouter } from "./payment/payment-router";
-import "colorts/lib/string";
-import { orderRouter } from "./order/order-router";
+
+import express, { NextFunction, Response, Request } from 'express';
+import mongoose from 'mongoose';
+import * as dotenv from 'dotenv';
+import { env } from 'process';
+import { userRouter } from './user/user-router';
+import { productRouter } from './product/product-router';
+import cookiesession from 'cookie-session';
+import { shipmentRouter } from './shipment/shipment-router';
+import { paymentRouter } from './payment/payment-router';
+import 'colorts/lib/string';
+import { orderRouter } from './order/order-router';
 import "colorts";
 
-require("dotenv").config();
+require('dotenv').config();
 
 const PORT = 4000;
 const app = express();
@@ -50,4 +51,12 @@ app.listen(PORT, () => {
 
 app.get("/", (req, res) => {
   res.send("server");
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  const statusCode =
+    res.statusCode < 400 || res.statusCode > 599 ? 500 : res.statusCode;
+
+  console.error(err.stack);
+  res.status(statusCode).json({ error: err.message });
 });

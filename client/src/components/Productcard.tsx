@@ -1,97 +1,92 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useCart } from "../contexts/ShoppingCartContext";
-import { Product } from "../interfaces/interfaces";
-import { getAllProducts } from "../productService";
-import ProductAccordion from "./ProductAccordion";
-import "./css/Productcard.css";
-import { FilterContext } from "../contexts/FilterCategoriesContext";
-import { useLocalStorageState } from "./hooks/localstorage";
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useCart } from '../contexts/ShoppingCartContext';
+import { Product } from '../interfaces/interfaces';
+import ProductAccordion from './ProductAccordion';
+import './css/Productcard.css';
+import { FilterContext } from '../contexts/FilterCategoriesContext';
+import { Box } from '@mui/material';
 
-export default function ImgMediaCard(): JSX.Element {
-  const { filter, subfilter } = FilterContext();
-  const [products, setProducts] = useState<Product[]>([]);
+interface ProductCardProps {
+  product: Product;
+}
 
-  useEffect(() => {
-    getAllProducts().then((p) => {
-      const results = p.filter((product) => product.category.includes(filter));
-      setProducts(results);
-    });
-
-    console.log(filter);
-  }, [filter]);
-
-  const { handleAddProduct } = useCart();
+export default function ProductCard({ product }: ProductCardProps) {
+  const { cartItems, handleAddProduct } = useCart();
+  const numberOfProductInCart =
+    cartItems.find((p) => p._id === product._id)?.quantity || 0;
 
   return (
-    <div className="ProductContainer">
-      {products.map((item, index) => (
-        <Card className="storeCardStyle" key={index}>
-          <Link
-            style={{ textDecoration: "none" }}
-            to={item.title.replaceAll(" ", "-")}
-          >
-            <CardActionArea>
-              <div className="ImageContainer">
-                <CardMedia
-                  component="img"
-                  alt={item.title}
-                  height="auto"
-                  image={item.image}
-                  title={item.title}
-                />
-              </div>
-              <CardContent>
-                <div className="InfoContainer">
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {item.title}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="ul"
-                    className="item-short-info"
-                  >
-                    <li>{item.info1}</li>
-                    <li>{item.info2}</li> <li>{item.info3}</li>
-                  </Typography>
-                </div>
-                <div className="price">
-                  <Typography variant="body2" component="p">
-                    {item.price} SEK
-                  </Typography>
-                </div>
-              </CardContent>
-            </CardActionArea>
-          </Link>
-          <ProductAccordion info={item.longinfo} />
-          <CardActions>
-            <div className="buttons">
-              <Button
-                onClick={() => handleAddProduct(item)}
-                variant="contained"
-                color="secondary"
-                size="small"
+    <Card className="storeCardStyle">
+      <Link
+        style={{ textDecoration: 'none' }}
+        to={product.title.replaceAll(' ', '-')}
+      >
+        <CardActionArea>
+          <div className="ImageContainer">
+            <CardMedia
+              component="img"
+              alt={product.title}
+              height="auto"
+              image={product.image}
+              title={product.title}
+            />
+          </div>
+          <CardContent>
+            <div className="InfoContainer">
+              <Typography gutterBottom variant="h5" component="h2">
+                {product.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="ul"
+                className="item-short-info"
               >
-                Lägg i kundvagn
-              </Button>
-
-              <Link to={item.title.replaceAll(" ", "-")}>
-                <Button variant="contained" color="primary" size="small">
-                  Till produkten
-                </Button>
-              </Link>
+                <li>{product.info1}</li>
+                <li>{product.info2}</li> <li>{product.info3}</li>
+              </Typography>
             </div>
-          </CardActions>
-        </Card>
-      ))}
-    </div>
+            <div className="price">
+              <Typography variant="body2" component="p">
+                {product.price} SEK
+              </Typography>
+            </div>
+          </CardContent>
+        </CardActionArea>
+      </Link>
+      <ProductAccordion info={product.longinfo} />
+      <Box sx={{ padding: '1rem' }}>
+        <Typography variant="body2" component="p">
+          {product.quantity} i lager
+        </Typography>
+      </Box>
+      <CardActions>
+        <div className="buttons">
+          <Button
+            disabled={numberOfProductInCart >= product.quantity}
+            onClick={() => handleAddProduct(product)}
+            variant="contained"
+            color="secondary"
+            size="small"
+          >
+            Lägg i kundvagn
+          </Button>
+
+          <Link to={product.title.replaceAll(' ', '-')}>
+            <Button variant="contained" color="primary" size="small">
+              Till produkten
+            </Button>
+          </Link>
+        </div>
+      </CardActions>
+    </Card>
   );
 }

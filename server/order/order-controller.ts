@@ -24,6 +24,15 @@ export const createOrder = async (
         throw new Error('Ogiltigt produkt-id');
       }
 
+      if (productDoc.quantity < p.quantity) {
+        res.status(400);
+        throw new Error(
+          'Det går inte att beställa fler av en produkt än vad som finns i lager'
+        );
+      }
+
+      productDoc.quantity -= p.quantity;
+      await productDoc.save();
       productDoc.quantity = p.quantity;
 
       return productDoc;

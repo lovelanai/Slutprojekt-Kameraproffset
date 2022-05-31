@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -18,7 +18,7 @@ import MuiAccordionSummary, {
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import { styled } from '@mui/material/styles';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
-import { useConfirmation } from '../contexts/ConfirmationContext';
+import { useConfirmation } from '../contexts/ConfirmContext';
 import {
   CreateOrderBody,
   Delivery,
@@ -31,8 +31,13 @@ import CardPayment from './CardPayment';
 import FakturaPayment from './FakturaPayment';
 import SwishPayment from './SwishPayment';
 import Shipping from './Shipping';
-import { getAllPaymentMethods, getAllShipmentMethods } from '../productService';
+import {
+  getAllPaymentMethods,
+  getAllShipmentMethods,
+} from '../services/productService';
 import './css/CheckOutAccordion.css';
+import { createOrder } from '../services/orderService';
+import { useError } from '../contexts/ErrorContext';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -71,8 +76,10 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function CheckOutAccordion() {
+  const navigate = useNavigate();
   const { confirm } = useConfirmation();
   const { cartItems } = React.useContext(ShoppingCartContext);
+  const error = useError();
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
   const [shipment, setShipment] = useState<Delivery[]>([]);
   const [payment, setPayment] = useState<Payment[]>([]);
@@ -198,6 +205,24 @@ export default function CheckOutAccordion() {
     ) {
       return false;
     } else return true;
+  };
+
+  const submitOrder = () => {
+    createOrder(createOrderBody)
+      .then((response) => {
+        if (response.ok) {
+          confirm(createOrderBody);
+          navigate(`/confirmation/${personalInfo.email}`);
+        } else {
+          return response.json();
+        }
+      })
+      .then((err) => {
+        error?.setErrorTitle('Kunde inte skapa beställning');
+        error?.setErrorMessage(err.error);
+        error?.handleOpen();
+      })
+      .catch((error) => console.log('dasdas'));
   };
 
   return (
@@ -483,15 +508,13 @@ export default function CheckOutAccordion() {
             the button will not be disabled and the "Link-to" will work. */}
             {checkboxes.find((item) => item.checked === true) &&
             checkboxesPay.find((item) => item.paychecked === true) ? (
-              <Link to={`/confirmation/${personalInfo.email}`}>
-                <Button
-                  onClick={() => confirm(createOrderBody)}
-                  variant="contained"
-                  sx={{ width: '100%' }}
-                >
-                  Slutför köp
-                </Button>
-              </Link>
+              <Button
+                onClick={submitOrder}
+                variant="contained"
+                sx={{ width: '100%' }}
+              >
+                Slutför köp
+              </Button>
             ) : (
               <Button
                 disabled={true}
