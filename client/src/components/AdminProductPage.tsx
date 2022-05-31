@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Product } from '../interfaces/interfaces';
 import AdminPageForm from './AdminPageForm';
-import { getAllProducts, removeProduct } from '../productService';
+import { getAllProducts, removeProduct } from '../services/productService';
 import { useNavigate } from 'react-router-dom';
 
 function AdminProductPage() {

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Product } from '../interfaces/interfaces';
-import { getAllProducts } from '../productService';
+import { getAllProducts } from '../services/productService';
 import AdminPage from './AdminPage';
 import AdminProductPage from './AdminProductPage';
 import AdminOrderPage from './AdminOrderPage';

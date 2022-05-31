@@ -1,4 +1,4 @@
-import { Delivery, Order, Payment, Product } from './interfaces/interfaces';
+import { Delivery, Order, Payment, Product } from '../interfaces/interfaces';
 
 const getAllProducts = async (): Promise<Product[]> =>
   await fetch('/api/products').then((response) => response.json());

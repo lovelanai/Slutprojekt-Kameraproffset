@@ -14,7 +14,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FilterContext } from '../contexts/FilterCategoriesContext';
 import { Product } from '../interfaces/interfaces';
-import { addProduct, updateProduct } from '../productService';
+import { addProduct, updateProduct } from '../services/productService';
 
 interface Props {
   product?: Product;
@@ -104,11 +104,11 @@ export default function AdminPageForm(props: Props) {
     }
   };
 
-  const handleAddProduct = (product: Product) => {
+  const handleAddProduct = async (product: Product): Promise<Response> => {
     if (props?.product) {
-      updateProduct(product);
+      return await updateProduct(product);
     } else {
-      addProduct(product);
+      return await addProduct(product);
     }
   };
 
@@ -191,8 +191,9 @@ export default function AdminPageForm(props: Props) {
       specifications: value.specifications!,
     };
 
-    handleAddProduct(product);
-    addedProductMessage();
+    handleAddProduct(product)
+      .then((response) => addedProductMessage())
+      .catch((error) => console.log(error));
   };
 
   const areAllFieldsFilled = () => {
