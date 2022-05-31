@@ -3,6 +3,9 @@ import { Delivery, Order, Payment, Product } from './interfaces/interfaces';
 const getAllProducts = async (): Promise<Product[]> =>
   await fetch('/api/products').then((response) => response.json());
 
+const getProduct = async (id: string): Promise<Product> =>
+  await fetch(`/api/product/${id}`).then((response) => response.json());
+
 const getAllPaymentMethods = async (): Promise<Payment[]> =>
   await fetch('/api/payment').then((response) => response.json());
 
@@ -40,6 +43,7 @@ const getAllShipmentMethods = async (): Promise<Delivery[]> =>
 
 export {
   getAllProducts,
+  getProduct,
   addProduct,
   updateProduct,
   removeProduct,

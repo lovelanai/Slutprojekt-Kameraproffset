@@ -10,8 +10,8 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FilterContext } from '../contexts/FilterCategoriesContext';
 import { Product } from '../interfaces/interfaces';
 import { addProduct, updateProduct } from '../productService';
@@ -36,20 +36,21 @@ const theme = createTheme({
   },
 });
 
-export default function AdminPageForm(props?: Props) {
-  const { all, sony, panasonic, canon, fujifilm, leica } = FilterContext();
+export default function AdminPageForm(props: Props) {
+  const navigate = useNavigate();
+
   const initialValues = {
-    _id: props?.product?._id,
-    title: props?.product?.title,
-    longinfo: props?.product?.longinfo,
-    info1: props?.product?.info1,
-    info2: props?.product?.info2,
-    info3: props?.product?.info3,
-    price: props?.product?.price,
-    quantity: props?.product?.quantity,
-    image: props?.product?.image,
-    image2: props?.product?.image2,
-    image3: props?.product?.image3,
+    _id: props?.product?._id || '',
+    title: props?.product?.title || '',
+    longinfo: props?.product?.longinfo || '',
+    info1: props?.product?.info1 || '',
+    info2: props?.product?.info2 || '',
+    info3: props?.product?.info3 || '',
+    price: props?.product?.price || '',
+    quantity: props?.product?.quantity || '',
+    image: props?.product?.image || '',
+    image2: props?.product?.image2 || '',
+    image3: props?.product?.image3 || '',
     category: props?.product?.category ?? ['all'],
     specifications: props?.product?.specifications ?? [],
   };
@@ -83,6 +84,10 @@ export default function AdminPageForm(props?: Props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    setValue(initialValues);
+  }, [props.product]);
 
   const toggleCategory = (category: string) => {
     if (category in value.category!) {
@@ -238,7 +243,7 @@ export default function AdminPageForm(props?: Props) {
             name="title"
             error={Boolean(errorInput.title)}
             onChange={handleChange}
-            defaultValue={props?.product?.title}
+            value={value.title}
             helperText={
               errorInput.title
                 ? 'Titeln måste vara minst ett tecken'
@@ -253,8 +258,7 @@ export default function AdminPageForm(props?: Props) {
               name="price"
               onChange={handleChange}
               error={Boolean(errorInput.price)}
-              defaultValue={props?.product?.price}
-              // value={value.price ? value.price : props.product?.price}
+              value={value.price}
               helperText={
                 errorInput.price
                   ? 'Produktens pris får endast innehålla siffror'
@@ -271,7 +275,7 @@ export default function AdminPageForm(props?: Props) {
             label="Image1"
             name="image"
             error={Boolean(errorInput.image)}
-            defaultValue={props?.product?.image}
+            value={value.image}
             helperText={
               errorInput.image ? 'Skriv in en URL' : 'Produktens bild URL 1'
             }
@@ -281,7 +285,7 @@ export default function AdminPageForm(props?: Props) {
             multiline
             maxRows={6}
             id="outlined-Image2"
-            defaultValue={props?.product?.image2}
+            value={value.image2}
             onChange={handleChange}
             error={Boolean(errorInput.image2)}
             label="Image2"
@@ -299,7 +303,7 @@ export default function AdminPageForm(props?: Props) {
             name="image3"
             onChange={handleChange}
             error={Boolean(errorInput.image3)}
-            defaultValue={props?.product?.image3}
+            value={value.image3}
             helperText={
               errorInput.image3 ? 'Skriv in en URL' : 'Produktens bild URL 3'
             }
@@ -318,7 +322,7 @@ export default function AdminPageForm(props?: Props) {
                 ? 'Produktinfo får inte vara tom'
                 : 'Produktens långa info'
             }
-            defaultValue={props?.product?.longinfo}
+            value={value.longinfo}
           />
           <TextField
             required
@@ -332,7 +336,7 @@ export default function AdminPageForm(props?: Props) {
             helperText={
               errorInput.info1 ? 'Ange produktens info' : 'Produktens info 1'
             }
-            defaultValue={props?.product?.info1}
+            value={value.info1}
           />
           <TextField
             required
@@ -342,7 +346,7 @@ export default function AdminPageForm(props?: Props) {
             label="Info2"
             name="info2"
             error={Boolean(errorInput.info2)}
-            defaultValue={props?.product?.info2}
+            value={value.info2}
             onChange={handleChange}
             helperText={
               errorInput.info2
@@ -364,7 +368,7 @@ export default function AdminPageForm(props?: Props) {
                 ? 'Ange produktens info'
                 : 'Produktens korta info 3'
             }
-            defaultValue={props?.product?.info3}
+            value={value.info3}
           />
           {value.specifications?.map((_, index) => (
             <div
@@ -379,7 +383,7 @@ export default function AdminPageForm(props?: Props) {
                 name={`title`}
                 onChange={(e) => handleSpecChange(index, e)}
                 helperText={'Specifikationstitel ' + (index + 1)}
-                defaultValue={props?.product?.specifications[index].title}
+                value={value.specifications[index].title}
               />
               <TextField
                 sx={{ marginLeft: 3 }}
@@ -390,7 +394,7 @@ export default function AdminPageForm(props?: Props) {
                 name={`value`}
                 onChange={(e) => handleSpecChange(index, e)}
                 helperText={'Ange specifikationsinfo ' + (index + 1)}
-                defaultValue={props?.product?.specifications[index].value}
+                value={value.specifications[index].value}
               />
             </div>
           ))}
@@ -446,7 +450,7 @@ export default function AdminPageForm(props?: Props) {
             Lägg till specifikation
           </Button>
         </div>
-        <Link to="/AdminPage">
+        <Link to="/admin/products">
           <Button
             onClick={sendToAddProduct}
             variant="contained"

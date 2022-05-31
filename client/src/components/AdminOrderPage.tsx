@@ -1,4 +1,3 @@
-import { Accordion, AccordionSummary, Typography, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Order } from '../interfaces/interfaces';
 import { getAllOrders } from '../productService';

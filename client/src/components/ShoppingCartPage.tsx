@@ -57,7 +57,7 @@ function ShoppingCartPage() {
                   <span>{totalCost}:-</span>
                   <div className="confirm-button">
                     {cartItems.length > 0 ? (
-                      <Link to="/checkOut">
+                      <Link to="/checkout">
                         <Button
                           disabled={false}
                           variant="contained"

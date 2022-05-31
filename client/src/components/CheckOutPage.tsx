@@ -8,13 +8,13 @@ function CheckOut() {
   const { isLoggedIn } = useUser();
   return (
     <div className="checkout-container">
-      <Link to="/ShoppingCartPage">
+      <Link to="/cart">
         <ArrowBackIcon sx={{ fontSize: '2.2rem' }} className="back-arrow" />
       </Link>
       {!isLoggedIn ? (
         <div>
           <div> du måste vara inloggad för att checka ut</div>
-          <Link to="/LoginPage">Logga in/Skapa användare</Link>
+          <Link to="/login">Logga in/Skapa användare</Link>
         </div>
       ) : (
         <CheckOutAccordion></CheckOutAccordion>
