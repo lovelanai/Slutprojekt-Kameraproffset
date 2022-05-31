@@ -7,7 +7,7 @@ export interface ContextValue {
   confirm: (createOrderBody: CreateOrderBody) => void;
 }
 
-export const ConfirmationContext = createContext<ContextValue>({
+export const ConfirmContext = createContext<ContextValue>({
   isLoading: false,
   confirm: (createOrderBody: CreateOrderBody) => {},
 });
@@ -33,12 +33,12 @@ const ConfirmationProvider: FC = (props) => {
   };
 
   return (
-    <ConfirmationContext.Provider value={{ isLoading, confirm }}>
+    <ConfirmContext.Provider value={{ isLoading, confirm }}>
       {props.children}
-    </ConfirmationContext.Provider>
+    </ConfirmContext.Provider>
   );
 };
 
 export default ConfirmationProvider;
 
-export const useConfirmation = () => useContext(ConfirmationContext);
+export const useConfirmation = () => useContext(ConfirmContext);

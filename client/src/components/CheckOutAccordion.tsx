@@ -18,7 +18,7 @@ import MuiAccordionSummary, {
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import { styled } from '@mui/material/styles';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
-import { useConfirmation } from '../contexts/ConfirmationContext';
+import { useConfirmation } from '../contexts/ConfirmContext';
 import {
   CreateOrderBody,
   Delivery,
