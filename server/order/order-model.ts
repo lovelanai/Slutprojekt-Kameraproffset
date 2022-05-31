@@ -7,7 +7,8 @@ import { User } from '../user/user-model';
 export interface Address {
   street: string;
   zipcode: string;
-  fullname: string;
+  firstname: string;
+  lastname: string;
 }
 
 const addressSchema = new mongoose.Schema({
@@ -42,4 +43,4 @@ const orderSchema = new mongoose.Schema({
   orderDate: { type: Date, default: Date.now },
 });
 
-export const OrderModel = mongoose.model<Order>('order', orderSchema);
+export const OrderModel = mongoose.model<Order>('Order', orderSchema);

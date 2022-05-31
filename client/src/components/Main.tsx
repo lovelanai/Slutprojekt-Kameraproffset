@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import { Product } from '../interfaces/interfaces';
 import { getAllProducts } from '../productService';
 import AdminPage from './AdminPage';
+import AdminProductPage from './AdminProductPage';
+import AdminOrderPage from './AdminOrderPage';
 import CheckOut from './CheckOutPage';
 import ProductInfo from './Productinfo';
 import ShoppingCartPage from './ShoppingCartPage';
@@ -11,6 +13,7 @@ import SignUpForm from './SignUpForm';
 import LoginPage from './LoginPage';
 import Confirmation from './Confirmation';
 import { useUser } from '../contexts/UserContext';
+import AdminEditProductPage from './AdminEditProductPage';
 
 function Main() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -25,13 +28,22 @@ function Main() {
       <Routes>
         <Route path="/" element={<Store />} />
         {user?.isAdmin ? (
-          <Route path="/AdminPage" element={<AdminPage />} />
+          <Route path="/admin" element={<AdminPage />}>
+            <Route index element={<AdminProductPage />}></Route>
+            <Route path="product" element={<AdminEditProductPage />}></Route>
+            <Route
+              path="product/:id"
+              element={<AdminEditProductPage />}
+            ></Route>
+            <Route path="products" element={<AdminProductPage />}></Route>
+            <Route path="orders" element={<AdminOrderPage />}></Route>
+          </Route>
         ) : null}
-        <Route path="/ShoppingCartPage" element={<ShoppingCartPage />} />
-        <Route path="/Register" element={<SignUpForm />} />
-        <Route path="/LoginPage" element={<LoginPage />} />
-        <Route path="/CheckOut" element={<CheckOut />} />
-        <Route path="/Confirmation/:customerName" element={<Confirmation />} />
+        <Route path="/cart" element={<ShoppingCartPage />} />
+        <Route path="/register" element={<SignUpForm />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/confirmation/:customerName" element={<Confirmation />} />
 
         {products.map((item, index) => (
           <Route

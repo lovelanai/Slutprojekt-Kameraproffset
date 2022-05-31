@@ -16,6 +16,6 @@ export const shipmentSchema = new mongoose.Schema({
 });
 
 export const ShipmentModel = mongoose.model<Shipment>(
-  'shipment',
+  'Shipment',
   shipmentSchema
 );

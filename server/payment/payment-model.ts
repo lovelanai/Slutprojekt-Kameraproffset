@@ -15,4 +15,4 @@ export const paymentSchema = new mongoose.Schema({
   alt: { type: String },
 });
 
-export const PaymentModel = mongoose.model<Payment>('payment', paymentSchema);
+export const PaymentModel = mongoose.model<Payment>('Payment', paymentSchema);

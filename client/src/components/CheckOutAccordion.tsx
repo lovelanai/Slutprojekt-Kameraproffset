@@ -483,7 +483,7 @@ export default function CheckOutAccordion() {
             the button will not be disabled and the "Link-to" will work. */}
             {checkboxes.find((item) => item.checked === true) &&
             checkboxesPay.find((item) => item.paychecked === true) ? (
-              <Link to={`/Confirmation/${personalInfo.email}`}>
+              <Link to={`/confirmation/${personalInfo.email}`}>
                 <Button
                   onClick={() => confirm(createOrderBody)}
                   variant="contained"

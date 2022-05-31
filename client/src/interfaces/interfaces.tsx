@@ -102,3 +102,29 @@ export interface CreateOrderBody {
   payment: string;
   shipment: string;
 }
+
+export interface User {
+  email: string;
+  password: string;
+  isAdmin: boolean;
+}
+
+export interface Shipment {
+  _id: string;
+  title: string;
+  price: number;
+  info: string;
+  image: string;
+}
+
+export interface Order {
+  _id: string;
+  user: User;
+  email: string;
+  phoneNumber: string;
+  products: Product[];
+  deliveryAddress: Address;
+  payment: Payment;
+  shipment: Shipment;
+  orderDate: Date;
+}

@@ -40,7 +40,7 @@ function Header() {
       <header id="header" className="show-products">
         {!isLoggedIn ? (
           <div>
-            <Link to="/LoginPage">
+            <Link to="/login">
               <Button className="loginButton" startIcon={<LoginIcon />}>
                 Logga in
               </Button>
@@ -49,11 +49,13 @@ function Header() {
         ) : (
           <div>
             {user?.isAdmin ? (
-              <Link to="/AdminPage">
-                <AdminPanelSettingsIcon
-                  className="icon"
-                  sx={{ paddingLeft: '1rem', fontSize: '2rem', opacity: '0' }}
-                />
+              <Link to="/admin">
+                <Button
+                  style={{ color: '#FEF9DC', marginLeft: '1rem' }}
+                  startIcon={<AdminPanelSettingsIcon />}
+                >
+                  Administration
+                </Button>
               </Link>
             ) : null}
             <Button
@@ -76,7 +78,7 @@ function Header() {
           />
         </Link>
 
-        <Link to="/ShoppingCartPage">
+        <Link to="/cart">
           <Badge
             className="icon"
             sx={{ marginRight: '1rem', opacity: '0' }}
