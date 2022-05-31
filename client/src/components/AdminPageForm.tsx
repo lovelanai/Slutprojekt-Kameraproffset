@@ -9,6 +9,8 @@ import {
   ButtonGroup,
   ToggleButtonGroup,
   ToggleButton,
+    FormControl,
+    Input
 } from '@mui/material';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -222,6 +224,21 @@ export default function AdminPageForm(props: Props) {
     setAlignment(newAlignment);
   };
 
+  const handleSubmit = (event: any) => {
+    event.preventDefault()
+
+    console.log('tjena')
+    let data = new FormData();
+    data.append("image", event.target.files)
+    fetch('/api/media', {
+      method: 'POST',
+      body: data,
+
+    })
+    console.log(data)
+  }
+
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -269,48 +286,49 @@ export default function AdminPageForm(props: Props) {
               }
             />
           </div>
-          <TextField
-            required
-            multiline
-            maxRows={6}
-            id="outlined-Image1"
-            onChange={handleChange}
-            label="Image1"
-            name="image"
-            error={Boolean(errorInput.image)}
-            value={value.image}
-            helperText={
-              errorInput.image ? 'Skriv in en URL' : 'Produktens bild URL 1'
-            }
-          />
-          <TextField
-            required
-            multiline
-            maxRows={6}
-            id="outlined-Image2"
-            value={value.image2}
-            onChange={handleChange}
-            error={Boolean(errorInput.image2)}
-            label="Image2"
-            name="image2"
-            helperText={
-              errorInput.image2 ? 'Skriv in en URL' : 'Produktens bild URL 2'
-            }
-          />
-          <TextField
-            required
-            multiline
-            maxRows={6}
-            id="outlined-Image3"
-            label="Image3"
-            name="image3"
-            onChange={handleChange}
-            error={Boolean(errorInput.image3)}
-            value={value.image3}
-            helperText={
-              errorInput.image3 ? 'Skriv in en URL' : 'Produktens bild URL 3'
-            }
-          />
+          <Input onSubmit={handleSubmit} error={Boolean(errorInput.image)} name='image' type="file" inputProps={{accept: "image/png, image/jpeg"}}/>
+          {/*<TextField*/}
+          {/*  required*/}
+          {/*  multiline*/}
+          {/*  maxRows={6}*/}
+          {/*  id="outlined-Image1"*/}
+          {/*  onChange={handleChange}*/}
+          {/*  label="Image1"*/}
+          {/*  name="image"*/}
+          {/*  error={Boolean(errorInput.image)}*/}
+          {/*  value={value.image}*/}
+          {/*  helperText={*/}
+          {/*    errorInput.image ? 'Skriv in en URL' : 'Produktens bild URL 1'*/}
+          {/*  }*/}
+          {/*/>*/}
+          {/*<TextField*/}
+          {/*  required*/}
+          {/*  multiline*/}
+          {/*  maxRows={6}*/}
+          {/*  id="outlined-Image2"*/}
+          {/*  value={value.image2}*/}
+          {/*  onChange={handleChange}*/}
+          {/*  error={Boolean(errorInput.image2)}*/}
+          {/*  label="Image2"*/}
+          {/*  name="image2"*/}
+          {/*  helperText={*/}
+          {/*    errorInput.image2 ? 'Skriv in en URL' : 'Produktens bild URL 2'*/}
+          {/*  }*/}
+          {/*/>*/}
+          {/*<TextField*/}
+          {/*  required*/}
+          {/*  multiline*/}
+          {/*  maxRows={6}*/}
+          {/*  id="outlined-Image3"*/}
+          {/*  label="Image3"*/}
+          {/*  name="image3"*/}
+          {/*  onChange={handleChange}*/}
+          {/*  error={Boolean(errorInput.image3)}*/}
+          {/*  value={value.image3}*/}
+          {/*  helperText={*/}
+          {/*    errorInput.image3 ? 'Skriv in en URL' : 'Produktens bild URL 3'*/}
+          {/*  }*/}
+          {/*/>*/}
           <TextField
             required
             multiline

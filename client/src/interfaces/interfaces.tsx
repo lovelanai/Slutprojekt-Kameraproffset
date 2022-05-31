@@ -49,29 +49,6 @@ export interface PaySelection {
   paychecked: boolean;
 }
 
-// export const mockedPay: Payment[] = [
-//   {
-//     _id: '30',
-//     title: 'Kortbetalning',
-//     price: 0,
-//     info: 'Direktbetalning med kort',
-//     alt: '(Visa, Mastercard...)',
-//   },
-//   {
-//     _id: '31',
-//     title: 'Swish',
-//     price: 0,
-//     info: 'Direktbetalning med Swish',
-//     alt: '',
-//   },
-//   {
-//     _id: '32',
-//     title: 'Faktura',
-//     price: 49,
-//     info: 'Faktura',
-//     alt: 'Betala inom 14 dagar',
-//   },
-// ];
 
 export interface PersonalData {
   email: string;

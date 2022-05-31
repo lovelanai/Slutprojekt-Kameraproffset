@@ -11,6 +11,7 @@ import { paymentRouter } from './payment/payment-router';
 import 'colorts/lib/string';
 import { orderRouter } from './order/order-router';
 import "colorts";
+import { mediaRouter } from "./media/media-router";
 
 require('dotenv').config();
 
@@ -36,6 +37,8 @@ app.use("/api", productRouter);
 app.use("/api", shipmentRouter);
 app.use("/api", paymentRouter);
 app.use("/api", orderRouter);
+app.use('/api', mediaRouter);
+
 
 //Connect to mongoose
 dotenv.config({ path: "/.env" });
