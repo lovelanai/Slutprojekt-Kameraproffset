@@ -1,22 +1,33 @@
 import ImgMediaCard from "./Productcard";
 import FilterBar from "./FilterBar";
-
+import SubFilterBar from "./SubFilterBar";
+import { FilterContext } from "../contexts/FilterCategoriesContext";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Button } from "@mui/material";
 function Store() {
+  const { showFilter, displayFilter } = FilterContext();
   return (
     <div>
-      <div
-        style={{
-          marginTop: "-4rem",
-          background: "#f9f9f9",
-          position: "fixed",
-          width: "100%",
-          zIndex: "3",
-          marginBottom: "1rem",
-        }}
-      >
-        <FilterBar />
-      </div>
-      <ImgMediaCard />;
+      {displayFilter ? (
+        <div>
+          <div className="filter-bar">
+            {/* <SubFilterBar /> */}
+            <FilterBar />
+          </div>
+          <ImgMediaCard />;
+        </div>
+      ) : (
+        <div style={{ position: "relative" }}>
+          <Button
+            onClick={showFilter}
+            style={{ position: "fixed", left: "0", top: "6rem", zIndex: "10" }}
+          >
+            <MenuIcon />
+            Filter
+          </Button>
+          <ImgMediaCard />;
+        </div>
+      )}
     </div>
   );
 }
