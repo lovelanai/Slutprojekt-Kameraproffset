@@ -11,16 +11,11 @@ export interface Product {
   image2: string;
   image3: string;
   category: string[];
-  subcategory: string[];
   specifications: Spec[];
 }
 
 export interface Category {
   category: string[];
-}
-
-export interface SubCategory {
-  subcategory: string[];
 }
 
 export interface Spec {
