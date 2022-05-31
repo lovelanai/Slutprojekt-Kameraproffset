@@ -47,7 +47,7 @@ export default function AdminPageForm(props: Props) {
     info2: props?.product?.info2 || '',
     info3: props?.product?.info3 || '',
     price: props?.product?.price || '',
-    quantity: props?.product?.quantity || '',
+    quantity: props?.product?.quantity || 0,
     image: props?.product?.image || '',
     image2: props?.product?.image2 || '',
     image3: props?.product?.image3 || '',
@@ -61,6 +61,7 @@ export default function AdminPageForm(props: Props) {
     info1: false,
     info2: false,
     info3: false,
+    quantity: false,
     price: false,
     image: false,
     image2: false,
@@ -182,7 +183,7 @@ export default function AdminPageForm(props: Props) {
       info2: value.info2!,
       info3: value.info3!,
       price: Number(value.price),
-      quantity: 1,
+      quantity: Number(value.quantity),
       image: value.image!,
       image2: value.image2!,
       image3: value.image3!,
@@ -204,7 +205,8 @@ export default function AdminPageForm(props: Props) {
       value.image3?.length &&
       value.info1?.length &&
       value.info2?.length &&
-      value.info3?.length
+      value.info3?.length &&
+      value.quantity?.toString().length
     ) {
       return false;
     } else return true;
@@ -369,6 +371,22 @@ export default function AdminPageForm(props: Props) {
                 : 'Produktens korta info 3'
             }
             value={value.info3}
+          />
+          <TextField
+            required
+            multiline
+            maxRows={6}
+            id="outlined-Quantity"
+            label="Antal"
+            name="quantity"
+            onChange={handleChange}
+            error={Boolean(errorInput.quantity)}
+            helperText={
+              errorInput.quantity
+                ? 'Ange antal i lager'
+                : 'Produktens antal i lager'
+            }
+            value={value.quantity}
           />
           {value.specifications?.map((_, index) => (
             <div
