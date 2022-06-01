@@ -1,4 +1,4 @@
-import { CreateOrderBody } from '../interfaces/interfaces';
+import { CreateOrderBody, Order } from '../interfaces/interfaces';
 
 const createOrder = async (
   createOrderBody: CreateOrderBody
@@ -12,4 +12,10 @@ const createOrder = async (
     body: JSON.stringify(createOrderBody),
   });
 
-export { createOrder };
+const getAllOrders = async (): Promise<Order[]> =>
+  fetch('/api/allorders').then((response) => response.json());
+
+const getMyOrders = async (): Promise<Order[]> =>
+  fetch('/api/myorders').then((response) => response.json());
+
+export { createOrder, getAllOrders, getMyOrders };

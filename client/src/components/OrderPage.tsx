@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Order } from '../interfaces/interfaces';
-import { getAllOrders } from '../services/orderService';
+import { getMyOrders } from '../services/orderService';
 import OrderAccoridion from './OrderAccordion';
 
-export default function AdminOrderPage() {
+export default function OrderPage() {
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    getAllOrders().then((order) => setOrders(order));
+    getMyOrders().then((order) => setOrders(order));
   }, []);
 
   return (

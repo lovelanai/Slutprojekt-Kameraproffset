@@ -9,9 +9,6 @@ const getProduct = async (id: string): Promise<Product> =>
 const getAllPaymentMethods = async (): Promise<Payment[]> =>
   fetch('/api/payment').then((response) => response.json());
 
-const getAllOrders = async (): Promise<Order[]> =>
-  fetch('/api/allorders').then((response) => response.json());
-
 const addProduct = async (product: Product): Promise<Response> =>
   fetch(`/api/product`, {
     method: 'POST',
@@ -49,5 +46,4 @@ export {
   removeProduct,
   getAllShipmentMethods,
   getAllPaymentMethods,
-  getAllOrders,
 };

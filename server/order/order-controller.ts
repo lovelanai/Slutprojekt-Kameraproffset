@@ -78,3 +78,19 @@ export const getAllOrders = asyncHandler(
     res.status(200).json(orders);
   }
 );
+
+export const getMyOrders = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    assertIsLoggedIn(
+      req,
+      res,
+      'Användare måste vara inloggad för se sina ordrar'
+    );
+
+    const orders = await OrderModel.find({
+      user: req.session!.user._id,
+    }).populate('user');
+
+    res.status(200).json(orders);
+  }
+);
