@@ -1,7 +1,6 @@
 import { createContext, FC, useContext, useState } from 'react';
 
 export interface ContextValue {
-  all: () => void;
   sony: () => void;
   panasonic: () => void;
   canon: () => void;
@@ -14,13 +13,12 @@ export interface ContextValue {
   resetfilter: () => void;
   showFilter: () => void;
   hideFilter: () => void;
-  brand: string;
-  cameratype: string;
+  brand: string | undefined;
+  type: string | undefined;
   displayFilter: boolean;
 }
 
 export const FilterCategoryContext = createContext<ContextValue>({
-  all: () => {},
   sony: () => {},
   panasonic: () => {},
   canon: () => {},
@@ -33,19 +31,15 @@ export const FilterCategoryContext = createContext<ContextValue>({
   resetfilter: () => {},
   showFilter: () => {},
   hideFilter: () => {},
-  brand: '',
-  cameratype: '',
+  brand: undefined,
+  type: undefined,
   displayFilter: false,
 });
 
 const FilterCategoryProvider: FC = (props) => {
-  const [brand, setBrand] = useState('all');
-  const [cameratype, setCameratype] = useState('all');
+  const [brand, setBrand] = useState<string | undefined>();
+  const [type, setType] = useState<string | undefined>();
   const [displayFilter, setDisplayFilter] = useState(false);
-
-  const all = () => {
-    setBrand('all');
-  };
 
   const sony = () => {
     setBrand('sony');
@@ -68,24 +62,24 @@ const FilterCategoryProvider: FC = (props) => {
   };
 
   const alltypes = () => {
-    setCameratype('all');
+    setType('all');
   };
 
   const systemkamera = () => {
-    setCameratype('systemkamera');
+    setType('systemkamera');
   };
 
   const kompaktkamera = () => {
-    setCameratype('kompaktkamera');
+    setType('kompaktkamera');
   };
 
   const mellanformatskamera = () => {
-    setCameratype('mellanformatskamera');
+    setType('mellanformatskamera');
   };
 
   const resetfilter = () => {
-    setBrand('all');
-    setCameratype('all');
+    setBrand(undefined);
+    setType(undefined);
   };
 
   const showFilter = () => {
@@ -101,8 +95,7 @@ const FilterCategoryProvider: FC = (props) => {
     <FilterCategoryContext.Provider
       value={{
         brand,
-        cameratype,
-        all,
+        type,
         sony,
         fujifilm,
         canon,

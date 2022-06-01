@@ -10,24 +10,20 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Button } from '@mui/material';
 function Store() {
   const { showFilter, displayFilter } = FilterContext();
-  const { brand, cameratype } = FilterContext();
+  const { brand, type } = FilterContext();
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     getAllProducts().then((p) => {
-      // brand: ex. sony, panasonic, fujifilm etc
-      const category = p.filter((product) => product.category.includes(brand));
-
-      // cameratype: ex. systemkamera, mellansystemkamera etc
-      const type = category.filter((product) =>
-        product.cameratype.includes(cameratype)
+      const filteredProducts = p.filter(
+        (product) =>
+          (brand ? product.category.brand === brand : true) &&
+          (type ? product.category.type === type : true)
       );
 
-      const filteredProducts = [...type];
-      console.log(filteredProducts);
       setProducts(filteredProducts);
     });
-  }, [cameratype, brand]);
+  }, [type, brand]);
 
   return (
     <div>

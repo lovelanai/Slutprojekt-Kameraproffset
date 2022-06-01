@@ -6,13 +6,11 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import './css/FilterBar.css';
 export default function FilterBar() {
   const {
-    all,
     sony,
     panasonic,
     canon,
     fujifilm,
     leica,
-    alltypes,
     systemkamera,
     mellanformatskamera,
     kompaktkamera,
@@ -24,7 +22,6 @@ export default function FilterBar() {
     <Container>
       <Nav
         variant="pills"
-        defaultActiveKey="#alla"
         style={{
           color: 'white',
           height: '100%',
@@ -79,7 +76,6 @@ export default function FilterBar() {
       </Nav>
       <Nav
         variant="pills"
-        defaultActiveKey="#alla"
         style={{
           color: 'white',
           height: '100%',

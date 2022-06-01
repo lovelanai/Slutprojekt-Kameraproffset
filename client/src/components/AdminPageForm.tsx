@@ -52,6 +52,9 @@ class ImageDataWithInfo {
   }
 }
 
+const brands = ['sony', 'panasonic', 'fujifilm', 'canon', 'leica'];
+const cameraTypes = ['systemkamera', 'kompaktkamera', 'mellanformatskamera'];
+
 export default function AdminPageForm(props: Props) {
   const navigate = useNavigate();
 
@@ -63,8 +66,8 @@ export default function AdminPageForm(props: Props) {
     price: props?.product?.price || '',
     quantity: props?.product?.quantity || 0,
     images: props?.product?.images || [],
-    category: props?.product?.category || ['all'],
-    cameratype: props?.product?.cameratype ?? ['all'],
+    category: props?.product?.category || { brand: '', type: '' },
+
     specifications: props?.product?.specifications || [],
   };
 
@@ -121,44 +124,6 @@ export default function AdminPageForm(props: Props) {
   useEffect(() => {
     setValue(initialValues);
   }, [props.product]);
-
-  // brand-category
-  const toggleCategory = (category: string) => {
-    if (category in value.category!) {
-      setValue({
-        ...value,
-        category: value.category!.filter((c) => c !== category),
-      });
-    } else {
-      setValue({
-        ...value,
-        category: [...value.category!, category],
-      });
-    }
-  };
-
-  // camera-type
-  const toggleCameraType = (cameratype: string) => {
-    if (cameratype in value.cameratype!) {
-      setValue({
-        ...value,
-        cameratype: value.cameratype!.filter((c) => c !== cameratype),
-      });
-    } else {
-      setValue({
-        ...value,
-        cameratype: [...value.cameratype!, cameratype],
-      });
-    }
-  };
-
-  // const handleAddProduct = async (product: Product): Promise<Response> => {
-  //   if (props?.product) {
-  //     return await updateProduct(product);
-  //   } else {
-  //     return await addProduct(product);
-  //   }
-  // };
 
   const addedProductMessage = () => {
     handleOpen();
@@ -257,7 +222,6 @@ export default function AdminPageForm(props: Props) {
       quantity: Number(value.quantity),
       images,
       category: value.category!,
-      cameratype: value.cameratype!,
       specifications: value.specifications!,
     };
 
@@ -291,22 +255,11 @@ export default function AdminPageForm(props: Props) {
     } else return true;
   };
 
-  const [alignment, setAlignment] = useState('web');
-  const [typeAlignment, setTypeAlignment] = useState('web');
+  const handleToggleButton = (_: any, brand: string) =>
+    setValue({ ...value, category: { ...value.category, brand } });
 
-  const handleToggleButton = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
-  ) => {
-    setAlignment(newAlignment);
-  };
-
-  const handleTypeToggleButton = (
-    event: React.MouseEvent<HTMLElement>,
-    newTypeAlignment: string
-  ) => {
-    setTypeAlignment(newTypeAlignment);
-  };
+  const handleTypeToggleButton = (_: any, type: string) =>
+    setValue({ ...value, category: { ...value.category, type } });
 
   const handleImageChange = (
     imageIndex: number,
@@ -507,77 +460,39 @@ export default function AdminPageForm(props: Props) {
           <div style={{ marginBottom: '1rem' }}>
             <ToggleButtonGroup
               color="primary"
-              value={alignment}
+              value={value.category.brand}
               exclusive
               onChange={handleToggleButton}
             >
-              <ToggleButton
-                onClick={() => toggleCategory('sony')}
-                style={{ marginLeft: '0.5rem' }}
-                value="sony"
-              >
-                Sony
-              </ToggleButton>
-              <ToggleButton
-                onClick={() => toggleCategory('panasonic')}
-                style={{ marginLeft: '0.5rem' }}
-                value="panasonic"
-              >
-                Panasonic
-              </ToggleButton>
-              <ToggleButton
-                onClick={() => toggleCategory('fujifilm')}
-                style={{ marginLeft: '0.5rem' }}
-                value="fujifilm"
-              >
-                Fujifilm
-              </ToggleButton>
-              <ToggleButton
-                onClick={() => toggleCategory('canon')}
-                style={{ marginLeft: '0.5rem' }}
-                value="canon"
-              >
-                Canon
-              </ToggleButton>
-              <ToggleButton
-                onClick={() => toggleCategory('leica')}
-                style={{ marginLeft: '0.5rem' }}
-                value="leica"
-              >
-                Leica
-              </ToggleButton>
+              {brands.map((brand, index) => (
+                <ToggleButton
+                  key={index}
+                  style={{ marginLeft: '0.5rem' }}
+                  value={brand}
+                >
+                  {brand}
+                </ToggleButton>
+              ))}
             </ToggleButtonGroup>
           </div>
 
-          <p>Varumärke</p>
+          <p>Kameratyp</p>
           <div style={{ marginBottom: '1rem' }}>
             <ToggleButtonGroup
               color="primary"
-              value={typeAlignment}
+              value={value.category.type}
               exclusive
               onChange={handleTypeToggleButton}
             >
-              <ToggleButton
-                onClick={() => toggleCameraType('systemkamera')}
-                style={{ marginLeft: '0.5rem' }}
-                value="systemkamera"
-              >
-                Systemkamera
-              </ToggleButton>
-              <ToggleButton
-                onClick={() => toggleCameraType('kompaktkamera')}
-                style={{ marginLeft: '0.5rem' }}
-                value="kompaktkamera"
-              >
-                Kompaktkamera
-              </ToggleButton>
-              <ToggleButton
-                onClick={() => toggleCameraType('mellanformatskamera')}
-                style={{ marginLeft: '0.5rem' }}
-                value="mellanformatskamera"
-              >
-                Mellanformatskamera
-              </ToggleButton>
+              {cameraTypes.map((type, index) => (
+                <ToggleButton
+                  key={index}
+                  style={{ marginLeft: '0.5rem' }}
+                  value={type}
+                >
+                  {type}
+                </ToggleButton>
+              ))}
             </ToggleButtonGroup>
           </div>
         </div>
