@@ -1,19 +1,19 @@
 import { Delivery, Order, Payment, Product } from '../interfaces/interfaces';
 
 const getAllProducts = async (): Promise<Product[]> =>
-  await fetch('/api/products').then((response) => response.json());
+  fetch('/api/products').then((response) => response.json());
 
 const getProduct = async (id: string): Promise<Product> =>
-  await fetch(`/api/product/${id}`).then((response) => response.json());
+  fetch(`/api/product/${id}`).then((response) => response.json());
 
 const getAllPaymentMethods = async (): Promise<Payment[]> =>
-  await fetch('/api/payment').then((response) => response.json());
+  fetch('/api/payment').then((response) => response.json());
 
 const getAllOrders = async (): Promise<Order[]> =>
-  await fetch('/api/allorders').then((response) => response.json());
+  fetch('/api/allorders').then((response) => response.json());
 
 const addProduct = async (product: Product): Promise<Response> =>
-  await fetch(`/api/product`, {
+  fetch(`/api/product`, {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -23,7 +23,7 @@ const addProduct = async (product: Product): Promise<Response> =>
   });
 
 const updateProduct = async (product: Product): Promise<Response> =>
-  await fetch(`/api/product/${product._id}`, {
+  fetch(`/api/product/${product._id}`, {
     method: 'PUT',
     credentials: 'include',
     headers: {
@@ -33,13 +33,13 @@ const updateProduct = async (product: Product): Promise<Response> =>
   });
 
 const removeProduct = async (product: Product): Promise<Response> =>
-  await fetch(`/api/product/${product._id}`, {
+  fetch(`/api/product/${product._id}`, {
     method: 'DELETE',
     credentials: 'include',
   });
 
 const getAllShipmentMethods = async (): Promise<Delivery[]> =>
-  await fetch('/api/shipment').then((response) => response.json());
+  fetch('/api/shipment').then((response) => response.json());
 
 export {
   getAllProducts,

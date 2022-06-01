@@ -5,13 +5,19 @@ import { useEffect, useState } from 'react';
 import { Product } from '../interfaces/interfaces';
 import { getAllProducts, removeProduct } from '../services/productService';
 import { useNavigate } from 'react-router-dom';
+import { deleteMedia } from '../services/mediaService';
 
 function AdminProductPage() {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Product[]>([]);
 
-  const handleRemoveProduct = (product: Product) => {
-    removeProduct(product);
+  const handleRemoveProduct = async (product: Product) => {
+    const deletionPromises = product.images.map((image) => deleteMedia(image));
+
+    deletionPromises.push(removeProduct(product));
+
+    await Promise.all(deletionPromises);
+
     setProducts(products.filter((p) => p._id !== product._id));
   };
 
