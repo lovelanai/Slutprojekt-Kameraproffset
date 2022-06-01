@@ -1,10 +1,8 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Product } from '../interfaces/interfaces';
-import AdminPageForm from './AdminPageForm';
 import { getAllProducts, removeProduct } from '../services/productService';
 import { useNavigate } from 'react-router-dom';
 
@@ -69,17 +67,19 @@ function AdminProductPage() {
               <h2>Title: {item.title}</h2>
               <p style={{ paddingLeft: '1rem' }}>ID: {item._id}</p>
               <div className="admin-image-container">
-                <img className="admin-image" src={item.image} alt="" />
-                <img className="admin-image" src={item.image2} alt="" />
-                <img className="admin-image" src={item.image3} alt="" />
+                {item.images.map((image, index) => (
+                  <img key={index} className="admin-image" src={image} alt="" />
+                ))}
               </div>
               <div className="admin-info-container">
                 <p>Price: {item.price}</p>
                 <p>Long info: {item.longinfo}</p>
                 <ul>
-                  <li>Short info 1: {item.info1}</li>
-                  <li>Short info 2: {item.info2}</li>
-                  <li>Short info 3: {item.info3}</li>
+                  {item.info.map((info, index) => (
+                    <li>
+                      Short info {index + 1}: {info}
+                    </li>
+                  ))}
                 </ul>
 
                 <ul>

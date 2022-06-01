@@ -5,13 +5,11 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/ShoppingCartContext';
 import { Product } from '../interfaces/interfaces';
 import ProductAccordion from './ProductAccordion';
 import './css/Productcard.css';
-import { FilterContext } from '../contexts/FilterCategoriesContext';
 import { Box } from '@mui/material';
 
 interface ProductCardProps {
@@ -35,7 +33,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               component="img"
               alt={product.title}
               height="auto"
-              image={product.image}
+              image={product.images[0]}
               title={product.title}
             />
           </div>
@@ -50,8 +48,9 @@ export default function ProductCard({ product }: ProductCardProps) {
                 component="ul"
                 className="item-short-info"
               >
-                <li>{product.info1}</li>
-                <li>{product.info2}</li> <li>{product.info3}</li>
+                {product.info.map((info, index) => (
+                  <li key={index}>{info}</li>
+                ))}
               </Typography>
             </div>
             <div className="price">

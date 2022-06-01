@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@emotion/react';
 import { Button, createTheme } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCartContext } from '../contexts/ShoppingCartContext';
 import CartItem from './CartItem';

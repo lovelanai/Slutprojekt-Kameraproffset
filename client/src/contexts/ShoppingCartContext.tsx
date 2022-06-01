@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useState, useEffect } from 'react';
 import { Product } from '../interfaces/interfaces';
-import {useLocalStorageState} from "../components/hooks/localstorage";
+
 
 export interface ContextValue {
   cartItems: Product[];
