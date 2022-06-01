@@ -135,7 +135,7 @@ function OrderAccoridion(props: OrderAccordionProps) {
                 >
                   <img
                     style={{ width: '5rem' }}
-                    src={product.images[0]}
+                    src={`/api/media/${product.images[0]}`}
                     alt=""
                   />
                   <Typography>{product.quantity} st</Typography>
