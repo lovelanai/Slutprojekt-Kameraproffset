@@ -38,6 +38,12 @@ export const getUser = asyncHandler(
 // create a new user
 export const addUser = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
+    const validEmail = /^.+\@\S+\.\S+$/;
+    if (!req.body.email || !req.body.email.match(validEmail)) {
+      res.status(400);
+      throw new Error('Du måste ange en giltig epostadress');
+    }
+
     const userData = {
       email: req.body.email,
       password: await argon2.hash(req.body.password),
@@ -45,7 +51,6 @@ export const addUser = asyncHandler(
     };
 
     const doesUserExist = await UserModel.findOne({ email: req.body.email });
-
     if (doesUserExist) {
       res.status(400);
       throw new Error('Användare finns redan registrerad');
