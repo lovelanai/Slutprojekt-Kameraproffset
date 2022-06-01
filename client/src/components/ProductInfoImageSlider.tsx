@@ -74,7 +74,7 @@ function ProductInfoImageSlider(props: Props) {
                   <Box
                     className="img"
                     component="img"
-                    src={step.imgPath}
+                    src={`/api/media/${step.imgPath}`}
                     alt={step.label}
                   />
                 ) : null}

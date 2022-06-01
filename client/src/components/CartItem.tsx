@@ -55,7 +55,7 @@ export default function CartItem(): JSX.Element {
                     component="img"
                     alt={item.title}
                     height="auto"
-                    image={item.images[0]}
+                    image={`/api/media/${item.images[0]}`}
                     title={item.title}
                   />
                 </div>

@@ -68,7 +68,12 @@ function AdminProductPage() {
               <p style={{ paddingLeft: '1rem' }}>ID: {item._id}</p>
               <div className="admin-image-container">
                 {item.images.map((image, index) => (
-                  <img key={index} className="admin-image" src={image} alt="" />
+                  <img
+                    key={index}
+                    className="admin-image"
+                    src={`/api/media/${image}`}
+                    alt=""
+                  />
                 ))}
               </div>
               <div className="admin-info-container">

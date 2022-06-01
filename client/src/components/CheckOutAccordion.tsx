@@ -482,7 +482,7 @@ export default function CheckOutAccordion() {
                     <Card className="product-checkout-width">
                       <h1>{item.title}</h1>
                       <div className="image-checkout-container">
-                        <img src={item.images[0]} alt="" />
+                        <img src={`/api/media/${item.images[0]}`} alt="" />
 
                         <CardActions>
                           <Typography>{item.quantity} st</Typography>

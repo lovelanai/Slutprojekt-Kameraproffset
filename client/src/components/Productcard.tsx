@@ -33,7 +33,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               component="img"
               alt={product.title}
               height="auto"
-              image={product.images[0]}
+              image={`/api/media/${product.images[0]}`}
               title={product.title}
             />
           </div>

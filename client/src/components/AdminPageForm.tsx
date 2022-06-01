@@ -196,7 +196,10 @@ export default function AdminPageForm(props: Props) {
         const formData = new FormData();
         formData.append('media', image.file!);
 
-        if (props?.product?.images[index]) {
+        if (
+          props?.product?.images[index] &&
+          props?.product?.images[index].startsWith('http') !== true
+        ) {
           return replaceMedia(props.product.images[index], formData);
         } else {
           return createMedia(formData);
@@ -208,9 +211,7 @@ export default function AdminPageForm(props: Props) {
       .filter((image) => image.file === undefined)
       .map((image) => image.value)
       .concat(
-        (await Promise.all(imageUploadPromises)).map(
-          (image) => `/api/media/${image._id}`
-        )
+        (await Promise.all(imageUploadPromises)).map((image) => image._id)
       );
 
     const product: Product = {
@@ -339,7 +340,11 @@ export default function AdminPageForm(props: Props) {
                     src={
                       image.file
                         ? URL.createObjectURL(image.file)
-                        : image.value || undefined
+                        : image.value
+                        ? image.value.startsWith('http') === true
+                          ? image.value
+                          : `/api/media/${image.value}`
+                        : undefined
                     }
                     alt=""
                     width="110"
