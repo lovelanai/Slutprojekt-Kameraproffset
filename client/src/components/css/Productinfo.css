@@ -6,7 +6,7 @@
   margin-top: 6rem;
   padding: 0 4rem;
   background-color: #ffffff;
-  height: calc(100vh - 9rem);
+  height: calc(100vh - 6rem);
 }
 
 .back-arrow {
@@ -52,6 +52,7 @@
   }
   .right-product-container {
     width: 100%;
+    margin-bottom: 4rem;
   }
   .left-product-container {
     width: 100%;
