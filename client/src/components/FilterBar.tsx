@@ -12,10 +12,12 @@ export default function FilterBar() {
     canon,
     fujifilm,
     leica,
+    alltypes,
     systemkamera,
     mellanformatskamera,
     kompaktkamera,
     hideFilter,
+    resetfilter,
   } = FilterContext();
 
   return (
@@ -47,6 +49,11 @@ export default function FilterBar() {
         <div className="cameratype">
           <h3>Kameratyp</h3>
           <hr />
+          <Nav.Item>
+            <Nav.Link href="#alla" onClick={alltypes}>
+              Alla
+            </Nav.Link>
+          </Nav.Item>
           <Nav.Item>
             <Nav.Link href="#systemkamera" onClick={systemkamera}>
               Systemkamera
@@ -114,7 +121,7 @@ export default function FilterBar() {
         </div>
 
         <Nav.Item>
-          <Nav.Link onClick={all}>
+          <Nav.Link onClick={resetfilter}>
             Nollställ Filter <RestartAltIcon />
           </Nav.Link>
         </Nav.Item>

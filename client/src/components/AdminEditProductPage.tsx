@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import AdminPageForm from './AdminPageForm';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Product } from '../interfaces/interfaces';
-import { getProduct } from '../services/productService';
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import AdminPageForm from "./AdminPageForm";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Product } from "../interfaces/interfaces";
+import { getProduct } from "../services/productService";
 
 function AdminEditProductPage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function AdminEditProductPage() {
   }, [id]);
 
   const goBack = () => {
-    navigate('/admin/products');
+    navigate("/admin/products");
   };
 
   return (

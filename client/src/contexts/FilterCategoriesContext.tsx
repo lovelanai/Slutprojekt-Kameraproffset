@@ -7,6 +7,7 @@ export interface ContextValue {
   canon: () => void;
   fujifilm: () => void;
   leica: () => void;
+  alltypes: () => void;
   systemkamera: () => void;
   kompaktkamera: () => void;
   mellanformatskamera: () => void;
@@ -14,7 +15,7 @@ export interface ContextValue {
   showFilter: () => void;
   hideFilter: () => void;
   filter: string;
-  subfilter: string;
+  cameratype: string;
   displayFilter: boolean;
 }
 
@@ -25,6 +26,7 @@ export const FilterCategoryContext = createContext<ContextValue>({
   canon: () => {},
   fujifilm: () => {},
   leica: () => {},
+  alltypes: () => {},
   systemkamera: () => {},
   kompaktkamera: () => {},
   mellanformatskamera: () => {},
@@ -32,13 +34,13 @@ export const FilterCategoryContext = createContext<ContextValue>({
   showFilter: () => {},
   hideFilter: () => {},
   filter: "",
-  subfilter: "",
+  cameratype: "",
   displayFilter: false,
 });
 
 const FilterCategoryProvider: FC = (props) => {
   const [filter, setFilter] = useState("all");
-  const [subfilter, setSubFilter] = useState("all");
+  const [cameratype, setCameratype] = useState("all");
   const [displayFilter, setDisplayFilter] = useState(false);
 
   const all = () => {
@@ -65,21 +67,25 @@ const FilterCategoryProvider: FC = (props) => {
     setFilter("leica");
   };
 
+  const alltypes = () => {
+    setCameratype("all");
+  };
+
   const systemkamera = () => {
-    setSubFilter("systemkamera");
+    setCameratype("systemkamera");
   };
 
   const kompaktkamera = () => {
-    setSubFilter("kompaktkamera");
+    setCameratype("kompaktkamera");
   };
 
   const mellanformatskamera = () => {
-    setSubFilter("mellanformatskamera");
+    setCameratype("mellanformatskamera");
   };
 
   const resetfilter = () => {
     setFilter("all");
-    setSubFilter("all");
+    setCameratype("all");
   };
 
   const showFilter = () => {
@@ -95,13 +101,14 @@ const FilterCategoryProvider: FC = (props) => {
     <FilterCategoryContext.Provider
       value={{
         filter,
-        subfilter,
+        cameratype,
         all,
         sony,
         fujifilm,
         canon,
         panasonic,
         leica,
+        alltypes,
         systemkamera,
         kompaktkamera,
         mellanformatskamera,

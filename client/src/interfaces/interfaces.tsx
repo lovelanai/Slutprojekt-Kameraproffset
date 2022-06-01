@@ -11,11 +11,16 @@ export interface Product {
   image2: string;
   image3: string;
   category: string[];
+  cameratype: string[];
   specifications: Spec[];
 }
 
 export interface Category {
   category: string[];
+}
+
+export interface CameraType {
+  cameratype: string[];
 }
 
 export interface Spec {
