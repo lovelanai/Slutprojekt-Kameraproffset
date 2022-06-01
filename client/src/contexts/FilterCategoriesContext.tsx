@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useState } from 'react';
 
 export interface ContextValue {
   all: () => void;
@@ -14,7 +14,7 @@ export interface ContextValue {
   resetfilter: () => void;
   showFilter: () => void;
   hideFilter: () => void;
-  filter: string;
+  brand: string;
   cameratype: string;
   displayFilter: boolean;
 }
@@ -33,59 +33,59 @@ export const FilterCategoryContext = createContext<ContextValue>({
   resetfilter: () => {},
   showFilter: () => {},
   hideFilter: () => {},
-  filter: "",
-  cameratype: "",
+  brand: '',
+  cameratype: '',
   displayFilter: false,
 });
 
 const FilterCategoryProvider: FC = (props) => {
-  const [filter, setFilter] = useState("all");
-  const [cameratype, setCameratype] = useState("all");
+  const [brand, setBrand] = useState('all');
+  const [cameratype, setCameratype] = useState('all');
   const [displayFilter, setDisplayFilter] = useState(false);
 
   const all = () => {
-    setFilter("all");
+    setBrand('all');
   };
 
   const sony = () => {
-    setFilter("sony");
+    setBrand('sony');
   };
 
   const panasonic = () => {
-    setFilter("panasonic");
+    setBrand('panasonic');
   };
 
   const canon = () => {
-    setFilter("canon");
+    setBrand('canon');
   };
 
   const fujifilm = () => {
-    setFilter("fujifilm");
+    setBrand('fujifilm');
   };
 
   const leica = () => {
-    setFilter("leica");
+    setBrand('leica');
   };
 
   const alltypes = () => {
-    setCameratype("all");
+    setCameratype('all');
   };
 
   const systemkamera = () => {
-    setCameratype("systemkamera");
+    setCameratype('systemkamera');
   };
 
   const kompaktkamera = () => {
-    setCameratype("kompaktkamera");
+    setCameratype('kompaktkamera');
   };
 
   const mellanformatskamera = () => {
-    setCameratype("mellanformatskamera");
+    setCameratype('mellanformatskamera');
   };
 
   const resetfilter = () => {
-    setFilter("all");
-    setCameratype("all");
+    setBrand('all');
+    setCameratype('all');
   };
 
   const showFilter = () => {
@@ -100,7 +100,7 @@ const FilterCategoryProvider: FC = (props) => {
   return (
     <FilterCategoryContext.Provider
       value={{
-        filter,
+        brand,
         cameratype,
         all,
         sony,
