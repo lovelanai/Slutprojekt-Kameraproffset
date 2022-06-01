@@ -1,3 +1,4 @@
+
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
@@ -19,6 +20,7 @@ import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutl
 import { Product } from '../interfaces/interfaces';
 import { createMedia, replaceMedia } from '../services/mediaService';
 import { addProduct, updateProduct } from '../services/productService';
+import { FilterContext } from "../contexts/FilterCategoriesContext";
 
 interface Props {
   product?: Product;
@@ -27,15 +29,15 @@ interface Props {
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#333333',
-      contrastText: '#FBF7F5', //button text white instead of black
+      main: "#333333",
+      contrastText: "#FBF7F5", //button text white instead of black
     },
     background: {
-      default: '#333333',
+      default: "#333333",
     },
 
     secondary: {
-      main: '#DA344D',
+      main: "#DA344D",
     },
   },
 });
@@ -64,6 +66,7 @@ export default function AdminPageForm(props: Props) {
     quantity: props?.product?.quantity || 0,
     images: props?.product?.images || [],
     category: props?.product?.category || ['all'],
+    cameratype: props?.product?.cameratype ?? ["all"],
     specifications: props?.product?.specifications || [],
   };
 
@@ -97,12 +100,12 @@ export default function AdminPageForm(props: Props) {
   };
 
   const modalStyle = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute" as "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: 'background.paper',
+    bgcolor: "background.paper",
     // border: "2px solid #000",
     boxShadow: 24,
     p: 4,
@@ -136,6 +139,29 @@ export default function AdminPageForm(props: Props) {
     }
   };
 
+  // camera-type
+  const toggleCameraType = (cameratype: string) => {
+    if (cameratype in value.cameratype!) {
+      setValue({
+        ...value,
+        cameratype: value.cameratype!.filter((c) => c !== cameratype),
+      });
+    } else {
+      setValue({
+        ...value,
+        cameratype: [...value.cameratype!, cameratype],
+      });
+    }
+  };
+
+  const handleAddProduct = async (product: Product): Promise<Response> => {
+    if (props?.product) {
+      return await updateProduct(product);
+    } else {
+      return await addProduct(product);
+    }
+  };
+
   const addedProductMessage = () => {
     handleOpen();
     setTimeout(handleClose, 1200);
@@ -144,8 +170,8 @@ export default function AdminPageForm(props: Props) {
   const addSpecification = () => {
     const specifications = value.specifications ?? [];
     specifications.push({
-      title: '',
-      value: '',
+      title: "",
+      value: "",
     });
 
     setValue({ ...value, specifications });
@@ -178,7 +204,7 @@ export default function AdminPageForm(props: Props) {
     /**This if-statement checks if the name of the target is price, if true, then it checks
      * if it includes anything else than numbers.
      */
-    if (evt.target.name === 'price') {
+    if (evt.target.name === "price") {
       if (!/^\d*$/.test(evt.target.value)) {
         setErrorInput({
           ...errorInput,
@@ -233,6 +259,7 @@ export default function AdminPageForm(props: Props) {
       quantity: Number(value.quantity),
       images,
       category: value.category!,
+      cameratype: value.cameratype!,
       specifications: value.specifications!,
     };
 
@@ -266,7 +293,8 @@ export default function AdminPageForm(props: Props) {
     } else return true;
   };
 
-  const [alignment, setAlignment] = useState('web');
+  const [alignment, setAlignment] = useState("web");
+  const [typeAlignment, setTypeAlignment] = useState("web");
 
   const handleToggleButton = (
     event: React.MouseEvent<HTMLElement>,
@@ -274,6 +302,12 @@ export default function AdminPageForm(props: Props) {
   ) => {
     setAlignment(newAlignment);
   };
+
+  const handleTypeToggleButton = (
+    event: React.MouseEvent<HTMLElement>,
+    newTypeAlignment: string
+  ) => {
+    setTypeAlignment(newTypeAlignment);
 
   const handleImageChange = (
     imageIndex: number,
@@ -299,10 +333,10 @@ export default function AdminPageForm(props: Props) {
       <Box
         component="form"
         sx={{
-          '& .MuiTextField-root': {
+          "& .MuiTextField-root": {
             marginTop: 2,
             marginBottom: 2,
-            width: '100%',
+            width: "100%",
           },
         }}
         noValidate
@@ -321,11 +355,11 @@ export default function AdminPageForm(props: Props) {
             value={value.title}
             helperText={
               errorInput.title
-                ? 'Titeln måste vara minst ett tecken'
-                : 'Produktens titel'
+                ? "Titeln måste vara minst ett tecken"
+                : "Produktens titel"
             }
           />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <TextField
               required
               id="outlined-number"
@@ -336,11 +370,12 @@ export default function AdminPageForm(props: Props) {
               value={value.price}
               helperText={
                 errorInput.price
-                  ? 'Produktens pris får endast innehålla siffror'
-                  : 'Produktens pris'
+                  ? "Produktens pris får endast innehålla siffror"
+                  : "Produktens pris"
               }
             />
           </div>
+
           {imagesWithInfo.map((image, index) => (
             <Paper
               variant="outlined"
@@ -408,6 +443,7 @@ export default function AdminPageForm(props: Props) {
               </Stack>
             </Paper>
           ))}
+
           <TextField
             required
             multiline
@@ -419,8 +455,8 @@ export default function AdminPageForm(props: Props) {
             error={Boolean(errorInput.longinfo)}
             helperText={
               errorInput.longinfo
-                ? 'Produktinfo får inte vara tom'
-                : 'Produktens långa info'
+                ? "Produktinfo får inte vara tom"
+                : "Produktens långa info"
             }
             value={value.longinfo}
           />
@@ -435,15 +471,15 @@ export default function AdminPageForm(props: Props) {
             error={Boolean(errorInput.quantity)}
             helperText={
               errorInput.quantity
-                ? 'Ange antal i lager'
-                : 'Produktens antal i lager'
+                ? "Ange antal i lager"
+                : "Produktens antal i lager"
             }
             value={value.quantity}
           />
           {value.specifications?.map((_, index) => (
             <div
               key={index}
-              style={{ display: 'flex', justifyContent: 'center' }}
+              style={{ display: "flex", justifyContent: "center" }}
             >
               <TextField
                 multiline
@@ -452,7 +488,7 @@ export default function AdminPageForm(props: Props) {
                 label="Spec title"
                 name={`title`}
                 onChange={(e) => handleSpecChange(index, e)}
-                helperText={'Specifikationstitel ' + (index + 1)}
+                helperText={"Specifikationstitel " + (index + 1)}
                 value={value.specifications[index].title}
               />
               <TextField
@@ -463,13 +499,13 @@ export default function AdminPageForm(props: Props) {
                 label="Spec info"
                 name={`value`}
                 onChange={(e) => handleSpecChange(index, e)}
-                helperText={'Ange specifikationsinfo ' + (index + 1)}
+                helperText={"Ange specifikationsinfo " + (index + 1)}
                 value={value.specifications[index].value}
               />
             </div>
           ))}
           <p>Varumärke</p>
-          <div style={{ marginBottom: '1rem' }}>
+          <div style={{ marginBottom: "1rem" }}>
             <ToggleButtonGroup
               color="primary"
               value={alignment}
@@ -477,46 +513,85 @@ export default function AdminPageForm(props: Props) {
               onChange={handleToggleButton}
             >
               <ToggleButton
-                onClick={() => toggleCategory('sony')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("sony")}
+                style={{ marginLeft: "0.5rem" }}
                 value="sony"
               >
                 Sony
               </ToggleButton>
               <ToggleButton
-                onClick={() => toggleCategory('panasonic')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("panasonic")}
+                style={{ marginLeft: "0.5rem" }}
                 value="panasonic"
               >
                 Panasonic
               </ToggleButton>
               <ToggleButton
-                onClick={() => toggleCategory('fujifilm')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("fujifilm")}
+                style={{ marginLeft: "0.5rem" }}
                 value="fujifilm"
               >
                 Fujifilm
               </ToggleButton>
               <ToggleButton
-                onClick={() => toggleCategory('canon')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("canon")}
+                style={{ marginLeft: "0.5rem" }}
                 value="canon"
               >
                 Canon
               </ToggleButton>
               <ToggleButton
-                onClick={() => toggleCategory('leica')}
-                style={{ marginLeft: '0.5rem' }}
+                onClick={() => toggleCategory("leica")}
+                style={{ marginLeft: "0.5rem" }}
                 value="leica"
               >
                 Leica
               </ToggleButton>
             </ToggleButtonGroup>
           </div>
+
+          <p>Varumärke</p>
+          <div style={{ marginBottom: "1rem" }}>
+            <ToggleButtonGroup
+              color="primary"
+              value={typeAlignment}
+              exclusive
+              onChange={handleTypeToggleButton}
+            >
+              <ToggleButton
+                onClick={() => toggleCameraType("all")}
+                style={{ marginLeft: "0.5rem" }}
+                value="all"
+              >
+                All
+              </ToggleButton>
+              <ToggleButton
+                onClick={() => toggleCameraType("systemkamera")}
+                style={{ marginLeft: "0.5rem" }}
+                value="systemkamera"
+              >
+                Systemkamera
+              </ToggleButton>
+              <ToggleButton
+                onClick={() => toggleCameraType("kompaktkamera")}
+                style={{ marginLeft: "0.5rem" }}
+                value="kompaktkamera"
+              >
+                Kompaktkamera
+              </ToggleButton>
+              <ToggleButton
+                onClick={() => toggleCameraType("mellanformatskamera")}
+                style={{ marginLeft: "0.5rem" }}
+                value="mellanformatskamera"
+              >
+                Mellanformatskamera
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
         </div>
         <div>
           <Button
-            style={{ marginBottom: '1rem' }}
+            style={{ marginBottom: "1rem" }}
             onClick={addSpecification}
             variant="outlined"
           >

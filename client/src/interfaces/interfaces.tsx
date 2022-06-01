@@ -7,11 +7,16 @@ export interface Product {
   quantity: number;
   images: string[];
   category: string[];
+  cameratype: string[];
   specifications: Spec[];
 }
 
 export interface Category {
   category: string[];
+}
+
+export interface CameraType {
+  cameratype: string[];
 }
 
 export interface Spec {

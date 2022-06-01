@@ -9,8 +9,8 @@ export interface Category {
   category: string[];
 }
 
-export interface SubCategory {
-  subCategory: string[];
+export interface CameraType {
+  cameratype: string[];
 }
 
 export interface Product {
@@ -21,7 +21,7 @@ export interface Product {
   quantity: number;
   images: string[];
   category: Category[];
-  subcategory: SubCategory[];
+  cameratype: CameraType[];
   specifications: Specification[];
 }
 
@@ -33,7 +33,7 @@ export const productSchema = new mongoose.Schema({
   quantity: { type: Number },
   images: { type: [String] },
   category: { type: [String] },
-  subcategory: { type: [String] },
+  cameratype: { type: [String] },
 
   specifications: [
     {

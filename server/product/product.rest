@@ -17,7 +17,7 @@ Content-Type: application/json
     "image2": "https://www.scandinavianphoto.se/globalassets/1038723_1.jpg?ref=1145D98FC7&w=1920&h=1920&mode=max",
     "image3": "https://www.scandinavianphoto.se/globalassets/1038723_2.jpg?ref=36400AFD1E&w=1920&h=1920&mode=max",
     "category": ["canon", "all"],
-    "subcategory": ["all", "systemkamera"]
+    "cameratype": ["all", "systemkamera"]
     
 
 }
