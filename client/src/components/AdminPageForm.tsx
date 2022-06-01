@@ -341,7 +341,7 @@ export default function AdminPageForm(props: Props) {
                         ? URL.createObjectURL(image.file)
                         : image.value || undefined
                     }
-                    alt=""
+                    alt="hej"
                     width="110"
                     style={{ marginRight: '1rem' }}
                   />
