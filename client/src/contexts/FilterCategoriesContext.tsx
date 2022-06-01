@@ -1,7 +1,6 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useState } from 'react';
 
 export interface ContextValue {
-  all: () => void;
   sony: () => void;
   panasonic: () => void;
   canon: () => void;
@@ -14,13 +13,12 @@ export interface ContextValue {
   resetfilter: () => void;
   showFilter: () => void;
   hideFilter: () => void;
-  filter: string;
-  cameratype: string;
+  brand: string | undefined;
+  type: string | undefined;
   displayFilter: boolean;
 }
 
 export const FilterCategoryContext = createContext<ContextValue>({
-  all: () => {},
   sony: () => {},
   panasonic: () => {},
   canon: () => {},
@@ -33,59 +31,55 @@ export const FilterCategoryContext = createContext<ContextValue>({
   resetfilter: () => {},
   showFilter: () => {},
   hideFilter: () => {},
-  filter: "",
-  cameratype: "",
+  brand: undefined,
+  type: undefined,
   displayFilter: false,
 });
 
 const FilterCategoryProvider: FC = (props) => {
-  const [filter, setFilter] = useState("all");
-  const [cameratype, setCameratype] = useState("all");
+  const [brand, setBrand] = useState<string | undefined>();
+  const [type, setType] = useState<string | undefined>();
   const [displayFilter, setDisplayFilter] = useState(false);
 
-  const all = () => {
-    setFilter("all");
-  };
-
   const sony = () => {
-    setFilter("sony");
+    setBrand('sony');
   };
 
   const panasonic = () => {
-    setFilter("panasonic");
+    setBrand('panasonic');
   };
 
   const canon = () => {
-    setFilter("canon");
+    setBrand('canon');
   };
 
   const fujifilm = () => {
-    setFilter("fujifilm");
+    setBrand('fujifilm');
   };
 
   const leica = () => {
-    setFilter("leica");
+    setBrand('leica');
   };
 
   const alltypes = () => {
-    setCameratype("all");
+    setType('all');
   };
 
   const systemkamera = () => {
-    setCameratype("systemkamera");
+    setType('systemkamera');
   };
 
   const kompaktkamera = () => {
-    setCameratype("kompaktkamera");
+    setType('kompaktkamera');
   };
 
   const mellanformatskamera = () => {
-    setCameratype("mellanformatskamera");
+    setType('mellanformatskamera');
   };
 
   const resetfilter = () => {
-    setFilter("all");
-    setCameratype("all");
+    setBrand(undefined);
+    setType(undefined);
   };
 
   const showFilter = () => {
@@ -100,9 +94,8 @@ const FilterCategoryProvider: FC = (props) => {
   return (
     <FilterCategoryContext.Provider
       value={{
-        filter,
-        cameratype,
-        all,
+        brand,
+        type,
         sony,
         fujifilm,
         canon,

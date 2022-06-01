@@ -6,17 +6,13 @@ export interface Product {
   price: number;
   quantity: number;
   images: string[];
-  category: string[];
-  cameratype: string[];
+  category: Category;
   specifications: Spec[];
 }
 
 export interface Category {
-  category: string[];
-}
-
-export interface CameraType {
-  cameratype: string[];
+  brand: string;
+  type: string;
 }
 
 export interface Spec {

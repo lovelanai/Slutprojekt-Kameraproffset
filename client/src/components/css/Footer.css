@@ -8,6 +8,8 @@ footer {
   color: #fffadd;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+  position: absolute;
+  bottom: 0;
 }
 
 h2 {

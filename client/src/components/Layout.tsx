@@ -4,7 +4,7 @@ import Main from "./Main";
 
 function Layout() {
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <Header />
       <Main />
       <Footer />

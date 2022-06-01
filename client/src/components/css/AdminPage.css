@@ -1,5 +1,5 @@
 .admin-top-container {
-  margin-top: 6rem;
+  min-height: calc(100vh);
   padding-top: 3rem;
   background-color: #ffffff;
   display: flex;
@@ -23,12 +23,16 @@
 
 .admin-product-container {
   position: relative;
-  width: 40rem;
+  max-width: 40rem;
   display: flex;
   flex-direction: column;
   border: 1px solid black;
   border-radius: 10px;
   margin: 1rem;
+}
+
+.admin-product-container:last-child {
+  margin-bottom: 5rem;
 }
 
 .admin-product-form-container {
@@ -78,6 +82,10 @@
 .admin-info-container {
   margin-top: 1rem;
   padding: 2rem;
+}
+
+.orders:last-child {
+  margin-bottom: 2rem;
 }
 
 @media (max-width: 535px) {

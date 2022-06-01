@@ -76,7 +76,7 @@ function AdminProductPage() {
                 <p>Long info: {item.longinfo}</p>
                 <ul>
                   {item.info.map((info, index) => (
-                    <li>
+                    <li key={index}>
                       Short info {index + 1}: {info}
                     </li>
                   ))}
