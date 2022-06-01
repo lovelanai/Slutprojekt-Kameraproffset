@@ -14,6 +14,7 @@ import LoginPage from './LoginPage';
 import Confirmation from './Confirmation';
 import { useUser } from '../contexts/UserContext';
 import AdminEditProductPage from './AdminEditProductPage';
+import OrderPage from './OrderPage';
 
 function Main() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -24,7 +25,7 @@ function Main() {
   }, []);
 
   return (
-    <main style={{ background: 'white' }}>
+    <main style={{ background: 'white', marginTop: '6rem' }}>
       <Routes>
         <Route path="/" element={<Store />} />
         {user?.isAdmin ? (
@@ -39,6 +40,7 @@ function Main() {
             <Route path="orders" element={<AdminOrderPage />}></Route>
           </Route>
         ) : null}
+        <Route path="/orders" element={<OrderPage />} />
         <Route path="/cart" element={<ShoppingCartPage />} />
         <Route path="/register" element={<SignUpForm />} />
         <Route path="/login" element={<LoginPage />} />
