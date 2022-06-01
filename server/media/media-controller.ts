@@ -4,6 +4,7 @@ import { bucket } from './media-model';
 import { GridFSFile } from 'mongodb';
 import { Types } from 'mongoose';
 import sharp from 'sharp';
+import 'multer';
 
 export const getMedia = async (
   req: Request,
@@ -43,12 +44,7 @@ export const addMedia = async (
 
   pipeline
     .clone()
-    .resize({
-      width: 1000,
-      height: 1000,
-      fit: 'cover',
-      position: sharp.strategy.entropy,
-    })
+    .resize({ width: 500 })
     .pipe(writableStream)
     .on('finish', (file: GridFSFile) => res.status(201).json(file));
 
@@ -79,12 +75,7 @@ export const replaceMedia = async (
 
   pipeline
     .clone()
-    .resize({
-      width: 1000,
-      height: 1000,
-      fit: 'cover',
-      position: sharp.strategy.entropy,
-    })
+    .resize({ width: 500 })
     .pipe(writableStream)
     .on('finish', (file: GridFSFile) => res.status(200).json(file));
 
