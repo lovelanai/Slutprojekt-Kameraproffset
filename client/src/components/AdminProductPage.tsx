@@ -1,10 +1,8 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Product } from '../interfaces/interfaces';
-import AdminPageForm from './AdminPageForm';
 import { getAllProducts, removeProduct } from '../services/productService';
 import { useNavigate } from 'react-router-dom';
 

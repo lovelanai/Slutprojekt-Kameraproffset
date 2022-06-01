@@ -5,13 +5,11 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../contexts/ShoppingCartContext';
 import { Product } from '../interfaces/interfaces';
 import ProductAccordion from './ProductAccordion';
 import './css/Productcard.css';
-import { FilterContext } from '../contexts/FilterCategoriesContext';
 import { Box } from '@mui/material';
 
 interface ProductCardProps {

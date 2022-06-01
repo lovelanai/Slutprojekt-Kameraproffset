@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import {
@@ -8,17 +8,14 @@ import {
   TextField,
   Typography,
   createTheme,
-  ButtonGroup,
   ToggleButtonGroup,
   ToggleButton,
-  FormControl,
   Input,
   Paper,
   Stack,
 } from '@mui/material';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
-import { FilterContext } from '../contexts/FilterCategoriesContext';
 import { Product } from '../interfaces/interfaces';
 import { createMedia, replaceMedia } from '../services/mediaService';
 import { addProduct, updateProduct } from '../services/productService';
