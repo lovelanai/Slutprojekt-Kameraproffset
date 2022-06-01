@@ -133,7 +133,11 @@ function OrderAccoridion(props: OrderAccordionProps) {
                   sx={{ padding: '1ex 2ex' }}
                   justifyContent="space-between"
                 >
-                  <img style={{ width: '5rem' }} src={product.image} alt="" />
+                  <img
+                    style={{ width: '5rem' }}
+                    src={product.images[0]}
+                    alt=""
+                  />
                   <Typography>{product.quantity} st</Typography>
                   <Typography>{product.price}:-</Typography>
                 </Stack>
@@ -142,9 +146,9 @@ function OrderAccoridion(props: OrderAccordionProps) {
             <AccordionDetails>
               <Box sx={{ width: '60%' }}>
                 <p>{product.longinfo}</p>
-                <p>{product.info1}</p>
-                <p>{product.info2}</p>
-                <p>{product.info3}</p>
+                {product.info.map((info, index) => (
+                  <p key={index}>{info}</p>
+                ))}
               </Box>
             </AccordionDetails>
           </Accordion>
