@@ -1,5 +1,14 @@
 .admin-top-container {
   min-height: calc(100vh);
+
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-top-container {
+  min-height: calc(100vh - 6rem);
   padding-top: 3rem;
   background-color: #ffffff;
   display: flex;
@@ -88,8 +97,105 @@
   margin-bottom: 2rem;
 }
 
+.product-image-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-form-inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.order-user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 750px) {
+  .product-image-container {
+    flex-direction: column;
+  }
+
+  .product-image-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .product-image-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 535px) {
   .admin-image-container {
     flex-direction: column;
+  }
+
+  .camera-type-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .camera-type-buttons button {
+    width: 100%;
+  }
+
+  .admin-form-inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .admin-form-inputs div {
+    margin: 0;
+  }
+
+  .order-user-info p {
+    font-size: 0.7rem;
+  }
+
+  .order-details {
+    font-size: 10px;
+  }
+
+  .order-details h3 {
+    font-size: 1rem;
+  }
+
+  .order-details h4 {
+    font-size: 1rem;
+  }
+
+  .order-accordion-product {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .order-accordion-product-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 410px) {
+  .order-user-info p {
+    font-size: 0.5rem;
   }
 }

@@ -4,8 +4,8 @@
   flex-wrap: wrap;
   flex-basis: max-content;
   background-color: white;
-  margin-top: 6rem;
+
   padding-top: 1rem;
   padding-bottom: 3rem;
-  min-height: calc(100vh - 10.5rem);
+  min-height: calc(100vh - 6rem);
 }
