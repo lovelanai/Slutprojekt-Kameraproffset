@@ -468,6 +468,15 @@ export default function AdminPageForm(props: Props) {
               </div>
             ))}
 
+            <div>
+              <Button
+                style={{ marginBottom: "1rem" }}
+                onClick={addSpecification}
+                variant="outlined"
+              >
+                Lägg till specifikation
+              </Button>
+            </div>
             <p>Varumärke</p>
             <div style={{ marginBottom: "1rem" }}>
               <ToggleButtonGroup
@@ -510,15 +519,7 @@ export default function AdminPageForm(props: Props) {
               </ToggleButtonGroup>
             </div>
           </div>
-          <div>
-            <Button
-              style={{ marginBottom: "1rem" }}
-              onClick={addSpecification}
-              variant="outlined"
-            >
-              Lägg till specifikation
-            </Button>
-          </div>
+
           <Button
             onClick={sendToAddProduct}
             variant="contained"

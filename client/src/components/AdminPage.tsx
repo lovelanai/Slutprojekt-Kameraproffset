@@ -28,7 +28,11 @@ function AdminPage() {
           zIndex: "3",
         }}
       >
-        <Stack direction="row" spacing={3} sx={{ padding: " 1rem" }}>
+        <Stack
+          direction="row"
+          spacing={3}
+          sx={{ padding: " 1rem", background: "lightgray" }}
+        >
           <Typography>ADMINISTRATION</Typography>
         </Stack>
         <Stack
@@ -39,6 +43,7 @@ function AdminPage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            background: "lightgray",
           }}
         >
           <Link to="products">PRODUKTER</Link>
