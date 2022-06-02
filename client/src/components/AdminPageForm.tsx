@@ -190,7 +190,7 @@ export default function AdminPageForm(props: Props) {
     let imageUploadPromises = imagesWithInfo
       .map((image, index) => {
         if (image.file === undefined) {
-          return null;
+          return new Promise((resolve) => resolve({ _id: image.value }));
         }
 
         const formData = new FormData();
@@ -207,12 +207,9 @@ export default function AdminPageForm(props: Props) {
       })
       .filter((image) => image !== null);
 
-    const images = imagesWithInfo
-      .filter((image) => image.file === undefined)
-      .map((image) => image.value)
-      .concat(
-        (await Promise.all(imageUploadPromises)).map((image) => image._id)
-      );
+    const images = (await Promise.all(imageUploadPromises)).map(
+      (image) => image._id
+    );
 
     const product: Product = {
       _id: props?.product?._id ?? undefined,
@@ -331,6 +328,7 @@ export default function AdminPageForm(props: Props) {
 
           {imagesWithInfo.map((image, index) => (
             <Paper
+              key={index}
               variant="outlined"
               sx={{ padding: '1rem', marginBottom: '1rem' }}
             >

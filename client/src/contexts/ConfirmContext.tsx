@@ -18,16 +18,6 @@ const ConfirmationProvider: FC = (props) => {
 
   const confirm = async (createOrderBody: CreateOrderBody) => {
     setIsLoading(true);
-
-    await fetch('/api/order', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(createOrderBody),
-    });
-
     emptyCart();
     setIsLoading(false);
   };
