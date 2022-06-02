@@ -12,7 +12,7 @@ export interface ContextValue {
   showSignUpForm: boolean;
   displaySignUpForm: () => void;
   hideSignUpForm: () => void;
-  createUser: (email: string, password: string) => void;
+  createUser: (email: string, password: string) => Promise<any>;
   logout: () => void;
   user: User | undefined;
 }
@@ -23,7 +23,7 @@ export const UserContext = createContext<ContextValue>({
   showSignUpForm: false,
   displaySignUpForm: () => {},
   hideSignUpForm: () => {},
-  createUser: () => {},
+  createUser: () => new Promise((resolve) => resolve(null)),
   logout: () => {},
   user: undefined,
 });
@@ -70,23 +70,24 @@ const ConfirmationProvider: FC = (props) => {
   };
 
   // create new user and log in
-  const createUser = async (email: string, password: string) => {
-    let result = await fetch('/api/user/signup', {
+  const createUser = async (email: string, password: string): Promise<any> =>
+    fetch('/api/user/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
-    });
+    }).then((result) => {
+      if (result.ok) {
+        setIsLoggedIn(true);
+        console.log('nu är du inloggad');
+      } else {
+        setIsLoggedIn(false);
+        console.log('Du är utloggad');
+      }
 
-    if (result.ok) {
-      setIsLoggedIn(true);
-      console.log('nu är du inloggad');
-    } else {
-      setIsLoggedIn(false);
-      console.log('Du är utloggad');
-    }
-  };
+      return result;
+    });
 
   const displaySignUpForm = () => {
     setShowSignUpForm(true);
