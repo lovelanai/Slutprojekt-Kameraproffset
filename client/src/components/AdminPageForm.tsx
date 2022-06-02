@@ -190,7 +190,7 @@ export default function AdminPageForm(props: Props) {
     let imageUploadPromises = imagesWithInfo
       .map((image, index) => {
         if (image.file === undefined) {
-          return null;
+          return new Promise((resolve) => resolve({ _id: image.value }));
         }
 
         const formData = new FormData();
@@ -207,12 +207,9 @@ export default function AdminPageForm(props: Props) {
       })
       .filter((image) => image !== null);
 
-    const images = imagesWithInfo
-      .filter((image) => image.file === undefined)
-      .map((image) => image.value)
-      .concat(
-        (await Promise.all(imageUploadPromises)).map((image) => image._id)
-      );
+    const images = (await Promise.all(imageUploadPromises)).map(
+      (image) => image._id
+    );
 
     const product: Product = {
       _id: props?.product?._id ?? undefined,
@@ -330,53 +327,51 @@ export default function AdminPageForm(props: Props) {
               />
             </div>
 
-            {imagesWithInfo.map((image, index) => (
-              <Paper
-                key={index}
-                variant="outlined"
-                sx={{ padding: "1rem", marginBottom: "1rem" }}
-              >
-                <Stack>
-                  <div className="product-image-container">
-                    <div className="product-image-content">
-                      <Box>
-                        <img
-                          src={
-                            image.file
-                              ? URL.createObjectURL(image.file)
-                              : image.value
-                              ? image.value.startsWith("http") === true
-                                ? image.value
-                                : `/api/media/${image.value}`
-                              : undefined
-                          }
-                          alt=""
-                          width="110"
-                          style={{ marginRight: "1rem" }}
-                        />
-                      </Box>
-                    </div>
-                    <Box sx={{ minWidth: "70%", maxWidth: "1000px" }}>
-                      <Input
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                          handleImageChange(index, e)
-                        }
-                        name="image"
-                        type="file"
-                        inputProps={{ accept: "image/*" }}
-                      />
-                      <TextField
-                        required
-                        multiline
-                        maxRows={6}
-                        id="outlined-Info1"
-                        label="Info"
-                        name="info"
-                        onChange={(
-                          e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                        ) => handleInfoChange(index, e)}
-                        defaultValue={image.info}
-                        /* error={Boolean(errorInput.info1)}
+          {imagesWithInfo.map((image, index) => (
+            <Paper
+              key={index}
+              variant="outlined"
+              sx={{ padding: '1rem', marginBottom: '1rem' }}
+            >
+              <Stack direction="row">
+                <Box>
+                  <img
+                    src={
+                      image.file
+                        ? URL.createObjectURL(image.file)
+                        : image.value
+                        ? image.value.startsWith('http') === true
+                          ? image.value
+                          : `/api/media/${image.value}`
+                        : undefined
+                    }
+                    alt=""
+                    width="110"
+                    style={{ marginRight: '1rem' }}
+                  />
+                </Box>
+                <Box sx={{ minWidth: '70%', maxWidth: '1000px' }}>
+                  <Input
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleImageChange(index, e)
+                    }
+                    name="image"
+                    type="file"
+                    inputProps={{ accept: 'image/*' }}
+                  />
+                  <TextField
+                    required
+                    multiline
+                    maxRows={6}
+                    id="outlined-Info1"
+                    label="Info"
+                    name="info"
+                    onChange={(
+                      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                    ) => handleInfoChange(index, e)}
+                    defaultValue={image.info}
+                    /* error={Boolean(errorInput.info1)}
+
                 helperText={
                   errorInput.info1
                     ? 'Ange produktens info'
