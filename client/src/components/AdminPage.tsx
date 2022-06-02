@@ -1,19 +1,19 @@
-import { createTheme, Stack, ThemeProvider, Typography } from '@mui/material';
-import { Link, Outlet } from 'react-router-dom';
-import './css/AdminPage.css';
+import { createTheme, Stack, ThemeProvider, Typography } from "@mui/material";
+import { Link, Outlet } from "react-router-dom";
+import "./css/AdminPage.css";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#333333',
-      contrastText: '#FBF7F5', //button text white instead of black
+      main: "#333333",
+      contrastText: "#FBF7F5", //button text white instead of black
     },
     background: {
-      default: '#333333',
+      default: "#333333",
     },
 
     secondary: {
-      main: '#DA344D',
+      main: "#DA344D",
     },
   },
 });
@@ -23,14 +23,24 @@ function AdminPage() {
     <ThemeProvider theme={theme}>
       <div
         style={{
-          background: '#ffffff',
-          position: 'fixed',
-          width: '100%',
-          zIndex: '3',
+          background: "#ffffff",
+          width: "100%",
+          zIndex: "3",
         }}
       >
-        <Stack direction="row" spacing={3} sx={{ padding: '1rem' }}>
+        <Stack direction="row" spacing={3} sx={{ padding: " 1rem" }}>
           <Typography>ADMINISTRATION</Typography>
+        </Stack>
+        <Stack
+          direction="row"
+          spacing={3}
+          sx={{
+            padding: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Link to="products">PRODUKTER</Link>
           <Link to="orders">ORDRAR</Link>
         </Stack>
