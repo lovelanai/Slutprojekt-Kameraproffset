@@ -1,6 +1,6 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ThemeProvider } from "@emotion/react";
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ThemeProvider } from '@emotion/react';
 import {
   Box,
   Button,
@@ -13,12 +13,12 @@ import {
   Input,
   Paper,
   Stack,
-} from "@mui/material";
-import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
-import RemoveCircleOutlineRoundedIcon from "@mui/icons-material/RemoveCircleOutlineRounded";
-import { Product } from "../interfaces/interfaces";
-import { createMedia, replaceMedia } from "../services/mediaService";
-import { addProduct, updateProduct } from "../services/productService";
+} from '@mui/material';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
+import { Product } from '../interfaces/interfaces';
+import { createMedia, replaceMedia } from '../services/mediaService';
+import { addProduct, updateProduct } from '../services/productService';
 
 interface Props {
   product?: Product;
@@ -27,23 +27,23 @@ interface Props {
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#333333",
-      contrastText: "#FBF7F5", //button text white instead of black
+      main: '#333333',
+      contrastText: '#FBF7F5', //button text white instead of black
     },
     background: {
-      default: "#333333",
+      default: '#333333',
     },
 
     secondary: {
-      main: "#DA344D",
+      main: '#DA344D',
     },
   },
 });
 
 class ImageDataWithInfo {
   file: File | undefined;
-  value: string = "";
-  info: string = "";
+  value: string = '';
+  info: string = '';
 
   constructor(value: string, info: string, file?: File) {
     this.file = file;
@@ -52,21 +52,21 @@ class ImageDataWithInfo {
   }
 }
 
-const brands = ["sony", "panasonic", "fujifilm", "canon", "leica"];
-const cameraTypes = ["systemkamera", "kompaktkamera", "mellanformatskamera"];
+const brands = ['sony', 'panasonic', 'fujifilm', 'canon', 'leica'];
+const cameraTypes = ['systemkamera', 'kompaktkamera', 'mellanformatskamera'];
 
 export default function AdminPageForm(props: Props) {
   const navigate = useNavigate();
 
   const initialValues = {
-    _id: props?.product?._id || "",
-    title: props?.product?.title || "",
-    longinfo: props?.product?.longinfo || "",
+    _id: props?.product?._id || '',
+    title: props?.product?.title || '',
+    longinfo: props?.product?.longinfo || '',
     info: props?.product?.info || [],
-    price: props?.product?.price || "",
+    price: props?.product?.price || '',
     quantity: props?.product?.quantity || 0,
     images: props?.product?.images || [],
-    category: props?.product?.category || { brand: "", type: "" },
+    category: props?.product?.category || { brand: '', type: '' },
 
     specifications: props?.product?.specifications || [],
   };
@@ -76,7 +76,7 @@ export default function AdminPageForm(props: Props) {
   );
 
   if (imagesWithInfoInitialState.length === 0) {
-    imagesWithInfoInitialState.push(new ImageDataWithInfo("", ""));
+    imagesWithInfoInitialState.push(new ImageDataWithInfo('', ''));
   }
 
   const [imagesWithInfo, setImagesWithInfo] = useState<ImageDataWithInfo[]>(
@@ -84,7 +84,7 @@ export default function AdminPageForm(props: Props) {
   );
 
   const addImageWithInfo = () => {
-    setImagesWithInfo([...imagesWithInfo, new ImageDataWithInfo("", "")]);
+    setImagesWithInfo([...imagesWithInfo, new ImageDataWithInfo('', '')]);
   };
 
   const removeImageWithInfo = (index: number) => {
@@ -101,12 +101,12 @@ export default function AdminPageForm(props: Props) {
   };
 
   const modalStyle = {
-    position: "absolute" as "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     width: 400,
-    bgcolor: "background.paper",
+    bgcolor: 'background.paper',
     // border: "2px solid #000",
     boxShadow: 24,
     p: 4,
@@ -118,7 +118,7 @@ export default function AdminPageForm(props: Props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    navigate("/admin/products");
+    navigate('/admin/products');
   };
 
   useEffect(() => {
@@ -133,8 +133,8 @@ export default function AdminPageForm(props: Props) {
   const addSpecification = () => {
     const specifications = value.specifications ?? [];
     specifications.push({
-      title: "",
-      value: "",
+      title: '',
+      value: '',
     });
 
     setValue({ ...value, specifications });
@@ -167,7 +167,7 @@ export default function AdminPageForm(props: Props) {
     /**This if-statement checks if the name of the target is price, if true, then it checks
      * if it includes anything else than numbers.
      */
-    if (evt.target.name === "price") {
+    if (evt.target.name === 'price') {
       if (!/^\d*$/.test(evt.target.value)) {
         setErrorInput({
           ...errorInput,
@@ -194,11 +194,11 @@ export default function AdminPageForm(props: Props) {
         }
 
         const formData = new FormData();
-        formData.append("media", image.file!);
+        formData.append('media', image.file!);
 
         if (
           props?.product?.images[index] &&
-          props?.product?.images[index].startsWith("http") !== true
+          props?.product?.images[index].startsWith('http') !== true
         ) {
           return replaceMedia(props.product.images[index], formData);
         } else {
@@ -283,16 +283,16 @@ export default function AdminPageForm(props: Props) {
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": {
+          '& .MuiTextField-root': {
             marginTop: 2,
             marginBottom: 2,
-            width: "100%",
+            width: '100%',
           },
         }}
         noValidate
         autoComplete="off"
       >
-        <div style={{ paddingBottom: "3rem", paddingTop: "1rem" }}>
+        <div style={{ paddingBottom: '3rem', paddingTop: '1rem' }}>
           <div>
             <TextField
               required
@@ -306,11 +306,11 @@ export default function AdminPageForm(props: Props) {
               value={value.title}
               helperText={
                 errorInput.title
-                  ? "Titeln måste vara minst ett tecken"
-                  : "Produktens titel"
+                  ? 'Titeln måste vara minst ett tecken'
+                  : 'Produktens titel'
               }
             />
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
               <TextField
                 required
                 id="outlined-number"
@@ -321,56 +321,56 @@ export default function AdminPageForm(props: Props) {
                 value={value.price}
                 helperText={
                   errorInput.price
-                    ? "Produktens pris får endast innehålla siffror"
-                    : "Produktens pris"
+                    ? 'Produktens pris får endast innehålla siffror'
+                    : 'Produktens pris'
                 }
               />
             </div>
 
-          {imagesWithInfo.map((image, index) => (
-            <Paper
-              key={index}
-              variant="outlined"
-              sx={{ padding: '1rem', marginBottom: '1rem' }}
-            >
-              <Stack direction="row">
-                <Box>
-                  <img
-                    src={
-                      image.file
-                        ? URL.createObjectURL(image.file)
-                        : image.value
-                        ? image.value.startsWith('http') === true
-                          ? image.value
-                          : `/api/media/${image.value}`
-                        : undefined
-                    }
-                    alt=""
-                    width="110"
-                    style={{ marginRight: '1rem' }}
-                  />
-                </Box>
-                <Box sx={{ minWidth: '70%', maxWidth: '1000px' }}>
-                  <Input
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                      handleImageChange(index, e)
-                    }
-                    name="image"
-                    type="file"
-                    inputProps={{ accept: 'image/*' }}
-                  />
-                  <TextField
-                    required
-                    multiline
-                    maxRows={6}
-                    id="outlined-Info1"
-                    label="Info"
-                    name="info"
-                    onChange={(
-                      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                    ) => handleInfoChange(index, e)}
-                    defaultValue={image.info}
-                    /* error={Boolean(errorInput.info1)}
+            {imagesWithInfo.map((image, index) => (
+              <Paper
+                key={index}
+                variant="outlined"
+                sx={{ padding: '1rem', marginBottom: '1rem' }}
+              >
+                <Stack direction="row">
+                  <Box>
+                    <img
+                      src={
+                        image.file
+                          ? URL.createObjectURL(image.file)
+                          : image.value
+                          ? image.value.startsWith('http') === true
+                            ? image.value
+                            : `/api/media/${image.value}`
+                          : undefined
+                      }
+                      alt=""
+                      width="110"
+                      style={{ marginRight: '1rem' }}
+                    />
+                  </Box>
+                  <Box sx={{ minWidth: '70%', maxWidth: '1000px' }}>
+                    <Input
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        handleImageChange(index, e)
+                      }
+                      name="image"
+                      type="file"
+                      inputProps={{ accept: 'image/*' }}
+                    />
+                    <TextField
+                      required
+                      multiline
+                      maxRows={6}
+                      id="outlined-Info1"
+                      label="Info"
+                      name="info"
+                      onChange={(
+                        e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                      ) => handleInfoChange(index, e)}
+                      defaultValue={image.info}
+                      /* error={Boolean(errorInput.info1)}
 
                 helperText={
                   errorInput.info1
@@ -379,27 +379,26 @@ export default function AdminPageForm(props: Props) {
                 }
                 value={value.info1}
                 */
-                      />
-                    </Box>
-                    <Stack
-                      flexGrow="1"
-                      justifyContent="center"
-                      alignItems="flex-end"
-                    >
-                      <div className="product-image-buttons">
-                        <Button onClick={addImageWithInfo}>
-                          <AddCircleOutlineRoundedIcon
-                            sx={{ height: "2em", width: "2em" }}
-                          />
-                        </Button>
-                        <Button onClick={() => removeImageWithInfo(index)}>
-                          <RemoveCircleOutlineRoundedIcon
-                            sx={{ height: "2em", width: "2em" }}
-                          />
-                        </Button>
-                      </div>
-                    </Stack>
-                  </div>
+                    />
+                  </Box>
+                  <Stack
+                    flexGrow="1"
+                    justifyContent="center"
+                    alignItems="flex-end"
+                  >
+                    <div className="product-image-buttons">
+                      <Button onClick={addImageWithInfo}>
+                        <AddCircleOutlineRoundedIcon
+                          sx={{ height: '2em', width: '2em' }}
+                        />
+                      </Button>
+                      <Button onClick={() => removeImageWithInfo(index)}>
+                        <RemoveCircleOutlineRoundedIcon
+                          sx={{ height: '2em', width: '2em' }}
+                        />
+                      </Button>
+                    </div>
+                  </Stack>
                 </Stack>
               </Paper>
             ))}
@@ -415,8 +414,8 @@ export default function AdminPageForm(props: Props) {
               error={Boolean(errorInput.longinfo)}
               helperText={
                 errorInput.longinfo
-                  ? "Produktinfo får inte vara tom"
-                  : "Produktens långa info"
+                  ? 'Produktinfo får inte vara tom'
+                  : 'Produktens långa info'
               }
               value={value.longinfo}
             />
@@ -431,8 +430,8 @@ export default function AdminPageForm(props: Props) {
               error={Boolean(errorInput.quantity)}
               helperText={
                 errorInput.quantity
-                  ? "Ange antal i lager"
-                  : "Produktens antal i lager"
+                  ? 'Ange antal i lager'
+                  : 'Produktens antal i lager'
               }
               value={value.quantity}
             />
@@ -446,7 +445,7 @@ export default function AdminPageForm(props: Props) {
                   label="Spec title"
                   name={`title`}
                   onChange={(e) => handleSpecChange(index, e)}
-                  helperText={"Specifikationstitel " + (index + 1)}
+                  helperText={'Specifikationstitel ' + (index + 1)}
                   value={value.specifications[index].title}
                 />
                 <TextField
@@ -457,7 +456,7 @@ export default function AdminPageForm(props: Props) {
                   label="Spec info"
                   name={`value`}
                   onChange={(e) => handleSpecChange(index, e)}
-                  helperText={"Ange specifikationsinfo " + (index + 1)}
+                  helperText={'Ange specifikationsinfo ' + (index + 1)}
                   value={value.specifications[index].value}
                 />
               </div>
@@ -465,7 +464,7 @@ export default function AdminPageForm(props: Props) {
 
             <div>
               <Button
-                style={{ marginBottom: "1rem" }}
+                style={{ marginBottom: '1rem' }}
                 onClick={addSpecification}
                 variant="outlined"
               >
@@ -473,7 +472,7 @@ export default function AdminPageForm(props: Props) {
               </Button>
             </div>
             <p>Varumärke</p>
-            <div style={{ marginBottom: "1rem" }}>
+            <div style={{ marginBottom: '1rem' }}>
               <ToggleButtonGroup
                 color="primary"
                 value={value.category.brand}
@@ -484,7 +483,7 @@ export default function AdminPageForm(props: Props) {
                 {brands.map((brand, index) => (
                   <ToggleButton
                     key={index}
-                    style={{ marginLeft: "0.5rem" }}
+                    style={{ marginLeft: '0.5rem' }}
                     value={brand}
                   >
                     {brand}
@@ -494,7 +493,7 @@ export default function AdminPageForm(props: Props) {
             </div>
 
             <p>Kameratyp</p>
-            <div style={{ marginBottom: "1rem" }}>
+            <div style={{ marginBottom: '1rem' }}>
               <ToggleButtonGroup
                 color="primary"
                 value={value.category.type}
@@ -505,7 +504,7 @@ export default function AdminPageForm(props: Props) {
                 {cameraTypes.map((type, index) => (
                   <ToggleButton
                     key={index}
-                    style={{ marginLeft: "0.5rem" }}
+                    style={{ marginLeft: '0.5rem' }}
                     value={type}
                   >
                     {type}
@@ -533,7 +532,7 @@ export default function AdminPageForm(props: Props) {
           >
             <Box sx={modalStyle}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                {props?.product ? "Produkt uppdaterad" : "Produkten tillagd"}
+                {props?.product ? 'Produkt uppdaterad' : 'Produkten tillagd'}
               </Typography>
             </Box>
           </Modal>
