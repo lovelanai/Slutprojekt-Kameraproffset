@@ -41,19 +41,27 @@ function Header() {
                 {!isLoggedIn ? (
                     <div>
                         <Link to="/login">
-                            <Button className="loginButton" startIcon={<LoginIcon/>}>
+                            <Button className="loginButton" startIcon={<LoginIcon />}>
                                 Logga in
                             </Button>
                         </Link>
                     </div>
                 ) : (
                     <div className="headerButtons">
+                        {user?.isAdmin === false ? (
+                            <Button
+                                className="orderBtn"
+                                style={{color: '#FEF9DC'}}
+                            >
+                                Ordrar
+                            </Button>
+                            ) : null }
                         {user?.isAdmin ? (
                             <Link to="/admin">
                                 <Button
                                     className="administrationBtn"
                                     style={{color: '#FEF9DC'}}
-                                    startIcon={<AdminPanelSettingsIcon/>}
+                                    startIcon={<AdminPanelSettingsIcon />}
                                 >
                                     Administration
                                 </Button>
@@ -62,7 +70,7 @@ function Header() {
                         <Button
                             className="logoutBtn"
                             style={{color: '#FEF9DC'}}
-                            startIcon={<LogoutIcon/>}
+                            startIcon={<LogoutIcon />}
                             onClick={logoutHandler}
                         >
                             Logga ut
