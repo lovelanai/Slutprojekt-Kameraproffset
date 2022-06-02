@@ -72,6 +72,14 @@ header img {
   opacity: 0;
 }
 
+.administrationBtn {
+  margin-left: 1rem;
+}
+
+.logoutBtn {
+  margin-left: 1rem;
+}
+
 @keyframes smalllogo {
   0% {
     opacity: 0;
@@ -119,12 +127,13 @@ header img {
 
   .show-products .administrationBtn {
     font-size: 9px;
+    margin-left: 0;
 
   }
 
   .show-products .logoutBtn {
     font-size: 9px;
-    margin: 0;
+    margin-left: 0;
     padding: 0.3rem 1rem 0 0;
 
   }
