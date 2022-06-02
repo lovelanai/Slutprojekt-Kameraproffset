@@ -47,10 +47,11 @@ function Header() {
             </Link>
           </div>
         ) : (
-          <div>
+          <div className="headerButtons">
             {user?.isAdmin ? (
               <Link to="/admin">
                 <Button
+                    className="administrationBtn"
                   style={{ color: '#FEF9DC', marginLeft: '1rem' }}
                   startIcon={<AdminPanelSettingsIcon />}
                 >
@@ -59,6 +60,7 @@ function Header() {
               </Link>
             ) : null}
             <Button
+                className="logoutBtn"
               style={{ color: '#FEF9DC', marginLeft: '1rem' }}
               startIcon={<LogoutIcon />}
               onClick={logoutHandler}

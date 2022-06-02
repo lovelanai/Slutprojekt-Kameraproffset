@@ -102,11 +102,42 @@ header img {
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 800px) {
+  .headerButtons {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 500px) {
   .show-products #smallLogo {
     top: 1.4rem;
     left: calc(50vw - 3.5rem);
     height: 3.5rem;
     width: 7rem;
   }
+
+  .show-products .administrationBtn {
+    font-size: 9px;
+
+  }
+
+  .show-products .logoutBtn {
+    font-size: 9px;
+    margin: 0;
+    padding: 0.3rem 1rem 0 0;
+
+  }
+
+  .headerButtons {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .show-products .loginButton {
+    font-size: 9px;
+  }
+
+
+
 }
