@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import 'cookie-session';
 
 export function assertIsLoggedIn(req: Request, res: Response, message: string) {
   if (req.session?.user === undefined) {
