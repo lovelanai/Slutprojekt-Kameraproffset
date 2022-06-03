@@ -26,7 +26,7 @@ mongodb+srv://grupp1:12345@cluster1.z3nab.mongodb.net/test?retryWrites=true&w=ma
 
 ## Login details for Admin authority
 ```
-email: admin
+email: admin@admin.com
 password: admin
 ```
 
