@@ -241,12 +241,6 @@ export default function AdminPageForm(props: Props) {
       value.title?.length &&
       value.price?.toString().length &&
       value.longinfo?.length &&
-      // value.image?.length &&
-      // value.image2?.length &&
-      // value.image3?.length &&
-      // value.info1?.length &&
-      // value.info2?.length &&
-      // value.info3?.length &&
       value.quantity?.toString().length
     ) {
       return false;

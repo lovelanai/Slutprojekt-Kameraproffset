@@ -18,7 +18,6 @@ export interface Product {
   quantity: number;
   images: string[];
   category: Category;
-  // cameratype: CameraType[];
   specifications: Specification[];
 }
 
@@ -33,7 +32,6 @@ export const productSchema = new mongoose.Schema({
     brand: { type: String },
     type: { type: String },
   },
-  // cameratype: { type: [String] },
 
   specifications: [
     {

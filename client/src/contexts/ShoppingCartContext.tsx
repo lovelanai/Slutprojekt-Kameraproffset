@@ -1,7 +1,6 @@
 import { createContext, FC, useContext, useState, useEffect } from 'react';
 import { Product } from '../interfaces/interfaces';
 
-
 export interface ContextValue {
   cartItems: Product[];
   amountOfProducts: number;
@@ -24,18 +23,21 @@ const ShoppingCartProvider: FC = (props) => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
   const [amountOfProducts, setAmountOfProducts] = useState<number>(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  
- useEffect(() => {
-   const items: Product[] = JSON.parse(localStorage.getItem('cartItems') || '[]');
-   const amount = items.map((product) => product.quantity).reduce((previous, current) => previous + current, 0);
-   setCartItems(items);
-   setAmountOfProducts(amount);
- }, [])
+
+  useEffect(() => {
+    const items: Product[] = JSON.parse(
+      localStorage.getItem('cartItems') || '[]'
+    );
+    const amount = items
+      .map((product) => product.quantity)
+      .reduce((previous, current) => previous + current, 0);
+    setCartItems(items);
+    setAmountOfProducts(amount);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    console.log(cartItems)
-  }, [cartItems])
+  }, [cartItems]);
 
   /**
    * This function adds a product to the cartItems-array.
@@ -43,8 +45,6 @@ const ShoppingCartProvider: FC = (props) => {
    * @param product This is the product we want to add.
    */
   function HandleAddProduct(product: Product) {
-
-
     const productExists = cartItems.find((item) => item._id === product._id);
     // If the product already exist we won't add it to the array again,
     // we will just set its quantity to plus one
@@ -61,7 +61,6 @@ const ShoppingCartProvider: FC = (props) => {
     }
     setAmountOfProducts(amountOfProducts + 1);
     setTotalPrice(totalPrice + product.price);
-
   }
 
   function emptyCart() {

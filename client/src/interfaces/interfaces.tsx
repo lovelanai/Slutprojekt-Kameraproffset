@@ -99,4 +99,5 @@ export interface Order {
   payment: Payment;
   shipment: Shipment;
   orderDate: Date;
+  sent: Date | null;
 }

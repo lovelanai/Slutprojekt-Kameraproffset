@@ -65,7 +65,6 @@ const ConfirmationProvider: FC = (props) => {
     } else {
       alert('Fel användarnamn eller lösenord');
       setIsLoggedIn(false);
-      console.log('Du är utloggad');
     }
   };
 
@@ -80,10 +79,8 @@ const ConfirmationProvider: FC = (props) => {
     }).then((result) => {
       if (result.ok) {
         setIsLoggedIn(true);
-        console.log('nu är du inloggad');
       } else {
         setIsLoggedIn(false);
-        console.log('Du är utloggad');
       }
 
       return result;
