@@ -10,6 +10,10 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useUser} from '../contexts/UserContext';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
+import * as React from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const theme = createTheme({
     palette: {
@@ -35,6 +39,16 @@ function Header() {
         e.preventDefault();
         logout();
     };
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    
     return (
         <ThemeProvider theme={theme}>
             <header id="header" className="show-products">
@@ -49,7 +63,31 @@ function Header() {
                 ) : (
                     <div className="headerButtons">
                         {user?.isAdmin === false ? (
-                            <Link to="/myOrders">
+                            <div>
+                                    <div>
+      <Button
+     style={{color:"#fffadd"}}
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        <AccountCircleIcon/>
+      </Button>
+ 
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+
+      >
+          
+        <MenuItem onClick={handleClose}> <Link to="/myOrders">
                                 <Button
                                     className="orderBtn"
                                     style={{color: '#FEF9DC'}}
@@ -57,19 +95,9 @@ function Header() {
                                     Dina Ordrar
                                 </Button>
                             </Link>
-                            ) : null }
-                        {user?.isAdmin ? (
-                            <Link to="/admin">
-                                <Button
-                                    className="administrationBtn"
-                                    style={{color: '#FEF9DC'}}
-                                    startIcon={<AdminPanelSettingsIcon />}
-                                >
-                                    Administration
-                                </Button>
-                            </Link>
-                        ) : null}
-                        <Button
+                            </MenuItem>
+        <MenuItem onClick={handleClose}>
+                          <Button
                             className="logoutBtn"
                             style={{color: '#FEF9DC'}}
                             startIcon={<LogoutIcon />}
@@ -77,6 +105,68 @@ function Header() {
                         >
                             Logga ut
                         </Button>
+        </MenuItem>
+      </Menu>
+   
+    </div>
+                           
+                 
+                        </div>
+                            ) : null }
+                        {user?.isAdmin ? (
+                            <div    className='administrationBtn show-products icon'>
+                                                      <div>
+      <Button
+
+     style={{color:"#fffadd"}}
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+       <AdminPanelSettingsIcon     />
+      </Button>
+ 
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+
+      >
+          
+        <MenuItem onClick={handleClose}> 
+                           <Link to="/admin">
+                                <Button
+                                    className="administrationBtn"
+                                    style={{color: '#FEF9DC'}}
+                               
+                                >
+                                    Administration
+                                </Button>
+                            </Link>
+                            </MenuItem>
+        <MenuItem onClick={handleClose}>
+                          <Button
+                            className="logoutBtn"
+                            style={{color: '#FEF9DC'}}
+                            startIcon={<LogoutIcon />}
+                            onClick={logoutHandler}
+                        >
+                            Logga ut
+                        </Button>
+        </MenuItem>
+      </Menu>
+   
+    </div>
+
+                        </div>
+                        ) : null}
+         
                     </div>
                 )}
 

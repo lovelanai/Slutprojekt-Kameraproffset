@@ -29,7 +29,7 @@ function Store() {
   return (
     <div>
       {displayFilter ? (
-        <div style={{ display: "flex" }}>
+        <div className="store-container">
           <div className="filter-bar">
             <FilterBar />
           </div>
