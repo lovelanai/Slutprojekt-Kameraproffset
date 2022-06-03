@@ -5,14 +5,12 @@ export interface Shipment {
   title: string;
   price: number;
   info: string;
-  image: string;
 }
 
 export const shipmentSchema = new mongoose.Schema({
   title: { type: String },
   price: { type: Number },
   info: { type: String },
-  image: { type: String },
 });
 
 export const ShipmentModel = mongoose.model<Shipment>(

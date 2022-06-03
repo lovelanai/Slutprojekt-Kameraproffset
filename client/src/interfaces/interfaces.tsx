@@ -25,7 +25,6 @@ export interface Delivery {
   title: string;
   price: number;
   info: string;
-  image: string;
 }
 
 export interface ShipperSelection {
