@@ -15,7 +15,7 @@ import { mediaRouter } from "./media/media-router";
 
 require('dotenv').config();
 
-const PORT = 4000;
+const PORT = 4100;
 const app = express();
 
 // global middlewares

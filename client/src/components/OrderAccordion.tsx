@@ -62,17 +62,19 @@ function OrderAccordion(props: OrderAccordionProps) {
     <Accordion
       sx={{ width: '80%', margin: 'auto', marginBottom: '0.5rem' }}
       disableGutters
+         style={{marginBottom:"1rem"}}
     >
       <AccordionSummary sx={{ width: '100%' }}>
         <Stack
           direction="row"
           sx={{ width: '100%', flexShrink: '0', padding: '1ex 2ex' }}
           justifyContent="space-between"
+       
         >
           <div className="order-user-info">
-            <Box>
+            <Box >
               <Typography>Ordernummer: {order._id}</Typography>
-              <Typography>Användare: {order.user.email}</Typography>
+              <Typography>Användare: {order.email}</Typography>
             </Box>
             <Box sx={{ textAlign: 'right' }}>
               <Typography>{orderDateStr}</Typography>
@@ -82,7 +84,7 @@ function OrderAccordion(props: OrderAccordionProps) {
         </Stack>
       </AccordionSummary>
       <AccordionDetails sx={{ padding: '2rem' }}>
-        <div className="order-details">
+        <div className="order-details" >
           <h3>Personuppgifter</h3>
           <Grid
             display="grid"

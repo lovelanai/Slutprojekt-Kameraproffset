@@ -15,7 +15,7 @@ export default function MyOrders() {
         <div className="myOrderContainer">
             <h3 style={{margin: '2rem'}}>Dina ordrar</h3>
             {orders.map((order, index) => (
-                <div key={index}>
+                <div className="myOrders" key={index}>
                     <OrderAccordion order={order}/>
                 </div>
             ))}

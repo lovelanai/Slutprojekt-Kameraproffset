@@ -16,8 +16,8 @@
 }
 
 .InfoContainer {
-  min-height: 12rem;
   color: black;
+  min-height: 12rem;
 }
 
 .buttons {
@@ -39,12 +39,12 @@
     height: 100%;
   }
 
-  .item-short-info {
+  .item-short-info{
     display: none;
   }
 
   .InfoContainer {
-    height: auto;
+    min-height: 0;
     color: black;
   }
 

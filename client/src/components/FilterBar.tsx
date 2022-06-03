@@ -23,7 +23,7 @@ export default function FilterBar() {
   const activebuttonBrand = `#${brand}`;
   const activebuttonType = `#${type}`;
   return (
-    <Container>
+    <Container className="filterbar-content">
       <Nav
         variant="pills"
         activeKey={activebuttonBrand}
@@ -31,7 +31,6 @@ export default function FilterBar() {
           color: "white",
           height: "100%",
           justifyContent: "center",
-
           position: "relative",
           flexDirection: "column",
         }}
@@ -42,7 +41,7 @@ export default function FilterBar() {
             position: "absolute",
             top: "4px",
             right: "-12px",
-            color: "white",
+            color: "#fffadd",
           }}
         >
           <CloseIcon />
@@ -51,6 +50,7 @@ export default function FilterBar() {
           <h3>Varumärke</h3>
           <hr />
 
+        <div className="brands-container">
           <Nav.Item>
             <Nav.Link href="#sony" onClick={sony}>
               Sony
@@ -77,13 +77,14 @@ export default function FilterBar() {
               Leica
             </Nav.Link>
           </Nav.Item>
+          </div>
         </div>
       </Nav>
       <Nav
         variant="pills"
         activeKey={activebuttonType}
         style={{
-          color: "white",
+          color: "#fffadd",
           height: "100%",
           justifyContent: "center",
 
@@ -112,7 +113,7 @@ export default function FilterBar() {
           </Nav.Item>
         </div>
         <hr />
-        <Nav.Item>
+        <Nav.Item style={{    marginBottom: "1rem"}}>
           <Nav.Link onClick={resetfilter}>
             Nollställ Filter <RestartAltIcon />
           </Nav.Link>
