@@ -1,4 +1,4 @@
-# ![KAMERPROFFSET](src/assets/img/smallogo.png)
+# ![KAMERPROFFSET](client/src/assets/img/smallogo.png)
 
 ## Projektbeskrivning 📃
 
@@ -19,6 +19,17 @@ cd client npm install följt av npm start
 
 ```
 
+## MongoDB connection string
+```
+mongodb+srv://grupp1:12345@cluster1.z3nab.mongodb.net/test?retryWrites=true&w=majority
+```
+
+## Login details for Admin authority
+```
+email: admin
+password: admin
+```
+
 ## [Material UI](https://mui.com/getting-started/installation/) 📦
 
 This project was built using components from the component-library _Material UI_.
@@ -29,13 +40,15 @@ Click [here](https://mui.com/getting-started/installation/) to read more about _
 
 ## Created by:
 
----
+
 
 ## Anna Özmehak [**Github**](https://github.com/A-Ozmehak)
 
 ## Olivia Isberg [**Github**](https://github.com/OliviaIsberg)
 
 ## Love Lanai [**Github**](https://github.com/lovelanai)
+
+---
 
 ### Uppfyllda kriterier för godkänt
 
