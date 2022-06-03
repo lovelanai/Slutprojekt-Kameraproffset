@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Order } from '../interfaces/interfaces';
-import { getAllOrders } from '../services/orderService';
-import OrderAccordion from './OrderAccordion';
+import { useEffect, useState } from "react";
+import { Order } from "../interfaces/interfaces";
+import { getAllOrders } from "../services/orderService";
+import OrderAccordion from "./OrderAccordion";
 
 export default function AdminOrderPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -18,7 +18,16 @@ export default function AdminOrderPage() {
   };
 
   return (
-    <div style={{ background: '#999', padding: '5ex 0' }}>
+    <div
+      style={{
+        background: "#999",
+        padding: "5ex 0",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column-reverse",
+      }}
+    >
       {orders.map((order, index) => (
         <div key={index} className="orders">
           <OrderAccordion
