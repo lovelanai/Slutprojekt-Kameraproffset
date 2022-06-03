@@ -6,12 +6,12 @@ import {
   Stack,
   styled,
   Typography,
-} from "@mui/material";
+} from '@mui/material';
 import MuiAccordionSummary, {
   AccordionSummaryProps,
-} from "@mui/material/AccordionSummary";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import { Order } from "../interfaces/interfaces";
+} from '@mui/material/AccordionSummary';
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import { Order } from '../interfaces/interfaces';
 
 interface OrderAccordionProps {
   order: Order;
@@ -19,18 +19,18 @@ interface OrderAccordionProps {
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
+    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
     {...props}
   />
 ))(({ theme }) => ({
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper": {
-    marginLeft: "3ex",
+  flexDirection: 'row-reverse',
+  '& .MuiAccordionSummary-expandIconWrapper': {
+    marginLeft: '3ex',
   },
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
+  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+    transform: 'rotate(90deg)',
   },
-  "& .MuiAccordionSummary-content": {
+  '& .MuiAccordionSummary-content': {
     marginLeft: theme.spacing(1),
   },
 }));
@@ -41,32 +41,32 @@ function OrderAccordion(props: OrderAccordionProps) {
     .map((product) => product.price * product.quantity)
     .reduce((current, previous) => current + previous);
 
-  const priceVAT = price * 1.25;
-  const priceTotal = priceVAT + order.payment.price + order.shipment.price;
+  // const priceVAT = price;
+  const priceTotal = price + order.payment.price + order.shipment.price;
 
   const orderDate = new Date(order.orderDate);
   const orderDateStr =
     orderDate.getFullYear().toString() +
-    "-" +
-    (orderDate.getMonth() + 1).toString().padStart(2, "0") +
-    "-" +
-    orderDate.getDate().toString().padStart(2, "0") +
-    " " +
-    orderDate.getHours().toString().padStart(2, "0") +
-    ":" +
-    orderDate.getMinutes().toString().padStart(2, "0") +
-    ":" +
-    orderDate.getSeconds().toString().padStart(2, "0");
+    '-' +
+    (orderDate.getMonth() + 1).toString().padStart(2, '0') +
+    '-' +
+    orderDate.getDate().toString().padStart(2, '0') +
+    ' ' +
+    orderDate.getHours().toString().padStart(2, '0') +
+    ':' +
+    orderDate.getMinutes().toString().padStart(2, '0') +
+    ':' +
+    orderDate.getSeconds().toString().padStart(2, '0');
 
   return (
     <Accordion
-      sx={{ width: "80%", margin: "auto", marginBottom: "0.5rem" }}
+      sx={{ width: '80%', margin: 'auto', marginBottom: '0.5rem' }}
       disableGutters
     >
-      <AccordionSummary sx={{ width: "100%" }}>
+      <AccordionSummary sx={{ width: '100%' }}>
         <Stack
           direction="row"
-          sx={{ width: "100%", flexShrink: "0", padding: "1ex 2ex" }}
+          sx={{ width: '100%', flexShrink: '0', padding: '1ex 2ex' }}
           justifyContent="space-between"
         >
           <div className="order-user-info">
@@ -74,14 +74,14 @@ function OrderAccordion(props: OrderAccordionProps) {
               <Typography>Ordernummer: {order._id}</Typography>
               <Typography>Användare: {order.user.email}</Typography>
             </Box>
-            <Box sx={{ textAlign: "right" }}>
+            <Box sx={{ textAlign: 'right' }}>
               <Typography>{orderDateStr}</Typography>
               <Typography>{priceTotal}:-</Typography>
             </Box>
           </div>
         </Stack>
       </AccordionSummary>
-      <AccordionDetails sx={{ padding: "2rem" }}>
+      <AccordionDetails sx={{ padding: '2rem' }}>
         <div className="order-details">
           <h3>Personuppgifter</h3>
           <Grid
@@ -128,17 +128,17 @@ function OrderAccordion(props: OrderAccordionProps) {
           <h3>Produkter</h3>
           {order.products?.map((product, index) => (
             <Accordion key={index} disableGutters>
-              <AccordionSummary sx={{ width: "100%" }}>
-                <Box sx={{ width: "100%" }}>
+              <AccordionSummary sx={{ width: '100%' }}>
+                <Box sx={{ width: '100%' }}>
                   <h4>{product.title}</h4>
                   <div className="order-accordion-product-container">
                     <Stack
                       direction="row"
-                      sx={{ padding: "1ex 2ex" }}
+                      sx={{ padding: '1ex 2ex' }}
                       justifyContent="space-between"
                     >
                       <img
-                        style={{ width: "5rem" }}
+                        style={{ width: '5rem' }}
                         src={`/api/media/${product.images[0]}`}
                         alt=""
                       />
@@ -151,7 +151,7 @@ function OrderAccordion(props: OrderAccordionProps) {
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
-                <Box sx={{ width: "100%" }}>
+                <Box sx={{ width: '100%' }}>
                   <p>{product.longinfo}</p>
                   {product.info.map((info, index) => (
                     <p key={index}>{info}</p>

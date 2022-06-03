@@ -494,14 +494,15 @@ export default function CheckOutAccordion() {
                 ))}
               </div>
               <hr />
-              Totalpris:{' '}
+              {/* Totalpris:{' '} */}
+              Total:
               {totalCost +
                 checkboxesPay.find((item) => item.paychecked === true)
                   ?.paymethod.price! +
                 checkboxes.find((item) => item.checked === true)?.shipper
                   .price!}{' '}
               kr
-              <div>Moms: {totalCost * 0.25} kr</div>
+              {/* <div>Total: {totalCost} kr</div> */}
             </div>
             <br />
             {/* If shipping and payment has not been choosen, the button is disabled. If they have been choosen
