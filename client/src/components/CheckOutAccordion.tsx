@@ -38,6 +38,7 @@ import {
 import './css/CheckOutAccordion.css';
 import { createOrder } from '../services/orderService';
 import { useError } from '../contexts/ErrorContext';
+import { textAlign } from '@mui/system';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -363,6 +364,7 @@ export default function CheckOutAccordion() {
                     display: 'flex',
                     flexDirection: 'row',
                     padding: '1rem 0',
+                    textAlign: 'center',
                   }}
                 >
                   <FormControlLabel
@@ -387,11 +389,9 @@ export default function CheckOutAccordion() {
                       />
                     }
                     label={
-                      <img
-                        className="shipper-img"
-                        src={checkbox.shipper.image}
-                        alt=""
-                      />
+                      <div className="info">
+                        <p>{checkbox.shipper.title}</p>
+                      </div>
                     }
                   />
 
