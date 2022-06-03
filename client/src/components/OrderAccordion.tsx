@@ -2,19 +2,26 @@ import {
   Accordion,
   AccordionDetails,
   Box,
+  Button,
   Grid,
   Stack,
   styled,
   Typography,
+  Checkbox,
 } from '@mui/material';
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from '@mui/material/AccordionSummary';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import { Order } from '../interfaces/interfaces';
+import { ChangeEvent, useState } from 'react';
+import { markOrderAsSent } from '../services/orderService';
+// import { getAllOrders, updateOrder } from '../services/orderService';
 
 interface OrderAccordionProps {
   order: Order;
+  admin?: Boolean;
+  updateOrder?: (order: Order) => void;
 }
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
@@ -36,6 +43,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
 }));
 
 function OrderAccordion(props: OrderAccordionProps) {
+  const [sent, setIsSent] = useState(props.order.sent !== null);
   const order = props.order;
   const price = order.products
     .map((product) => product.price * product.quantity)
@@ -57,6 +65,33 @@ function OrderAccordion(props: OrderAccordionProps) {
     orderDate.getMinutes().toString().padStart(2, '0') +
     ':' +
     orderDate.getSeconds().toString().padStart(2, '0');
+
+  let sentOrderDateStr = '';
+  if (order.sent !== null) {
+    const sentOrderDate = new Date(order.sent);
+    sentOrderDateStr =
+      sentOrderDate.getFullYear().toString() +
+      '-' +
+      (sentOrderDate.getMonth() + 1).toString().padStart(2, '0') +
+      '-' +
+      sentOrderDate.getDate().toString().padStart(2, '0') +
+      ' ' +
+      sentOrderDate.getHours().toString().padStart(2, '0') +
+      ':' +
+      sentOrderDate.getMinutes().toString().padStart(2, '0') +
+      ':' +
+      sentOrderDate.getSeconds().toString().padStart(2, '0');
+  }
+
+  async function handleClick(order: Order, sent: Boolean) {
+    markOrderAsSent(order, sent)
+      .then((result) => result.json())
+      .then((order) => {
+        if (props.updateOrder) props.updateOrder(order);
+      });
+
+    // etProduct(id).then((p) => setProduct(p));
+  }
 
   return (
     <Accordion
@@ -162,6 +197,27 @@ function OrderAccordion(props: OrderAccordionProps) {
           ))}
           <hr />
           <Typography>Totalpris: {priceTotal}:-</Typography>
+          <Box>
+            {props.admin ? (
+              <>
+                <Typography>Status: </Typography>
+                <Checkbox
+                  checked={sent}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setIsSent(e.target.checked)
+                  }
+                />
+                <Button onClick={() => handleClick(order, sent)}>
+                  Skickad
+                </Button>
+              </>
+            ) : null}
+            <Typography component="p">
+              {order.sent !== null
+                ? 'Order skickad ' + sentOrderDateStr
+                : 'Order inte skickad'}
+            </Typography>
+          </Box>
         </div>
       </AccordionDetails>
     </Accordion>

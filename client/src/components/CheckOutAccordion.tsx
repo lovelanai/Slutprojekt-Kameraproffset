@@ -108,9 +108,7 @@ export default function CheckOutAccordion() {
     checked: false,
   }));
 
-  useEffect(() => {
-    console.log(createOrderBody);
-  }, [createOrderBody]);
+  useEffect(() => {}, [createOrderBody]);
 
   useEffect(() => {
     getAllShipmentMethods().then((s) => {
@@ -223,7 +221,7 @@ export default function CheckOutAccordion() {
         error?.setErrorMessage(err.error);
         error?.handleOpen();
       })
-      .catch((error) => console.log('dasdas'));
+      .catch((error) => console.log(error));
   };
 
   return (

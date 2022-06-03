@@ -41,7 +41,6 @@ export const deleteProduct = asyncHandler(
     );
 
     const product = await ProductModel.findByIdAndDelete(req.params.id);
-    console.log('delete product');
     res.status(200).json(product);
   }
 );
@@ -57,10 +56,6 @@ export const updateProduct = asyncHandler(
     const { id } = req.params;
 
     await ProductModel.findByIdAndUpdate(id, req.body);
-
-    console.log(req.body);
-
-    console.log('updateProduct');
 
     res.status(200).json({
       new: req.body,

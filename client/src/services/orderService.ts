@@ -18,4 +18,17 @@ const getAllOrders = async (): Promise<Order[]> =>
 const getMyOrders = async (): Promise<Order[]> =>
   fetch('/api/myorders').then((response) => response.json());
 
-export { createOrder, getAllOrders, getMyOrders };
+const markOrderAsSent = async (
+  order: Order,
+  sent: Boolean
+): Promise<Response> =>
+  fetch(`/api/order/send/${order._id}`, {
+    method: 'PUT',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ sent }),
+  });
+
+export { createOrder, getAllOrders, getMyOrders, markOrderAsSent };

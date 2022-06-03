@@ -74,5 +74,5 @@ Click [here](https://mui.com/getting-started/installation/) to read more about _
 
 1. [x] Administratörer ska kunna redigera vilka kategorier en produkt tillhör (VG)
 2. [x] Backendapplikationen måste ha en fungerande global felhantering (VG)
-3. [x] Administratörer ska kunna lägga till och ta bort produkter
+3. [x] Administratörer ska kunna lägga till och ta bort produkter (VG)
    - =)
