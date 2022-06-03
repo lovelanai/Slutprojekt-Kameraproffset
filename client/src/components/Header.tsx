@@ -49,12 +49,14 @@ function Header() {
                 ) : (
                     <div className="headerButtons">
                         {user?.isAdmin === false ? (
-                            <Button
-                                className="orderBtn"
-                                style={{color: '#FEF9DC'}}
-                            >
-                                Ordrar
-                            </Button>
+                            <Link to="/myOrders">
+                                <Button
+                                    className="orderBtn"
+                                    style={{color: '#FEF9DC'}}
+                                >
+                                    Dina Ordrar
+                                </Button>
+                            </Link>
                             ) : null }
                         {user?.isAdmin ? (
                             <Link to="/admin">
