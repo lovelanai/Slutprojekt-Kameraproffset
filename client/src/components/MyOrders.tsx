@@ -4,8 +4,6 @@ import { getMyOrders } from "../services/orderService";
 import OrderAccordion from "./OrderAccordion";
 import './css/MyOrders.css';
 
-
-
 export default function MyOrders() {
     const [orders, setOrders] = useState<Order[]>([]);
 
@@ -15,7 +13,7 @@ export default function MyOrders() {
 
     return (
         <div className="myOrderContainer">
-            <h3>Dina ordrar</h3>
+            <h3 style={{margin: '2rem'}}>Dina ordrar</h3>
             {orders.map((order, index) => (
                 <div key={index}>
                     <OrderAccordion order={order}/>
