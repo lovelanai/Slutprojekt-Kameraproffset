@@ -35,7 +35,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   },
 }));
 
-function OrderAccoridion(props: OrderAccordionProps) {
+function OrderAccordion(props: OrderAccordionProps) {
   const order = props.order;
   const price = order.products
     .map((product) => product.price * product.quantity)
@@ -168,4 +168,4 @@ function OrderAccoridion(props: OrderAccordionProps) {
   );
 }
 
-export default OrderAccoridion;
+export default OrderAccordion;

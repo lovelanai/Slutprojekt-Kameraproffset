@@ -72,6 +72,14 @@ header img {
   opacity: 0;
 }
 
+.administrationBtn {
+  margin-left: 1rem;
+}
+
+.logoutBtn {
+  margin-left: 1rem;
+}
+
 @keyframes smalllogo {
   0% {
     opacity: 0;
@@ -102,11 +110,48 @@ header img {
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 800px) {
+  .headerButtons {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 500px) {
   .show-products #smallLogo {
     top: 1.4rem;
     left: calc(50vw - 3.5rem);
     height: 3.5rem;
     width: 7rem;
   }
+
+  .show-products .administrationBtn {
+    font-size: 8px;
+    margin-left: 0;
+
+  }
+
+  .show-products .logoutBtn {
+    font-size: 8px;
+    margin-left: 0;
+    padding: 0.3rem 0 0 4px;
+
+  }
+
+  .headerButtons {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .show-products .loginButton {
+    font-size: 8px;
+  }
+
+  .show-products .orderBtn {
+    font-size: 8px;
+
+  }
+
+
+
 }

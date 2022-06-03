@@ -15,6 +15,8 @@ import Confirmation from './Confirmation';
 import { useUser } from '../contexts/UserContext';
 import AdminEditProductPage from './AdminEditProductPage';
 import OrderPage from './OrderPage';
+import MyOrders from './MyOrders'
+
 
 function Main() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -28,16 +30,18 @@ function Main() {
     <main style={{ background: 'white', marginTop: '6rem' }}>
       <Routes>
         <Route path="/" element={<Store />} />
+
+
         {user?.isAdmin ? (
           <Route path="/admin" element={<AdminPage />}>
-            <Route index element={<AdminProductPage />}></Route>
-            <Route path="product" element={<AdminEditProductPage />}></Route>
+            <Route index element={<AdminProductPage />}/>
+            <Route path="product" element={<AdminEditProductPage />}/>
             <Route
               path="product/:id"
-              element={<AdminEditProductPage />}
-            ></Route>
-            <Route path="products" element={<AdminProductPage />}></Route>
-            <Route path="orders" element={<AdminOrderPage />}></Route>
+              element={<AdminEditProductPage />}/>
+
+            <Route path="products" element={<AdminProductPage />}/>
+            <Route path="orders" element={<AdminOrderPage />}/>
           </Route>
         ) : null}
         <Route path="/orders" element={<OrderPage />} />
@@ -46,6 +50,7 @@ function Main() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/confirmation/:customerName" element={<Confirmation />} />
+        <Route path="/myOrders" element={<MyOrders />}/>
 
         {products.map((item, index) => (
           <Route

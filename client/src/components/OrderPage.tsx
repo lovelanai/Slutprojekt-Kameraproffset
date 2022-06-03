@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Order } from '../interfaces/interfaces';
 import { getMyOrders } from '../services/orderService';
-import OrderAccoridion from './OrderAccordion';
+import OrderAccordion from './OrderAccordion';
 
 export default function OrderPage() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -14,7 +14,7 @@ export default function OrderPage() {
     <div style={{ background: '#999', padding: '5ex 0' }}>
       {orders.map((order, index) => (
         <div key={index} className="orders">
-          <OrderAccoridion order={order}></OrderAccoridion>
+          <OrderAccordion order={order}></OrderAccordion>
         </div>
       ))}
     </div>
