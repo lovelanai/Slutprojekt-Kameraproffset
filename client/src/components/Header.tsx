@@ -63,7 +63,7 @@ function Header() {
         ) : (
           <div className="headerButtons">
             {user?.isAdmin === false ? (
-              <div>
+              <div className="administrationBtn show-products icon">
                 <div>
                   <Button
                     style={{ color: "#fffadd" }}
