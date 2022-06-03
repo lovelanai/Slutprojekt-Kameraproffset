@@ -14,8 +14,8 @@ header {
   height: 100vh;
 }
 
-.css-6hp17o-MuiList-root-MuiMenu-list{
-background-color: #DA334D;
+.css-6hp17o-MuiList-root-MuiMenu-list {
+  background-color: #da334d;
 }
 
 .icon {
@@ -79,7 +79,7 @@ header img {
 .administrationBtn {
   opacity: 0;
   margin-left: 1rem;
-    animation: showCart 1s ease-in-out forwards;
+  animation: showCart 1s ease-in-out forwards;
   animation-delay: 1.8s;
 }
 
@@ -135,14 +135,12 @@ header img {
   .show-products .administrationBtn {
     font-size: 8px;
     margin-left: 0;
-
   }
 
   .show-products .logoutBtn {
     font-size: 8px;
     margin-left: 0;
     padding: 0.3rem 0 0 4px;
-
   }
 
   .headerButtons {
@@ -156,9 +154,5 @@ header img {
 
   .show-products .orderBtn {
     font-size: 8px;
-
   }
-
-
-
 }
