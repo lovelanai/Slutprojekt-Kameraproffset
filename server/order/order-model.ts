@@ -27,6 +27,7 @@ export interface Order {
   payment: Payment;
   shipment: Shipment;
   orderDate: Date;
+  sent: Date | null;
 }
 
 const orderSchema = new mongoose.Schema({
@@ -41,6 +42,7 @@ const orderSchema = new mongoose.Schema({
   payment: paymentSchema,
   shipment: shipmentSchema,
   orderDate: { type: Date, default: Date.now },
+  sent: { type: Date },
 });
 
 export const OrderModel = mongoose.model<Order>('Order', orderSchema);

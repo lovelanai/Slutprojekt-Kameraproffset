@@ -88,7 +88,6 @@ const FilterCategoryProvider: FC = (props) => {
 
   const hideFilter = () => {
     setDisplayFilter(false);
-    console.log(displayFilter);
   };
 
   return (

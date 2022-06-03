@@ -29,7 +29,6 @@ function SignUpForm() {
         }
       })
       .then((err) => {
-        console.log(err);
         error?.setErrorTitle('Kunde inte skapa användare');
         error?.setErrorMessage(err.error);
         error?.handleOpen();

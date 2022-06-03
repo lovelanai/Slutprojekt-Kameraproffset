@@ -15,7 +15,6 @@ export const getAllUsers = asyncHandler(
     );
 
     const users = await UserModel.find({});
-    console.log('getusers');
     res.status(200).json(users);
     res.send();
   }
@@ -59,7 +58,6 @@ export const addUser = asyncHandler(
     const user = new UserModel(userData);
     await user.save();
     res.status(200).json(user);
-    console.log(userData);
   }
 );
 
@@ -85,7 +83,6 @@ export const loginUser = asyncHandler(
     if (req.session) {
       req.session.user = user;
 
-      console.log(`inloggad som ${user?.email}`);
       res.status(200).json({
         email: user.email,
         isAdmin: user.isAdmin,
@@ -119,8 +116,6 @@ export const updateUser = asyncHandler(
 
     await UserModel.findByIdAndUpdate(id, userData);
 
-    console.log('updateUser');
-
     res.status(200).json({
       new: userData,
     });
@@ -137,7 +132,6 @@ export const deleteUser = asyncHandler(
     );
 
     const user = await UserModel.findByIdAndDelete(req.params.id);
-    console.log('delete user');
     res.status(200).json(user);
   }
 );

@@ -40,8 +40,6 @@ function ProductInfoImageSlider(props: Props) {
     return { label: product.info[index], imgPath: image };
   });
 
-  console.log(images);
-
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;

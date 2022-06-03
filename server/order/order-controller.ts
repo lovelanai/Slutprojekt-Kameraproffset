@@ -59,6 +59,7 @@ export const createOrder = asyncHandler(
     order.deliveryAddress = req.body.deliveryAddress;
     order.payment = payment;
     order.shipment = shipment;
+    order.sent = null;
 
     await order.save();
 
@@ -84,7 +85,7 @@ export const getMyOrders = asyncHandler(
     assertIsLoggedIn(
       req,
       res,
-      'Användare måste vara inloggad för se sina ordrar'
+      'Användare måste vara inloggad för att se dina ordrar'
     );
 
     const orders = await OrderModel.find({
@@ -92,5 +93,28 @@ export const getMyOrders = asyncHandler(
     }).populate('user');
 
     res.status(200).json(orders);
+  }
+);
+
+export const markOrderSent = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    assertIsAdmin(
+      req,
+      res,
+      'Du kan inte uppdatera ordrar utan att vara inloggad som admin'
+    );
+
+    const { id } = req.params;
+
+    const order = await OrderModel.findById(id).populate('user');
+    if (!order) {
+      res.status(404);
+      throw new Error('Beställningen kunde inte hittas');
+    }
+
+    order.sent = req.body.sent ? new Date() : null;
+    order.save();
+
+    res.status(200).json(order);
   }
 );
